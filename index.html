@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Tools Directory 2026</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=Space+Grotesk:wght@400;500;700&display=swap');
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #0a0b0f; --surface: #12141a; --surface2: #1a1d27; --border: rgba(255,255,255,0.07);
+    --text: #f0f0f0; --muted: #6b7280; --subtle: #3a3f50;
+    --cat-chat: #6366f1; --cat-image: #ec4899; --cat-video: #f59e0b; --cat-audio: #10b981;
+    --cat-code: #3b82f6; --cat-write: #8b5cf6; --cat-search: #06b6d4; --cat-design: #f97316;
+    --cat-auto: #14b8a6; --cat-biz: #84cc16; --cat-edu: #e879f9; --cat-meet: #fb923c;
+  }
+  body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; min-height: 100vh; padding: 48px 32px 64px; }
+  .header { text-align: center; margin-bottom: 48px; }
+  .header-eyebrow { font-family: 'Space Grotesk', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); margin-bottom: 12px; }
+  .header h1 { font-family: 'Space Grotesk', sans-serif; font-size: clamp(36px, 5vw, 64px); font-weight: 700; line-height: 1.1; background: linear-gradient(135deg, #fff 0%, #a78bfa 50%, #60a5fa 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 12px; }
+  .header p { font-size: 15px; color: var(--muted); max-width: 560px; margin: 0 auto 24px; line-height: 1.6; }
+  .stats-bar { display: flex; justify-content: center; flex-wrap: wrap; gap: 12px 32px; margin-bottom: 40px; }
+  .stat { text-align: center; }
+  .stat-num { font-family: 'Space Grotesk', sans-serif; font-size: 28px; font-weight: 700; color: #fff; line-height: 1; }
+  .stat-label { font-size: 11px; color: var(--muted); margin-top: 3px; letter-spacing: 0.04em; text-transform: uppercase; }
+  .tier-key { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-bottom: 36px; }
+  .tier-key span { font-size: 12px; display: flex; align-items: center; gap: 5px; color: var(--muted); }
+  .badge-row { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 6px; }
+  .badge { font-size: 10px; font-weight: 600; padding: 2px 7px; border-radius: 20px; letter-spacing: 0.04em; }
+  .b-free { background: rgba(16,185,129,0.18); color: #34d399; border: 1px solid rgba(16,185,129,0.3); }
+  .b-budget { background: rgba(99,102,241,0.18); color: #a5b4fc; border: 1px solid rgba(99,102,241,0.3); }
+  .b-trial { background: rgba(251,191,36,0.15); color: #fbbf24; border: 1px solid rgba(251,191,36,0.3); }
+  .b-paid { background: rgba(100,116,139,0.18); color: #94a3b8; border: 1px solid rgba(100,116,139,0.3); }
+  .b-open { background: rgba(6,182,212,0.15); color: #67e8f9; border: 1px solid rgba(6,182,212,0.3); }
+  .b-hot { background: rgba(239,68,68,0.18); color: #fca5a5; border: 1px solid rgba(239,68,68,0.3); }
+  .grid-wrapper { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px; }
+  .cat-section { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; }
+  .cat-header { display: flex; align-items: center; gap: 10px; padding: 14px 16px; border-bottom: 1px solid var(--border); }
+  .cat-icon { width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; }
+  .cat-title { font-family: 'Space Grotesk', sans-serif; font-size: 14px; font-weight: 700; letter-spacing: 0.01em; }
+  .cat-count { margin-left: auto; font-size: 11px; color: var(--muted); background: var(--surface2); padding: 2px 8px; border-radius: 20px; border: 1px solid var(--border); }
+  .tools-list { padding: 4px 0; }
+  .tool-row { display: flex; align-items: flex-start; gap: 10px; padding: 9px 16px; border-bottom: 1px solid var(--border); transition: background 0.15s; position: relative; }
+  .tool-row:last-child { border-bottom: none; }
+  .tool-row:hover { background: var(--surface2); }
+  .tool-num { font-size: 11px; color: var(--subtle); font-weight: 600; width: 18px; flex-shrink: 0; padding-top: 2px; font-family: 'Space Grotesk', sans-serif; }
+  .tool-info { flex: 1; min-width: 0; }
+  .tool-link { display: inline-flex; align-items: center; gap: 5px; text-decoration: none; color: var(--text); font-size: 13.5px; font-weight: 600; line-height: 1.3; transition: color 0.15s; }
+  .tool-link:hover { color: #a78bfa; }
+  .tool-link .arrow { font-size: 10px; opacity: 0; transform: translate(-3px, -3px); transition: opacity 0.15s, transform 0.15s; color: #a78bfa; flex-shrink: 0; }
+  .tool-link:hover .arrow { opacity: 1; transform: translate(0, -3px); }
+  .tool-desc { font-size: 11.5px; color: var(--muted); margin-top: 2px; line-height: 1.4; }
+  .footer { text-align: center; margin-top: 48px; padding-top: 32px; border-top: 1px solid var(--border); }
+  .footer p { font-size: 12px; color: var(--subtle); }
+</style>
+</head>
+<body>
+<div class="header">
+  <p class="header-eyebrow">Complete Reference · Updated June 2026</p>
+  <h1>AI Tools Directory 2026</h1>
+  <p>65 tools across 12 categories — click any tool to visit it. Free tier, budget & open-source options clearly marked.</p>
+</div>
+<div class="stats-bar">
+  <div class="stat"><div class="stat-num">65</div><div class="stat-label">Tools</div></div>
+  <div class="stat"><div class="stat-num">12</div><div class="stat-label">Categories</div></div>
+  <div class="stat"><div class="stat-num">28+</div><div class="stat-label">Free / Freemium</div></div>
+  <div class="stat"><div class="stat-num">15+</div><div class="stat-label">Under $15/mo</div></div>
+</div>
+<div class="tier-key">
+  <span><span class="badge b-free">FREE</span> No credit card needed</span>
+  <span><span class="badge b-budget">BUDGET</span> Under $15/month</span>
+  <span><span class="badge b-trial">TRIAL</span> Generous free trial</span>
+  <span><span class="badge b-open">OPEN</span> Open-source</span>
+  <span><span class="badge b-paid">PAID</span> Paid only</span>
+  <span><span class="badge b-hot">🔥 HOT</span> Trending in 2026</span>
+</div>
+<div class="grid-wrapper">
+  <div class="cat-section">
+    <div class="cat-header" style="border-left:3px solid var(--cat-chat)">
+      <div class="cat-icon" style="background:rgba(99,102,241,.15);color:var(--cat-chat)">💬</div>
+      <span class="cat-title" style="color:var(--cat-chat)">AI Assistants & Chatbots</span>
+      <span class="cat-count">8 tools</span>
+    </div>
+    <div class="tools-list">
+      <div class="tool-row"><span class="tool-num">01</span><div class="tool-info"><a class="tool-link" href="https://chat.openai.com" target="_blank" rel="noopener">ChatGPT <span class="arrow">↗</span></a><div class="tool-desc">Best all-rounder · writing, coding, research, images</div><div class="badge-row"><span class="badge b-free">FREE</span><span class="badge b-budget">$8/mo</span><span class="badge b-hot">🔥 HOT</span></div></div></div>
+      <div class="tool-row"><span class="tool-num">02</span><div class="tool-info"><a class="tool-link" href="https://claude.ai" target="_blank" rel="noopener">Claude (Anthropic) <span class="arrow">↗</span></a><div class="tool-desc">Best for coding, reasoning, long documents</div><div class="badge-row"><span class="badge b-free">FREE</span><span class="badge b-budget">$20/mo Pro</span><span class="badge b-hot">🔥 HOT</span></div></div></div>
+      <div class="tool-row"><span class="tool-num">03</span><div class="tool-info"><a class="tool-link" href="https://gemini.google.com" target="_blank" rel="noopener">Gemini (Google) <span class="arrow">↗</span></a><div class="tool-desc">Deep Google Workspace integration · large context</div><div class="badge-row"><span class="badge b-free">FREE</span><span class="badge b-budget">$20/mo Advanced</span></div></div></div>
+      <div class="tool-row"><span class="tool-num">04</span><div class="tool-info"><a class="tool-link" href="https://www.perplexity.ai" target="_blank" rel="noopener">Perplexity AI <span class="arrow">↗</span></a><div class="tool-desc">AI search with live citations · research powerhouse</div><div class="badge-row"><span class="badge b-free">FREE</span><span class="badge b-budget">$20/mo Pro</span><span class="badge b-hot">🔥 HOT</span></div></div></div>
+      <div class="tool-row"><span class="tool-num">05</span><div class="tool-info"><a class="tool-link" href="https://x.ai/grok" target="_blank" rel="noopener">Grok (xAI) <span class="arrow">↗</span></a><div class="tool-desc">Real-time X/Twitter data · current events focus</div><div class="badge-row"><span class="badge b-free">FREE</span><span class="badge b-budget">$8/mo Premium</span></div></div></div>
+      <div class="tool-row"><span class="tool-num">06</span><div class="tool-info"><a class="tool-link" href="https://copilot.microsoft.com" target="_blank" rel="noopener">Microsoft Copilot <span class="arrow">↗</span></a><div class="tool-desc">Integrated into Windows, Office 365, Teams</div><div class="badge-row"><span class="badge b-free">FREE</span><span class="badge b-budget">Included in M365</span></div></div></div>
+      <div class="tool-row"><span class="tool-num">07</span><div class="tool-info"><a class="tool-link" href="https://chat.deepseek.com" target="_blank" rel="noopener">DeepSeek <span class="arrow">↗</span></a><div class="tool-desc">Strong reasoning · DeepSeek-V4 Pro / V4-Flash · open weights</div><div class="badge-row"><span class="badge b-free">FREE</span><span class="badge b-open">OPEN</span></div></div></div>
+      <div class="tool-row"><span class="tool-num">08</span><div class="tool-info"><a class="tool-link" href="https://huggingface.co/chat" target="_blank" rel="noopener">HuggingChat <span class="arrow">↗</span></a><div class="tool-desc">Open-source chatbot · multiple models · no login needed</div><div class="badge-row"><span class="badge b-free">FREE</span><span class="badge b-open">OPEN</span></div></div></div>
+    </div>
+  </div>
+  <div class="cat-section">
+    <div class="cat-header" style="border-left:3px solid var(--cat-image)">
+      <div class="cat-icon" style="background:rgba(236,72,153,.15);color:var(--cat-image)">🎨</div>
+      <span class="cat-title" style="color:var(--cat-image)">Image Generation & Design</span>
+      <span class="cat-count">8 tools</span>
+    </div>
+    <div class="tools-list">
+      <div class="tool-row"><span class="tool-num">09</span><div class="tool-info"><a class="tool-link" href="https://www.midjourney.com" target="_blank" rel="noopener">Midjourney V8.1 <span class="arrow">↗</span></a><div class="tool-desc">Best artistic quality · branding, concept art</div><div class="badge-row"><span class="badge b-budget">$10/mo Basic</span><span class="badge b-hot">🔥 HOT</span></div></div></div>
+      <div class="tool-row"><span class="tool-num">10</span><div class="tool-info"><a class="tool-link" href="https://openai.com/dall-e-3" target="_blank" rel="noopener">DALL-E 3 (OpenAI) <span class="arrow">↗</span></a><div class="tool-desc">Fast generation · inside ChatGPT · great for utility</div><div class="badge-row"><span class="badge b-free">FREE</span><span class="badge b-budget">Via ChatGPT $8/mo</span></div></div></div>
+      <div class="tool-row"><span class="tool-num">11</span><div class="tool-info"><a class="tool-link" href="https://firefly.adobe.com" target="_blank" rel="noopener">Adobe Firefly <span class="arrow">↗</span></a><div class="tool-desc">Commercial-safe · licensed stock training data</div><div class="badge-row"><span class="badge b-trial">25 free credits</span><span class="badge b-budget">$10/mo</span></div></div></div>
+      <div class="tool-row"><span class="tool-num">12</span><div class="tool-info"><a class="tool-link" href="https://leonardo.ai" target="_blank" rel="noopener">Leonardo AI <span class="arrow">↗</span></a><div class="tool-desc">Product & game art focus · generous free tier</div><div class="badge-row"><span class="badge b-free">FREE</span><span class="badge b-budget">$12/mo Essential</span></div></div></div>
+      <div class="tool-row"><span class="tool-num">13</span><div class="tool-info"><a class="tool-link" href="https://ideogram.ai" target="_blank" rel="noopener">Ideogram 4.0 <span class="arrow">↗</span></a><div class="tool-desc">Best for text inside images · 2K resolution · transparent PNG · open weights</div><div class="badge-row"><span class="badge b-free">FREE</span><span class="badge b-budget">$8/mo Basic</span><span class="badge b-hot">🔥 HOT</span></div></div></div>
+      <div class="tool-row"><span class="tool-num">14</span><div class="tool-info"><a class="tool-link" href="https://stability.ai" target="_blank" rel="noopener">Stable Diffusion <span class="arrow">↗</span></a><div class="tool-desc">Run locally · fully open-source · unlimited generations</div><div class="badge-row"><span class="badge b-free">FREE</span><span class="badge b-open">OPEN</span></div></div></div>
+      <div class="tool-row"><span class="tool-num">15</span><div class="tool-info"><a class="tool-link" href="https://www.canva.com/ai-image-generator" target="_blank" rel="noopener">Canva AI (Magic Studio) <span class="arrow">↗</span></a><div class="tool-desc">Design + AI generation · templates · social media</div><div class="badge-row"><span class="badge b-free">FREE</span><span class="badge b-budget">$12/mo Pro</span></div></div></div>
+      <div class="tool-row"><span class="tool-num">16</span><div class="tool-info"><a class="tool-link" href="https://blackforestlabs.ai" target="_blank" rel="noopener">Flux 2 (Black Forest Labs) <span class="arrow">↗</span></a><div class="tool-desc">High-realism open model · Flux 2 Max / Pro / Dev lineup</div><div class="badge-row"><span class="badge b-free">FREE</span><span class="badge b-open">OPEN</span><span class="badge b-hot">🔥 HOT</span></div></div></div>
+    </div>
+  </div>
+  <div class="cat-section">
+    <div class="cat-header" style="border-left:3px solid var(--cat-video)">
+      <div class="cat-icon" style="background:rgba(245,158,11,.15);color:var(--cat-video)">🎬</div>
+      <span class="cat-title" style="color:var(--cat-video)">Video Generation & Editing</span>
+      <span class="cat-count">6 tools</span>
+    </div>
+    <div class="tools-list">
+      <div class="tool-row"><span class="tool-num">17</span><div class="tool-info"><a class="tool-link" href="https://runwayml.com" target="_blank" rel="noopener">Runway ML (Gen-4.5) <span class="arrow">↗</span></a><div class="tool-desc">Best cinematic AI video · Aleph editor · Act-Two MoCap</div><div class="badge-row"><span class="badge b-trial">125 free credits</span><span class="badge b-budget">$12/mo Std</span><span class="badge b-hot">🔥 HOT</span></div></div></div>
+      <div class="tool-row"><span class="tool-num">18</span><div class="tool-info"><a class="tool-link" href="https://deepmind.google/technologies/veo" target="_blank" rel="noopener">Veo 3.1 (Google) <span class="arrow">↗</span></a><div class="tool-desc">Realistic scenes · Google's flagship video model</div><div class="badge-row"><span class="badge b-paid">Via AI Ultra $249/mo</span><span class="badge b-hot">🔥 HOT</span></div></div></div>
+      <div class="tool-row"><span class="tool-num">19</span><div class="tool-info"><a class="tool-link" href="https://pika.art" target="_blank" rel="noopener">Pika Labs <span class="arrow">↗</span></a><div class="tool-desc">Quick short-form clips · social media focused · affordable</div><div class="badge-row"><span class="badge b-free">FREE tier</span><span class="badge b-budget">$8/mo Basic</span></div></div></div>
+      <div class="tool-row"><span class="tool-num">20</span><div class="tool-info"><a class="tool-link" href="https://klingai.com" target="_blank" rel="noopener">Kling AI 3.5 <span class="arrow">↗</span></a><div class="tool-desc">Motion & image-to-video · Kling 3.5 with browser platform</div><div class="badge-row"><span class="badge b-free">FREE</span><span class="badge b-budget">$10/mo</span></div></div></div>
+      <div class="tool-row"><span class="tool-num">21</span><div class="tool-info"><a class="tool-link" href="https://www.descript.com" target="_blank" rel="noopener">Descript <span class="arrow">↗</span></a><div class="tool-desc">Edit video like a doc · overdub voice · transcript editing</div><div class="badge-row"><span class="badge b-free">FREE</span><span class="badge b-budget">$12/mo Hobbyist</span></div></div></div>
+      <div class="tool-row"><span class="tool-num">22</span><div class="tool-info"><a class="tool-link" href="https://www.synthesia.io" target="_blank" rel="noopener">Synthesia <span class="arrow">↗</span></a><div class="tool-desc">AI avatar presenter videos · no camera needed · training</div><div class="badge-row"><span class="badge b-free">FREE 3 mins/mo</span><span class="badge b-budget">$18/mo Starter</span></div></div></div>
+    </div>
+  </div>
+  <div class="cat-section">
+    <div class="cat-header" style="border-left:3px solid var(--cat-audio)">
+      <div class="cat-icon" style="background:rgba(16,185,129,.15);color:var(--cat-audio)">🎵</div>
+      <span class="cat-title" style="color:var(--cat-audio)">Audio, Voice & Music</span>
+      <span class="cat-count">5 tools</span>
+    </div>
+    <div class="tools-list">
+      <div class="tool-row"><span class="tool-num">23</span><div class="tool-info"><a class="tool-link" href="https://elevenlabs.io" target="_blank" rel="noopener">ElevenLabs <span class="arrow">↗</span></a><div class="tool-desc">Most realistic AI voices · dubbing · 30+ languages</div><div class="badge-row"><span class="badge b-free">FREE 10k chars/mo</span><span class="badge b-budget">$5/mo Starter</span><span class="badge b-hot">🔥 HOT</span></div></div></div>
+      <div class="tool-row"><span class="tool-num">24</span><div class="tool-info"><a class="tool-link" href="https://suno.com" target="_blank" rel="noopener">Suno V5.5 <span class="arrow">↗</span></a><div class="tool-desc">Full songs with vocals from text prompt · music creation</div><div class="badge-row"><span class="badge b-free">FREE 50 songs/day</span><span class="badge b-budget">$8/mo Pro</span></div></div></div>
+      <div class="tool-row"><span class="tool-num">25</span><div class="tool-info"><a class="tool-link" href="https://podcast.adobe.com" target="_blank" rel="noopener">Adobe Podcast (Enhance) <span class="arrow">↗</span></a><div class="tool-desc">Studio-quality audio from any mic · noise removal</div><div class="badge-row"><span class="badge b-free">FREE</span></div></div></div>
+      <div class="tool-row"><span class="tool-num">26</span><div class="tool-info"><a class="tool-link" href="https://openai.com/research/whisper" target="_blank" rel="noopener">Whisper (OpenAI) <span class="arrow">↗</span></a><div class="tool-desc">Best speech-to-text · open-source · 99 languages</div><div class="badge-row"><span class="badge b-free">FREE</span><span class="badge b-open">OPEN</span></div></div></div>
+      <div class="tool-row"><span class="tool-num">27</span><div class="tool-info"><a class="tool-link" href="https://murf.ai" target="_blank" rel="noopener">Murf AI <span class="arrow">↗</span></a><div class="tool-desc">120+ AI voices · e-learning & explainer voiceovers</div><div class="badge-row"><span class="badge b-free">FREE 10 mins</span><span class="badge b-budget">$13/mo Basic</span></div></div></div>
+    </div>
+  </div>
+  <div class="cat-section">
+    <div class="cat-header" style="border-left:3px solid var(--cat-code)">
+      <div class="cat-icon" style="background:rgba(59,130,246,.15);color:var(--cat-code)">💻</div>
+      <span class="cat-title" style="color:var(--cat-code)">Coding & Development</span>
+      <span class="cat-count">6 tools</span>
+    </div>
+    <div class="tools-list">
+      <div class="tool-row"><span class="tool-num">28</span><div class="tool-info"><a class="tool-link" href="https://www.cursor.com" target="_blank" rel="noopener">Cursor <span class="arrow">↗</span></a><div class="tool-desc">AI-native code editor · agent mode · best for solo devs</div><div class="badge-row"><span class="badge b-free">FREE Hobby</span><span class="badge b-budget">$20/mo Pro</span><span class="badge b-hot">🔥 HOT</span></div></div></div>
+      <div class="tool-row"><span class="tool-num">29</span><div class="tool-info"><a class="tool-link" href="https://github.com/features/copilot" target="_blank" rel="noopener">GitHub Copilot <span class="arrow">↗</span></a><div class="tool-desc">In-IDE suggestions · deeply integrated with VS Code</div><div class="badge-row"><span class="badge b-free">FREE for students</span><span class="badge b-budget">$10/mo</span></div></div></div>
+      <div class="tool-row"><span class="tool-num">30</span><div class="tool-info"><a class="tool-link" href="https://claude.ai/code" target="_blank" rel="noopener">Claude Code <span class="arrow">↗</span></a><div class="tool-desc">Terminal-based agentic coding · Opus 4.6 / Sonnet 4.6 / Haiku 4.5</div><div class="badge-row"><span class="badge b-trial">Free trial credits</span><span class="badge b-hot">🔥 HOT</span></div></div></div>
+      <div class="tool-row"><span class="tool-num">31</span><div class="tool-info"><a class="tool-link" href="https://replit.com" target="_blank" rel="noopener">Replit AI <span class="arrow">↗</span></a><div class="tool-desc">Browser-based IDE · deploy instantly · beginner-friendly</div><div class="badge-row"><span class="badge b-free">FREE</span><span class="badge b-budget">$10/mo Core</span></div></div></div>
+      <div class="tool-row"><span class="tool-num">32</span><div class="tool-info"><a class="tool-link" href="https://windsurf.com" target="_blank" rel="noopener">Windsurf (Codeium) <span class="arrow">↗</span></a><div class="tool-desc">Free Copilot alternative · multi-file awareness · acquired by Cognition AI (2025)</div><div class="badge-row"><span class="badge b-free">FREE</span><span class="badge b-budget">$10/mo Pro</span></div></div></div>
+      <div class="tool-row"><span class="tool-num">33</span><div class="tool-info"><a class="tool-link" href="https://v0.dev" target="_blank" rel="noopener">v0 (Vercel) <span class="arrow">↗</span></a><div class="tool-desc">Generate React UI from prompt · deploy to Vercel instantly</div><div class="badge-row"><span class="badge b-free">FREE tier</span><span class="badge b-hot">🔥 HOT</span></div></div></div>
+    </div>
+  </div>
+  <div class="cat-section">
+    <div class="cat-header" style="border-left:3px solid var(--cat-write)">
+      <div class="cat-icon" style="background:rgba(139,92,246,.15);color:var(--cat-write)">✍️</div>
+      <span class="cat-title" style="color:var(--cat-write)">Writing & Content Creation</span>
+      <span class="cat-count">7 tools</span>
+    </div>
+    <div class="tools-list">
+      <div class="tool-row"><span class="tool-num">34</span><div class="tool-info"><a class="tool-link" href="https://www.jasper.ai" target="_blank" rel="noopener">Jasper AI <span class="arrow">↗</span></a><div class="tool-desc">Marketing copy · brand voice training · long-form</div><div class="badge-row"><span class="badge b-trial">7-day free trial</span><span class="badge b-budget">$39/mo Creator</span></div></div></div>
+      <div class="tool-row"><span class="tool-num">35</span><div class="tool-info"><a class="tool-link" href="https://www.copy.ai" target="_blank" rel="noopener">Copy.ai <span class="arrow">↗</span></a><div class="tool-desc">Sales copy · email sequences · landing pages</div><div class="badge-row"><span class="badge b-free">FREE 2,000 words</span><span class="badge b-budget">$36/mo Pro</span></div></div></div>
+      <div class="tool-row"><span class="tool-num">36</span><div class="tool-info"><a class="tool-link" href="https://writesonic.com" target="_blank" rel="noopener">Writesonic <span class="arrow">↗</span></a><div class="tool-desc">SEO articles · Surfer integration · bulk generation</div><div class="badge-row"><span class="badge b-free">FREE 10k words</span><span class="badge b-budget">$13/mo Individual</span></div></div></div>
+      <div class="tool-row"><span class="tool-num">37</span><div class="tool-info"><a class="tool-link" href="https://rytr.me" target="_blank" rel="noopener">Rytr <span class="arrow">↗</span></a><div class="tool-desc">Budget writing tool · 40+ use cases · 30 languages</div><div class="badge-row"><span class="badge b-free">FREE 10k chars/mo</span><span class="badge b-budget">$9/mo Saver</span></div></div></div>
+      <div class="tool-row"><span class="tool-num">38</span><div class="tool-info"><a class="tool-link" href="https://www.grammarly.com" target="_blank" rel="noopener">Grammarly <span class="arrow">↗</span></a><div class="tool-desc">Grammar, tone, style · GrammarlyGO AI rewrite</div><div class="badge-row"><span class="badge b-free">FREE</span><span class="badge b-budget">$12/mo Premium</span></div></div></div>
+      <div class="tool-row"><span class="tool-num">39</span><div class="tool-info"><a class="tool-link" href="https://www.notion.so/product/ai" target="_blank" rel="noopener">Notion AI <span class="arrow">↗</span></a><div class="tool-desc">In-app writing assistant · summarize notes · brainstorm</div><div class="badge-row"><span class="badge b-free">FREE limited</span><span class="badge b-budget">$8/mo add-on</span></div></div></div>
+      <div class="tool-row"><span class="tool-num">40</span><div class="tool-info"><a class="tool-link" href="https://quillbot.com" target="_blank" rel="noopener">Quillbot <span class="arrow">↗</span></a><div class="tool-desc">Paraphrasing, summarizing, citation generation</div><div class="badge-row"><span class="badge b-free">FREE</span><span class="badge b-budget">$8/mo Premium</span></div></div></div>
+    </div>
+  </div>
+  <div class="cat-section">
+    <div class="cat-header" style="border-left:3px solid var(--cat-search)">
+      <div class="cat-icon" style="background:rgba(6,182,212,.15);color:var(--cat-search)">🔍</div>
+      <span class="cat-title" style="color:var(--cat-search)">Research & Productivity</span>
+      <span class="cat-count">5 tools</span>
+    </div>
+    <div class="tools-list">
+      <div class="tool-row"><span class="tool-num">41</span><div class="tool-info"><a class="tool-link" href="https://notebooklm.google.com" target="_blank" rel="noopener">NotebookLM (Google) <span class="arrow">↗</span></a><div class="tool-desc">Upload PDFs · AI podcast generation · deep research</div><div class="badge-row"><span class="badge b-free">FREE</span><span class="badge b-hot">🔥 HOT</span></div></div></div>
+      <div class="tool-row"><span class="tool-num">42</span><div class="tool-info"><a class="tool-link" href="https://elicit.com" target="_blank" rel="noopener">Elicit <span class="arrow">↗</span></a><div class="tool-desc">AI for academic research · paper analysis · evidence</div><div class="badge-row"><span class="badge b-free">FREE 5 queries/day</span><span class="badge b-budget">$10/mo Plus</span></div></div></div>
+      <div class="tool-row"><span class="tool-num">43</span><div class="tool-info"><a class="tool-link" href="https://consensus.app" target="_blank" rel="noopener">Consensus <span class="arrow">↗</span></a><div class="tool-desc">Scientific paper search with AI summaries</div><div class="badge-row"><span class="badge b-free">FREE</span><span class="badge b-budget">$8/mo Premium</span></div></div></div>
+      <div class="tool-row"><span class="tool-num">44</span><div class="tool-info"><a class="tool-link" href="https://www.napkin.ai" target="_blank" rel="noopener">Napkin AI <span class="arrow">↗</span></a><div class="tool-desc">Auto-generate diagrams from text · visual thinking</div><div class="badge-row"><span class="badge b-free">FREE</span><span class="badge b-hot">🔥 HOT</span></div></div></div>
+      <div class="tool-row"><span class="tool-num">45</span><div class="tool-info"><a class="tool-link" href="https://gamma.app" target="_blank" rel="noopener">Gamma <span class="arrow">↗</span></a><div class="tool-desc">AI presentations from prompts · beautiful slides fast</div><div class="badge-row"><span class="badge b-free">FREE 400 AI credits</span><span class="badge b-budget">$8/mo Plus</span></div></div></div>
+    </div>
+  </div>
+  <div class="cat-section">
+    <div class="cat-header" style="border-left:3px solid var(--cat-design)">
+      <div class="cat-icon" style="background:rgba(249,115,22,.15);color:var(--cat-design)">🖌️</div>
+      <span class="cat-title" style="color:var(--cat-design)">Design & UI/UX Tools</span>
+      <span class="cat-count">4 tools</span>
+    </div>
+    <div class="tools-list">
+      <div class="tool-row"><span class="tool-num">46</span><div class="tool-info"><a class="tool-link" href="https://www.figma.com/ai" target="_blank" rel="noopener">Figma AI <span class="arrow">↗</span></a><div class="tool-desc">Auto-layout, wireframe generation, design assistant</div><div class="badge-row"><span class="badge b-free">FREE Starter</span><span class="badge b-budget">$15/mo Pro</span></div></div></div>
+      <div class="tool-row"><span class="tool-num">47</span><div class="tool-info"><a class="tool-link" href="https://looka.com" target="_blank" rel="noopener">Looka <span class="arrow">↗</span></a><div class="tool-desc">AI logo and brand identity generator</div><div class="badge-row"><span class="badge b-trial">Free preview</span><span class="badge b-budget">$20 one-time logo</span></div></div></div>
+      <div class="tool-row"><span class="tool-num">48</span><div class="tool-info"><a class="tool-link" href="https://uizard.io" target="_blank" rel="noopener">Uizard <span class="arrow">↗</span></a><div class="tool-desc">Sketch-to-UI prototype · no design skills needed</div><div class="badge-row"><span class="badge b-free">FREE 3 projects</span><span class="badge b-budget">$12/mo Pro</span></div></div></div>
+      <div class="tool-row"><span class="tool-num">49</span><div class="tool-info"><a class="tool-link" href="https://www.framer.com" target="_blank" rel="noopener">Framer AI <span class="arrow">↗</span></a><div class="tool-desc">Full website from prompt · animations · CMS</div><div class="badge-row"><span class="badge b-free">FREE</span><span class="badge b-budget">$15/mo Basic</span></div></div></div>
+    </div>
+  </div>
+  <div class="cat-section">
+    <div class="cat-header" style="border-left:3px solid var(--cat-auto)">
+      <div class="cat-icon" style="background:rgba(20,184,166,.15);color:var(--cat-auto)">⚡</div>
+      <span class="cat-title" style="color:var(--cat-auto)">Automation & AI Agents</span>
+      <span class="cat-count">4 tools</span>
+    </div>
+    <div class="tools-list">
+      <div class="tool-row"><span class="tool-num">50</span><div class="tool-info"><a class="tool-link" href="https://n8n.io" target="_blank" rel="noopener">n8n <span class="arrow">↗</span></a><div class="tool-desc">Self-host automation · 400+ integrations · open-source</div><div class="badge-row"><span class="badge b-free">FREE self-hosted</span><span class="badge b-open">OPEN</span><span class="badge b-hot">🔥 HOT</span></div></div></div>
+      <div class="tool-row"><span class="tool-num">51</span><div class="tool-info"><a class="tool-link" href="https://zapier.com" target="_blank" rel="noopener">Zapier <span class="arrow">↗</span></a><div class="tool-desc">7,000+ app connections · no-code · AI actions</div><div class="badge-row"><span class="badge b-free">FREE 100 tasks/mo</span><span class="badge b-budget">$20/mo Starter</span></div></div></div>
+      <div class="tool-row"><span class="tool-num">52</span><div class="tool-info"><a class="tool-link" href="https://www.make.com" target="_blank" rel="noopener">Make (Integromat) <span class="arrow">↗</span></a><div class="tool-desc">Visual workflow builder · complex logic · cheaper than Zapier</div><div class="badge-row"><span class="badge b-free">FREE 1,000 ops/mo</span><span class="badge b-budget">$9/mo Core</span></div></div></div>
+      <div class="tool-row"><span class="tool-num">53</span><div class="tool-info"><a class="tool-link" href="https://www.lindy.ai" target="_blank" rel="noopener">Lindy AI <span class="arrow">↗</span></a><div class="tool-desc">Personal AI employee · email, calendar, task automation</div><div class="badge-row"><span class="badge b-free">FREE 400 tasks</span><span class="badge b-budget">$49/mo Pro</span></div></div></div>
+    </div>
+  </div>
+  <div class="cat-section">
+    <div class="cat-header" style="border-left:3px solid var(--cat-biz)">
+      <div class="cat-icon" style="background:rgba(132,204,22,.15);color:var(--cat-biz)">📊</div>
+      <span class="cat-title" style="color:var(--cat-biz)">Business & Marketing</span>
+      <span class="cat-count">4 tools</span>
+    </div>
+    <div class="tools-list">
+      <div class="tool-row"><span class="tool-num">54</span><div class="tool-info"><a class="tool-link" href="https://surferseo.com" target="_blank" rel="noopener">Surfer SEO <span class="arrow">↗</span></a><div class="tool-desc">AI SEO content optimization · SERP analysis</div><div class="badge-row"><span class="badge b-trial">7-day free trial</span><span class="badge b-budget">$79/mo Essential</span></div></div></div>
+      <div class="tool-row"><span class="tool-num">55</span><div class="tool-info"><a class="tool-link" href="https://www.hubspot.com/artificial-intelligence" target="_blank" rel="noopener">HubSpot AI <span class="arrow">↗</span></a><div class="tool-desc">CRM + AI email, content, ad copy · all-in-one</div><div class="badge-row"><span class="badge b-free">FREE CRM forever</span></div></div></div>
+      <div class="tool-row"><span class="tool-num">56</span><div class="tool-info"><a class="tool-link" href="https://www.tidio.com" target="_blank" rel="noopener">Tidio AI (Lyro) <span class="arrow">↗</span></a><div class="tool-desc">AI customer support chatbot · e-commerce focused</div><div class="badge-row"><span class="badge b-free">FREE 50 chats/mo</span><span class="badge b-budget">$29/mo Lyro</span></div></div></div>
+      <div class="tool-row"><span class="tool-num">57</span><div class="tool-info"><a class="tool-link" href="https://www.adcreative.ai" target="_blank" rel="noopener">AdCreative.ai <span class="arrow">↗</span></a><div class="tool-desc">AI-generated ad creatives · A/B test ready · social ads</div><div class="badge-row"><span class="badge b-trial">7-day free trial</span><span class="badge b-budget">$21/mo Starter</span></div></div></div>
+    </div>
+  </div>
+  <div class="cat-section">
+    <div class="cat-header" style="border-left:3px solid var(--cat-meet)">
+      <div class="cat-icon" style="background:rgba(251,146,60,.15);color:var(--cat-meet)">📝</div>
+      <span class="cat-title" style="color:var(--cat-meet)">Meetings & Transcription</span>
+      <span class="cat-count">5 tools</span>
+    </div>
+    <div class="tools-list">
+      <div class="tool-row"><span class="tool-num">58</span><div class="tool-info"><a class="tool-link" href="https://fathom.video" target="_blank" rel="noopener">Fathom <span class="arrow">↗</span></a><div class="tool-desc">Best free meeting notes · records & summarizes Zoom calls</div><div class="badge-row"><span class="badge b-free">FREE forever</span><span class="badge b-hot">🔥 HOT</span></div></div></div>
+      <div class="tool-row"><span class="tool-num">59</span><div class="tool-info"><a class="tool-link" href="https://otter.ai" target="_blank" rel="noopener">Otter.ai <span class="arrow">↗</span></a><div class="tool-desc">Live transcription · meeting summaries · action items</div><div class="badge-row"><span class="badge b-free">FREE 300 mins/mo</span><span class="badge b-budget">$10/mo Pro</span></div></div></div>
+      <div class="tool-row"><span class="tool-num">60</span><div class="tool-info"><a class="tool-link" href="https://fireflies.ai" target="_blank" rel="noopener">Fireflies.ai <span class="arrow">↗</span></a><div class="tool-desc">Records all meetings · searchable transcripts · CRM sync</div><div class="badge-row"><span class="badge b-free">FREE limited</span><span class="badge b-budget">$10/mo Pro</span></div></div></div>
+      <div class="tool-row"><span class="tool-num">61</span><div class="tool-info"><a class="tool-link" href="https://krisp.ai" target="_blank" rel="noopener">Krisp <span class="arrow">↗</span></a><div class="tool-desc">AI noise cancellation · background voice removal on calls</div><div class="badge-row"><span class="badge b-free">FREE 60 mins/day</span><span class="badge b-budget">$8/mo Pro</span></div></div></div>
+      <div class="tool-row"><span class="tool-num">62</span><div class="tool-info"><a class="tool-link" href="https://tldv.io" target="_blank" rel="noopener">Tldv <span class="arrow">↗</span></a><div class="tool-desc">Record & summarize Google Meet / Zoom · timestamp clips</div><div class="badge-row"><span class="badge b-free">FREE unlimited recordings</span></div></div></div>
+    </div>
+  </div>
+  <div class="cat-section">
+    <div class="cat-header" style="border-left:3px solid var(--cat-edu)">
+      <div class="cat-icon" style="background:rgba(232,121,249,.15);color:var(--cat-edu)">🎓</div>
+      <span class="cat-title" style="color:var(--cat-edu)">Education & Learning</span>
+      <span class="cat-count">3 tools</span>
+    </div>
+    <div class="tools-list">
+      <div class="tool-row"><span class="tool-num">63</span><div class="tool-info"><a class="tool-link" href="https://www.khanacademy.org/khan-labs" target="_blank" rel="noopener">Khan Academy (Khanmigo) <span class="arrow">↗</span></a><div class="tool-desc">Socratic AI tutor · never gives answers · guides thinking</div><div class="badge-row"><span class="badge b-free">FREE for students</span></div></div></div>
+      <div class="tool-row"><span class="tool-num">64</span><div class="tool-info"><a class="tool-link" href="https://www.duolingo.com/ai" target="_blank" rel="noopener">Duolingo Max <span class="arrow">↗</span></a><div class="tool-desc">AI conversation practice · roleplay scenarios</div><div class="badge-row"><span class="badge b-free">FREE Basic</span><span class="badge b-budget">$8/mo Max</span></div></div></div>
+      <div class="tool-row"><span class="tool-num">65</span><div class="tool-info"><a class="tool-link" href="https://www.coursera.org" target="_blank" rel="noopener">Coursera AI Tutor <span class="arrow">↗</span></a><div class="tool-desc">Contextual learning help · embedded in courses</div><div class="badge-row"><span class="badge b-free">FREE audit</span><span class="badge b-budget">$49/mo Plus</span></div></div></div>
+    </div>
+  </div>
+</div>
+<div class="footer">
+  <p>Updated June 2026 · 65 tools · 12 categories · Click any tool name to visit · Opens in a new tab</p>
+  <p style="margin-top:6px">🟢 Free = no credit card &nbsp;·&nbsp; 🟣 Budget = under $15/mo &nbsp;·&nbsp; 🟡 Trial = time/credit limited &nbsp;·&nbsp; 🔵 Open = open-source</p>
+  <p style="margin-top:6px">Prices are approximate and may vary by region. Always verify on the official site.</p>
+</div>
+</body>
+</html>
