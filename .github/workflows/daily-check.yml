@@ -26,7 +26,7 @@ jobs:
       - name: Run monitor
         run: python tools_monitor.py
 
-      - name: Commit and push changes
+           - name: Commit and push changes
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
@@ -35,5 +35,6 @@ jobs:
             echo "No changes to commit."
           else
             git commit -m "chore: daily tools check [$(date -u +%Y-%m-%d)]"
+            git pull --rebase origin main
             git push
           fi
