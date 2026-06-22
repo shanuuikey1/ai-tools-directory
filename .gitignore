@@ -4,3 +4,7 @@ node_modules/
 
 # Env files
 .env
+
+# Build output (Netlify/CI rebuild from source)
+web/dist/
+mobile/build/
