@@ -21,7 +21,8 @@ const authenticateCustomer = (req, res, next) => {
       next();
     });
   } catch (error) {
-    return res.status(500).json({ message: error.message });
+    console.error(error);
+    return res.status(500).json({ message: 'Internal server error' });
   }
 };
 
@@ -46,7 +47,8 @@ const authenticateProvider = (req, res, next) => {
       next();
     });
   } catch (error) {
-    return res.status(500).json({ message: error.message });
+    console.error(error);
+    return res.status(500).json({ message: 'Internal server error' });
   }
 };
 

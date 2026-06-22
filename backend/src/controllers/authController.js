@@ -13,6 +13,10 @@ exports.registerCustomer = async (req, res) => {
       return res.status(400).json({ message: 'Email, phone, and password are required' });
     }
 
+    if (password.length < 6) {
+      return res.status(400).json({ message: 'Password must be at least 6 characters' });
+    }
+
     // Check if user already exists
     const existingUser = await User.findOne({
       where: {
@@ -55,7 +59,8 @@ exports.registerCustomer = async (req, res) => {
       },
     });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    console.error(error);
+    res.status(500).json({ message: 'Internal server error' });
   }
 };
 
@@ -67,6 +72,10 @@ exports.registerProvider = async (req, res) => {
     // Validate input
     if (!email || !phone || !password || !name) {
       return res.status(400).json({ message: 'Email, phone, password, and name are required' });
+    }
+
+    if (password.length < 6) {
+      return res.status(400).json({ message: 'Password must be at least 6 characters' });
     }
 
     // Check if provider already exists
@@ -112,7 +121,8 @@ exports.registerProvider = async (req, res) => {
       },
     });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    console.error(error);
+    res.status(500).json({ message: 'Internal server error' });
   }
 };
 
@@ -155,7 +165,8 @@ exports.loginCustomer = async (req, res) => {
       },
     });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    console.error(error);
+    res.status(500).json({ message: 'Internal server error' });
   }
 };
 
@@ -198,6 +209,7 @@ exports.loginProvider = async (req, res) => {
       },
     });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    console.error(error);
+    res.status(500).json({ message: 'Internal server error' });
   }
 };

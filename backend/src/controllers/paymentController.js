@@ -68,7 +68,8 @@ exports.createOrder = async (req, res) => {
     });
   } catch (error) {
     console.error('Razorpay error:', error);
-    res.status(500).json({ message: error.message });
+    console.error(error);
+    res.status(500).json({ message: 'Internal server error' });
   }
 };
 
@@ -123,7 +124,8 @@ exports.verifyPayment = async (req, res) => {
       },
     });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    console.error(error);
+    res.status(500).json({ message: 'Internal server error' });
   }
 };
 
@@ -151,6 +153,7 @@ exports.getPaymentHistory = async (req, res) => {
       payments: bookings,
     });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    console.error(error);
+    res.status(500).json({ message: 'Internal server error' });
   }
 };

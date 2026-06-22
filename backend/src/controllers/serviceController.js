@@ -20,7 +20,8 @@ exports.getAllServices = async (req, res) => {
       services,
     });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    console.error(error);
+    res.status(500).json({ message: 'Internal server error' });
   }
 };
 
@@ -40,7 +41,8 @@ exports.getServiceById = async (req, res) => {
       service,
     });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    console.error(error);
+    res.status(500).json({ message: 'Internal server error' });
   }
 };
 
@@ -66,7 +68,8 @@ exports.createService = async (req, res) => {
       service,
     });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    console.error(error);
+    res.status(500).json({ message: 'Internal server error' });
   }
 };
 
@@ -88,6 +91,7 @@ exports.getCategories = async (req, res) => {
       categories,
     });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    console.error(error);
+    res.status(500).json({ message: 'Internal server error' });
   }
 };
