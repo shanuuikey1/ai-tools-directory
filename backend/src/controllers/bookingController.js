@@ -6,13 +6,28 @@ const Service = require('../models/Service');
 // Create Booking (Customer)
 exports.createBooking = async (req, res) => {
   try {
-    const { providerId, serviceId, serviceDate, serviceTime, serviceAddress, servicePrice } = req.body;
+    const { providerId, serviceId, serviceDate, serviceTime, serviceAddress } = req.body;
     const customerId = req.user.id;
 
-    // Validate inputs
-    if (!providerId || !serviceId || !serviceDate || !serviceTime || !serviceAddress || !servicePrice) {
+    // Validate inputs. Price is NOT taken from the client — it is looked
+    // up from the Service record below to prevent tampering.
+    if (!providerId || !serviceId || !serviceDate || !serviceTime || !serviceAddress) {
       return res.status(400).json({ message: 'All fields are required' });
     }
+
+    // Authoritative price from the catalogue, not the request body.
+    const service = await Service.findByPk(serviceId);
+    if (!service || !service.is_active) {
+      return res.status(404).json({ message: 'Service not found' });
+    }
+
+    // Verify the provider exists and is bookable.
+    const provider = await ServiceProvider.findByPk(providerId);
+    if (!provider || !provider.is_active) {
+      return res.status(404).json({ message: 'Service provider not found' });
+    }
+
+    const servicePrice = parseFloat(service.base_price);
 
     // Calculate commission (25% to platform, 75% to provider)
     const platformCommission = parseFloat((servicePrice * 0.25).toFixed(2));
@@ -241,6 +256,27 @@ exports.rateBooking = async (req, res) => {
         customer_rating: rating,
         customer_feedback: feedback || '',
       });
+      // Recalculate the provider's displayed average rating and the
+      // count of jobs they have been rated on.
+      const { Op } = require('sequelize');
+      const rated = await Booking.findAll({
+        where: {
+          provider_id: booking.provider_id,
+          customer_rating: { [Op.ne]: null },
+        },
+        attributes: ['customer_rating'],
+      });
+      if (rated.length > 0) {
+        const avg =
+          rated.reduce((sum, b) => sum + b.customer_rating, 0) / rated.length;
+        await ServiceProvider.update(
+          {
+            rating: parseFloat(avg.toFixed(2)),
+            total_services: rated.length,
+          },
+          { where: { id: booking.provider_id } }
+        );
+      }
     } else if (userType === 'provider') {
       if (booking.provider_id !== userId) {
         return res.status(403).json({ message: 'Unauthorized' });

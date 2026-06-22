@@ -7,10 +7,10 @@ const RAZORPAY_KEY_SECRET = process.env.RAZORPAY_KEY_SECRET;
 // Create Razorpay Order
 exports.createOrder = async (req, res) => {
   try {
-    const { bookingId, amount } = req.body;
+    const { bookingId } = req.body;
 
-    if (!bookingId || !amount) {
-      return res.status(400).json({ message: 'Booking ID and amount are required' });
+    if (!bookingId) {
+      return res.status(400).json({ message: 'Booking ID is required' });
     }
 
     const booking = await Booking.findByPk(bookingId);
@@ -18,6 +18,18 @@ exports.createOrder = async (req, res) => {
     if (!booking) {
       return res.status(404).json({ message: 'Booking not found' });
     }
+
+    // Only the customer who owns the booking may pay for it.
+    if (booking.customer_id !== req.user.id) {
+      return res.status(403).json({ message: 'Unauthorized' });
+    }
+
+    if (booking.payment_status === 'completed') {
+      return res.status(400).json({ message: 'Booking is already paid' });
+    }
+
+    // Authoritative amount comes from the booking, never the client.
+    const amount = parseFloat(booking.service_price);
 
     // Create Razorpay order
     const options = {
@@ -87,6 +99,15 @@ exports.verifyPayment = async (req, res) => {
 
     if (!booking) {
       return res.status(404).json({ message: 'Booking not found' });
+    }
+
+    // Only the customer who owns the booking may confirm its payment,
+    // and the signed order must match the one stored on the booking.
+    if (booking.customer_id !== req.user.id) {
+      return res.status(403).json({ message: 'Unauthorized' });
+    }
+    if (booking.razorpay_order_id !== razorpayOrderId) {
+      return res.status(400).json({ message: 'Order does not match booking' });
     }
 
     await booking.update({

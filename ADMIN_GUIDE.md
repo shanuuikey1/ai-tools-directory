@@ -123,15 +123,32 @@ bank transfer at first; automate with Razorpay Payouts later).
 
 ---
 
-## 6. Security to-dos before scaling
+## 6. Security status
 
-These are known gaps to close as you grow (not blockers for launch):
+Fixed and in place:
 
-- **`POST /api/services` has no auth** — anyone who knows the URL could add
-  a service. Add an admin check or an `ADMIN_API_KEY` header before
-  advertising the API publicly.
-- **No admin role/dashboard** — management is via this shell. A simple admin
-  page can be added to the React web app later.
+- ✅ **Booking & payment prices are server-side** — the catalogue price is
+  authoritative; clients cannot tamper with what they're charged.
+- ✅ **`POST /api/services` is protected** by the `ADMIN_API_KEY`. To add a
+  service over the API, send the `x-admin-key` header:
+  ```bash
+  curl -X POST https://YOUR-APP.onrender.com/api/services \
+    -H "x-admin-key: YOUR_ADMIN_KEY" -H "Content-Type: application/json" \
+    -d '{"name":"Sofa Cleaning","category":"Cleaning","basePrice":699}'
+  ```
+  (Find the generated key in Render → Environment → `ADMIN_API_KEY`.)
+- ✅ **Token type checks** — customer tokens can't hit provider routes and
+  vice-versa; only the owning customer can pay for a booking.
+- ✅ **Provider ratings auto-update** from customer feedback.
+
+Still worth doing as you grow (not launch blockers):
+
+- **No admin role/dashboard** — management is via this shell; a web admin
+  page can be added later.
+- **Add rate limiting** on login/register (`express-rate-limit`).
+- **Generic error messages** in production (controllers currently return
+  `error.message`).
+- **Lock CORS** to your Netlify domain instead of allowing all origins.
 - Set a strong `JWT_SECRET` (Render's Blueprint auto-generates one).
 - Switch Razorpay to **live keys** only when you're ready to collect real money.
 
