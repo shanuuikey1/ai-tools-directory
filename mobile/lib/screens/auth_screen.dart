@@ -13,6 +13,7 @@ class AuthScreen extends StatefulWidget {
 
 class _AuthScreenState extends State<AuthScreen> {
   bool _isLogin = true;
+  bool _busy = false;
   final _name = TextEditingController();
   final _email = TextEditingController();
   final _phone = TextEditingController();
@@ -27,38 +28,53 @@ class _AuthScreenState extends State<AuthScreen> {
     super.dispose();
   }
 
-  void _submit() {
+  Future<void> _submit() async {
     if (_email.text.trim().isEmpty || _password.text.trim().isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please fill email and password')),
-      );
+      _snack('Please fill email and password');
       return;
     }
     if (!_isLogin && _name.text.trim().isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please enter your name')),
-      );
+      _snack('Please enter your name');
       return;
     }
-    final name = _isLogin
-        ? (_email.text.split('@').first)
-        : _name.text.trim();
-    context.read<AppState>().login(
-          name: name,
+
+    setState(() => _busy = true);
+    final state = context.read<AppState>();
+    try {
+      if (_isLogin) {
+        await state.login(
+          email: _email.text.trim(),
+          password: _password.text.trim(),
+        );
+      } else {
+        await state.register(
+          name: _name.text.trim(),
           email: _email.text.trim(),
           phone: _phone.text.trim(),
+          password: _password.text.trim(),
         );
-    Navigator.pop(context);
+      }
+      if (!mounted) return;
+      Navigator.pop(context);
+      _snack(_isLogin ? 'Welcome back!' : 'Account created!',
+          color: AppColors.success);
+    } catch (e) {
+      if (!mounted) return;
+      _snack(e.toString(), color: AppColors.danger);
+    } finally {
+      if (mounted) setState(() => _busy = false);
+    }
+  }
+
+  void _snack(String msg, {Color? color}) {
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(_isLogin ? 'Welcome back!' : 'Account created!'),
-        backgroundColor: AppColors.success,
-      ),
+      SnackBar(content: Text(msg), backgroundColor: color),
     );
   }
 
   @override
   Widget build(BuildContext context) {
+    final online = context.watch<AppState>().isOnline;
     return Scaffold(
       appBar: AppBar(),
       body: SingleChildScrollView(
@@ -87,7 +103,18 @@ class _AuthScreenState extends State<AuthScreen> {
                   : 'Sign up to get started in minutes',
               style: const TextStyle(color: AppColors.textMuted),
             ),
-            const SizedBox(height: 28),
+            const SizedBox(height: 10),
+            Row(
+              children: [
+                Icon(online ? Icons.cloud_done_rounded : Icons.cloud_off_rounded,
+                    size: 15, color: AppColors.textMuted),
+                const SizedBox(width: 6),
+                Text(online ? 'Connected to server' : 'Offline mode',
+                    style: const TextStyle(
+                        fontSize: 12, color: AppColors.textMuted)),
+              ],
+            ),
+            const SizedBox(height: 22),
             if (!_isLogin) ...[
               _label('Full name'),
               TextField(
@@ -132,13 +159,22 @@ class _AuthScreenState extends State<AuthScreen> {
             ),
             const SizedBox(height: 28),
             ElevatedButton(
-              onPressed: _submit,
-              child: Text(_isLogin ? 'Login' : 'Create Account'),
+              onPressed: _busy ? null : _submit,
+              child: _busy
+                  ? const SizedBox(
+                      height: 22,
+                      width: 22,
+                      child: CircularProgressIndicator(
+                          strokeWidth: 2.4, color: Colors.white),
+                    )
+                  : Text(_isLogin ? 'Login' : 'Create Account'),
             ),
             const SizedBox(height: 18),
             Center(
               child: GestureDetector(
-                onTap: () => setState(() => _isLogin = !_isLogin),
+                onTap: _busy
+                    ? null
+                    : () => setState(() => _isLogin = !_isLogin),
                 child: RichText(
                   text: TextSpan(
                     style: const TextStyle(color: AppColors.textMuted),

@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import '../app_state.dart';
 import '../theme.dart';
 import 'auth_screen.dart';
+import 'server_settings_screen.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -80,10 +81,17 @@ class ProfileScreen extends StatelessWidget {
               ),
             ),
           const SizedBox(height: 10),
-          _tile(Icons.receipt_long_rounded, 'My Bookings'),
           _tile(Icons.location_on_outlined, 'Saved Addresses'),
           _tile(Icons.payment_rounded, 'Payment Methods'),
           _tile(Icons.local_offer_outlined, 'Offers & Coupons'),
+          _tile(
+            Icons.dns_rounded,
+            state.isOnline ? 'Server (connected)' : 'Server Settings',
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => const ServerSettingsScreen()),
+            ),
+          ),
           _tile(Icons.headset_mic_rounded, 'Help & Support'),
           _tile(Icons.info_outline_rounded, 'About Us'),
           if (user != null) ...[
@@ -115,7 +123,7 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 
-  Widget _tile(IconData icon, String label) {
+  Widget _tile(IconData icon, String label, {VoidCallback? onTap}) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(20, 0, 20, 10),
       child: Container(
@@ -124,6 +132,7 @@ class ProfileScreen extends StatelessWidget {
           borderRadius: BorderRadius.circular(16),
         ),
         child: ListTile(
+          onTap: onTap,
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
           leading: Container(
