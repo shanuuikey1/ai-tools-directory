@@ -152,13 +152,11 @@ export default function Bookings() {
                   <div className="flex flex-col justify-between">
                     <div>
                       <div className="bg-gray-50 rounded-lg p-4 mb-4">
-                        <p className="text-sm text-gray-600 mb-2">Service Price</p>
+                        <p className="text-sm text-gray-600 mb-2">Amount Paid</p>
                         <p className="text-3xl font-bold text-blue-600">
                           ₹{booking.service_price}
                         </p>
-                        <p className="text-xs text-gray-500 mt-2">
-                          Platform commission: ₹{booking.platform_commission}
-                        </p>
+                        <p className="text-xs text-gray-500 mt-2">All-inclusive · No hidden charges</p>
                       </div>
 
                       {/* Rating Section */}

@@ -253,18 +253,11 @@ export default function ServiceDetail() {
 
                     {/* Price Summary */}
                     <div className="border-t pt-4 mt-4">
-                      <div className="flex justify-between mb-2">
-                        <span className="text-gray-600">Service Price</span>
-                        <span className="font-semibold">₹{service.base_price}</span>
-                      </div>
-                      <div className="flex justify-between mb-4">
-                        <span className="text-gray-600">Platform Fee (25%)</span>
-                        <span className="font-semibold">₹{(service.base_price * 0.25).toFixed(2)}</span>
-                      </div>
-                      <div className="flex justify-between text-lg font-bold border-t pt-2">
+                      <div className="flex justify-between text-lg font-bold">
                         <span>Total Amount</span>
                         <span className="text-blue-600">₹{service.base_price}</span>
                       </div>
+                      <p className="text-xs text-gray-500 mt-1">All-inclusive price · No hidden charges</p>
                     </div>
 
                     {/* Submit Button */}
