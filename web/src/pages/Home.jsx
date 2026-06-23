@@ -142,7 +142,7 @@ export default function Home() {
       </section>
 
       {/* ===================== FEATURES ===================== */}
-      <section className="relative -mt-8 z-10 px-4 sm:px-6 lg:px-8">
+      <section id="about" className="relative -mt-8 z-10 px-4 sm:px-6 lg:px-8 scroll-mt-24">
         <div className="max-w-6xl mx-auto bg-white rounded-2xl shadow-lg border border-gray-100 p-8 md:p-10">
           <div className="grid grid-cols-1 md:grid-cols-3 md:divide-x md:divide-gray-100">
             {features.map((feature, idx) => (
@@ -205,7 +205,7 @@ export default function Home() {
       </section>
 
       {/* ===================== CTA ===================== */}
-      <section id="how-it-works" className="px-4 sm:px-6 lg:px-8 pb-16 md:pb-24">
+      <section id="how-it-works" className="px-4 sm:px-6 lg:px-8 pb-16 md:pb-24 scroll-mt-24">
         <div className="max-w-7xl mx-auto">
           <div className="relative overflow-hidden bg-gradient-to-r from-blue-600 to-blue-700 rounded-2xl px-8 md:px-12 py-10 md:py-12">
             <div className="absolute right-0 bottom-0 w-40 h-40 opacity-10"
@@ -233,7 +233,7 @@ export default function Home() {
       </section>
 
       {/* ===================== FOOTER ===================== */}
-      <footer id="contact" className="bg-[#0f1c34] text-white pt-16 pb-8">
+      <footer id="contact" className="bg-[#0f1c34] text-white pt-16 pb-8 scroll-mt-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
             {/* Brand */}

@@ -15,6 +15,20 @@ export default function Navbar() {
     navigate('/');
   };
 
+  // Navigate to a Home-page section from anywhere, then smooth-scroll to it.
+  const goToSection = (e, id) => {
+    e.preventDefault();
+    setIsOpen(false);
+    if (location.pathname !== '/') {
+      navigate('/');
+      setTimeout(() => {
+        document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+      }, 120);
+    } else {
+      document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   const isActive = (path) => location.pathname === path;
 
   const navLink = (to, label) => (
@@ -73,9 +87,9 @@ export default function Navbar() {
               </div>
             </div>
 
-            <a href="#about" className="text-gray-700 hover:text-blue-600 font-medium transition-colors duration-200">About Us</a>
-            <a href="#how-it-works" className="text-gray-700 hover:text-blue-600 font-medium transition-colors duration-200">How It Works</a>
-            <a href="#contact" className="text-gray-700 hover:text-blue-600 font-medium transition-colors duration-200">Contact</a>
+            <a href="/#about" onClick={(e) => goToSection(e, 'about')} className="text-gray-700 hover:text-blue-600 font-medium transition-colors duration-200">About Us</a>
+            <a href="/#how-it-works" onClick={(e) => goToSection(e, 'how-it-works')} className="text-gray-700 hover:text-blue-600 font-medium transition-colors duration-200">How It Works</a>
+            <a href="/#contact" onClick={(e) => goToSection(e, 'contact')} className="text-gray-700 hover:text-blue-600 font-medium transition-colors duration-200">Contact</a>
           </div>
 
           {/* Right side auth */}
@@ -131,9 +145,9 @@ export default function Navbar() {
           <div className="md:hidden pb-4 space-y-1 border-t border-gray-100 pt-3">
             <Link to="/" className="block py-2.5 px-4 hover:bg-blue-50 rounded-lg text-gray-700 hover:text-blue-600">Home</Link>
             <Link to="/services" className="block py-2.5 px-4 hover:bg-blue-50 rounded-lg text-gray-700 hover:text-blue-600">Services</Link>
-            <a href="#about" className="block py-2.5 px-4 hover:bg-blue-50 rounded-lg text-gray-700 hover:text-blue-600">About Us</a>
-            <a href="#how-it-works" className="block py-2.5 px-4 hover:bg-blue-50 rounded-lg text-gray-700 hover:text-blue-600">How It Works</a>
-            <a href="#contact" className="block py-2.5 px-4 hover:bg-blue-50 rounded-lg text-gray-700 hover:text-blue-600">Contact</a>
+            <a href="/#about" onClick={(e) => goToSection(e, 'about')} className="block py-2.5 px-4 hover:bg-blue-50 rounded-lg text-gray-700 hover:text-blue-600">About Us</a>
+            <a href="/#how-it-works" onClick={(e) => goToSection(e, 'how-it-works')} className="block py-2.5 px-4 hover:bg-blue-50 rounded-lg text-gray-700 hover:text-blue-600">How It Works</a>
+            <a href="/#contact" onClick={(e) => goToSection(e, 'contact')} className="block py-2.5 px-4 hover:bg-blue-50 rounded-lg text-gray-700 hover:text-blue-600">Contact</a>
             {user ? (
               <>
                 <Link to="/bookings" className="block py-2.5 px-4 hover:bg-blue-50 rounded-lg text-gray-700 hover:text-blue-600">My Bookings</Link>
