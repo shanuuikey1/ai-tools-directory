@@ -33,7 +33,7 @@ export default function Login() {
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center px-4">
       <div className="bg-white rounded-lg shadow-xl p-8 w-full max-w-md">
         <h1 className="text-3xl font-bold text-center text-gray-800 mb-2">Welcome Back</h1>
-        <p className="text-center text-gray-600 mb-6">Login to your Urban Services account</p>
+        <p className="text-center text-gray-600 mb-6">Login to your Ghar Pahuch Seva account</p>
 
         {error && (
           <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-lg flex items-start space-x-3">

@@ -90,7 +90,7 @@ export default function ServiceDetail() {
           key: orderResponse.data.key,
           amount: Math.round(service.base_price * 100),
           currency: 'INR',
-          name: 'Urban Services',
+          name: 'Ghar Pahuch Seva',
           description: service.name,
           order_id: orderResponse.data.orderId,
           handler: async (response) => {

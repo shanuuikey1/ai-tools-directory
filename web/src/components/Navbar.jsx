@@ -20,7 +20,7 @@ export default function Navbar() {
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2 font-bold text-xl">
             <Wrench size={28} />
-            <span>Urban Services</span>
+            <span>Ghar Pahuch Seva</span>
           </Link>
 
           {/* Desktop Menu */}

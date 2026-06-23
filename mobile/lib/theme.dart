@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-/// Central palette for the Urban Services app.
+/// Central palette for the Ghar Pahuch Seva app.
 class AppColors {
   static const Color primary = Color(0xFF4F46E5); // indigo-600
   static const Color primaryDark = Color(0xFF3730A3);

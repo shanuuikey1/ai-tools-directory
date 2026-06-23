@@ -30,7 +30,7 @@ class ApiException implements Exception {
   String toString() => message;
 }
 
-/// Thin REST client for the Urban Services backend.
+/// Thin REST client for the Ghar Pahuch Seva backend.
 class ApiService {
   static const _timeout = Duration(seconds: 15);
 

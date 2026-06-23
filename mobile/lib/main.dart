@@ -28,7 +28,7 @@ class UrbanServicesApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Urban Services',
+      title: 'Ghar Pahuch Seva',
       debugShowCheckedModeBanner: false,
       theme: buildAppTheme(),
       home: const SplashScreen(),

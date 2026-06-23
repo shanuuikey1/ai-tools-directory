@@ -63,7 +63,7 @@ export default function Home() {
       {/* Features Section */}
       <section className="py-16 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-center mb-12">Why Choose Urban Services?</h2>
+          <h2 className="text-3xl font-bold text-center mb-12">Why Choose Ghar Pahuch Seva?</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {features.map((feature, idx) => (
               <div key={idx} className="card text-center">
@@ -125,7 +125,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
             <div>
-              <h3 className="font-semibold mb-4">Urban Services</h3>
+              <h3 className="font-semibold mb-4">Ghar Pahuch Seva</h3>
               <p className="text-gray-400">
                 Professional services at your doorstep in Chhindwara
               </p>
@@ -147,7 +147,7 @@ export default function Home() {
             </div>
           </div>
           <div className="border-t border-gray-700 pt-8 text-center text-gray-400">
-            <p>&copy; 2026 Urban Services. All rights reserved.</p>
+            <p>&copy; 2026 Ghar Pahuch Seva. All rights reserved.</p>
           </div>
         </div>
       </footer>

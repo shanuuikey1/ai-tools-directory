@@ -12,6 +12,6 @@ void main() {
         child: const UrbanServicesApp(),
       ),
     );
-    expect(find.text('Urban Services'), findsOneWidget);
+    expect(find.text('Ghar Pahuch Seva'), findsOneWidget);
   });
 }
