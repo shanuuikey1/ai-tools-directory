@@ -10,6 +10,16 @@ const ServiceProvider = require('./models/ServiceProvider');
 const Service = require('./models/Service');
 const Booking = require('./models/Booking');
 
+// Model associations. The booking controllers eager-load these relations
+// (e.g. include: [{ model: ServiceProvider }, { model: Service }]), which
+// only works once the associations are declared here.
+Booking.belongsTo(User, { foreignKey: 'customer_id' });
+Booking.belongsTo(ServiceProvider, { foreignKey: 'provider_id' });
+Booking.belongsTo(Service, { foreignKey: 'service_id' });
+User.hasMany(Booking, { foreignKey: 'customer_id' });
+ServiceProvider.hasMany(Booking, { foreignKey: 'provider_id' });
+Service.hasMany(Booking, { foreignKey: 'service_id' });
+
 // Import routes
 const authRoutes = require('./routes/auth');
 const serviceRoutes = require('./routes/services');
