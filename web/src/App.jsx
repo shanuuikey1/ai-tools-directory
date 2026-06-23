@@ -9,6 +9,9 @@ import Services from './pages/Services';
 import ServiceDetail from './pages/ServiceDetail';
 import Bookings from './pages/Bookings';
 import Profile from './pages/Profile';
+import About from './pages/About';
+import HowItWorks from './pages/HowItWorks';
+import Help from './pages/Help';
 
 function PrivateRoute({ children }) {
   const { token, loading } = useAuth();
@@ -30,6 +33,9 @@ function AppRoutes() {
         <Route path="/" element={<Home />} />
         <Route path="/services" element={<Services />} />
         <Route path="/services/:id" element={<ServiceDetail />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/how-it-works" element={<HowItWorks />} />
+        <Route path="/help" element={<Help />} />
 
         {!token ? (
           <>

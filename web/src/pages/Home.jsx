@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import {
   Home as HomeIcon, Wrench, Zap, Sparkles, Wind, Hammer,
   Clock, Star, ShieldCheck, CheckCircle, ArrowRight, Play,
-  User, ThumbsUp, Calendar, LayoutGrid,
+  User, ThumbsUp, Calendar, LayoutGrid, ChevronDown,
   Facebook, Instagram, MessageCircle, Mail, Phone, MapPin,
 } from 'lucide-react';
 
@@ -229,6 +229,155 @@ export default function Home() {
                 <ArrowRight size={20} />
               </Link>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ===================== WHY CHOOSE US ===================== */}
+      <section className="bg-gray-50 py-16 md:py-24">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-14">
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-3">Why Choose Ghar Pahuch Seva?</h2>
+            <p className="text-lg text-gray-500">Trusted by thousands of customers in Chhindwara</p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {[
+              { number: '500+', label: 'Verified Professionals', icon: '✓' },
+              { number: '10K+', label: 'Happy Customers', icon: '😊' },
+              { number: '24/7', label: 'Customer Support', icon: '💬' },
+              { number: '4.8★', label: 'Average Rating', icon: '⭐' },
+            ].map((stat, idx) => (
+              <div key={idx} className="bg-white p-8 rounded-2xl shadow-sm hover:shadow-md transition-all duration-300 text-center border border-gray-100">
+                <div className="text-4xl mb-3">{stat.icon}</div>
+                <p className="text-3xl font-bold text-gray-900 mb-2">{stat.number}</p>
+                <p className="text-gray-600 font-medium">{stat.label}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ===================== TESTIMONIALS ===================== */}
+      <section className="py-16 md:py-24">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-14">
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-3">What Our Customers Say</h2>
+            <p className="text-lg text-gray-500">Real reviews from real customers</p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {[
+              {
+                name: 'Priya Sharma',
+                role: 'Homeowner',
+                text: 'Found a plumber within minutes. Professional, on-time, and excellent work. Highly recommended!',
+                rating: 5,
+              },
+              {
+                name: 'Rajesh Patel',
+                role: 'Business Owner',
+                text: 'Great service for office maintenance. The electrician was knowledgeable and affordable.',
+                rating: 5,
+              },
+              {
+                name: 'Meera Gupta',
+                role: 'Customer',
+                text: 'Best experience booking home cleaning service. Easy app, verified professional, transparent pricing.',
+                rating: 5,
+              },
+            ].map((review, idx) => (
+              <div key={idx} className="bg-white border border-gray-100 p-8 rounded-2xl hover:shadow-lg transition-all duration-300">
+                <div className="flex items-center justify-between mb-4">
+                  <div>
+                    <p className="font-bold text-gray-900">{review.name}</p>
+                    <p className="text-sm text-gray-500">{review.role}</p>
+                  </div>
+                  <div className="text-2xl">👤</div>
+                </div>
+                <div className="flex gap-1 mb-4">
+                  {Array.from({ length: review.rating }).map((_, i) => (
+                    <span key={i} className="text-yellow-400">★</span>
+                  ))}
+                </div>
+                <p className="text-gray-600 italic">"{review.text}"</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ===================== FAQS ===================== */}
+      <section className="bg-gray-50 py-16 md:py-24">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-14">
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-3">Frequently Asked Questions</h2>
+            <p className="text-lg text-gray-500">Find answers to common questions</p>
+          </div>
+
+          <div className="space-y-4">
+            {[
+              {
+                q: 'How do I book a service?',
+                a: 'Browse services, select a professional, choose your date/time, and confirm. You\'ll get instant confirmation.',
+              },
+              {
+                q: 'Are professionals verified?',
+                a: 'Yes, every professional undergoes background verification before listing on our platform.',
+              },
+              {
+                q: 'What if I\'m not satisfied?',
+                a: 'We guarantee your satisfaction. Contact support within 24 hours for a refund or resolution.',
+              },
+              {
+                q: 'How is payment handled?',
+                a: 'Secure payment via card, UPI, or wallet. Money is held until service is complete.',
+              },
+            ].map((faq, idx) => (
+              <div key={idx} className="bg-white border border-gray-100 rounded-xl overflow-hidden hover:border-blue-300 transition-all duration-300">
+                <button className="w-full p-6 flex items-center justify-between hover:bg-gray-50 transition-colors">
+                  <span className="font-semibold text-gray-900 text-left">{faq.q}</span>
+                  <ChevronDown size={20} className="text-blue-600 shrink-0" />
+                </button>
+                <div className="px-6 pb-6 text-gray-600 border-t border-gray-100">{faq.a}</div>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-12 text-center">
+            <p className="text-gray-600 mb-4">Still have questions?</p>
+            <Link
+              to="/help"
+              className="inline-flex items-center space-x-2 text-blue-600 font-semibold hover:text-blue-700 transition-colors"
+            >
+              <span>View all FAQs</span>
+              <ArrowRight size={18} />
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* ===================== TRUST BADGES ===================== */}
+      <section className="py-16 md:py-24">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-3">Safe & Secure</h2>
+            <p className="text-lg text-gray-500">Your trust is our priority</p>
+          </div>
+
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+            {[
+              { icon: '🔒', title: 'Verified Professionals', desc: 'Background verified' },
+              { icon: '💳', title: 'Secure Payments', desc: 'Safe transactions' },
+              { icon: '📱', title: 'Real Reviews', desc: 'Authentic feedback' },
+              { icon: '🛡️', title: 'Guaranteed Service', desc: 'Satisfaction assured' },
+            ].map((badge, idx) => (
+              <div key={idx} className="text-center">
+                <div className="text-5xl mb-4">{badge.icon}</div>
+                <p className="font-bold text-gray-900">{badge.title}</p>
+                <p className="text-sm text-gray-500">{badge.desc}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>

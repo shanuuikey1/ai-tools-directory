@@ -87,9 +87,23 @@ export default function Navbar() {
               </div>
             </div>
 
-            <a href="/#about" onClick={(e) => goToSection(e, 'about')} className="text-gray-700 hover:text-blue-600 font-medium transition-colors duration-200">About Us</a>
-            <a href="/#how-it-works" onClick={(e) => goToSection(e, 'how-it-works')} className="text-gray-700 hover:text-blue-600 font-medium transition-colors duration-200">How It Works</a>
-            <a href="/#contact" onClick={(e) => goToSection(e, 'contact')} className="text-gray-700 hover:text-blue-600 font-medium transition-colors duration-200">Contact</a>
+            <Link to="/about" className="text-gray-700 hover:text-blue-600 font-medium transition-colors duration-200">About Us</Link>
+            <Link to="/how-it-works" className="text-gray-700 hover:text-blue-600 font-medium transition-colors duration-200">How It Works</Link>
+
+            <div className="relative group">
+              <button className="flex items-center space-x-1 text-gray-700 hover:text-blue-600 font-medium transition-colors duration-200">
+                <span>More</span>
+                <ChevronDown size={16} className="group-hover:rotate-180 transition-transform duration-300" />
+              </button>
+              <div className="absolute left-0 top-full pt-3 w-48 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">
+                <div className="bg-white rounded-xl shadow-lg border border-gray-100 py-2">
+                  <Link to="/help" className="block px-4 py-2.5 text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors">Help & Support</Link>
+                  <a href="/#contact" onClick={(e) => goToSection(e, 'contact')} className="block px-4 py-2.5 text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors">Contact Us</a>
+                  <hr className="my-2" />
+                  <button className="block w-full text-left px-4 py-2.5 text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors">Become a Professional</button>
+                </div>
+              </div>
+            </div>
           </div>
 
           {/* Right side auth */}
@@ -145,9 +159,11 @@ export default function Navbar() {
           <div className="md:hidden pb-4 space-y-1 border-t border-gray-100 pt-3">
             <Link to="/" className="block py-2.5 px-4 hover:bg-blue-50 rounded-lg text-gray-700 hover:text-blue-600">Home</Link>
             <Link to="/services" className="block py-2.5 px-4 hover:bg-blue-50 rounded-lg text-gray-700 hover:text-blue-600">Services</Link>
-            <a href="/#about" onClick={(e) => goToSection(e, 'about')} className="block py-2.5 px-4 hover:bg-blue-50 rounded-lg text-gray-700 hover:text-blue-600">About Us</a>
-            <a href="/#how-it-works" onClick={(e) => goToSection(e, 'how-it-works')} className="block py-2.5 px-4 hover:bg-blue-50 rounded-lg text-gray-700 hover:text-blue-600">How It Works</a>
+            <Link to="/about" className="block py-2.5 px-4 hover:bg-blue-50 rounded-lg text-gray-700 hover:text-blue-600">About Us</Link>
+            <Link to="/how-it-works" className="block py-2.5 px-4 hover:bg-blue-50 rounded-lg text-gray-700 hover:text-blue-600">How It Works</Link>
+            <Link to="/help" className="block py-2.5 px-4 hover:bg-blue-50 rounded-lg text-gray-700 hover:text-blue-600">Help & Support</Link>
             <a href="/#contact" onClick={(e) => goToSection(e, 'contact')} className="block py-2.5 px-4 hover:bg-blue-50 rounded-lg text-gray-700 hover:text-blue-600">Contact</a>
+            <button className="block w-full text-left py-2.5 px-4 hover:bg-blue-50 rounded-lg text-gray-700 hover:text-blue-600 border-t border-gray-100 mt-2 pt-3">Become a Professional</button>
             {user ? (
               <>
                 <Link to="/bookings" className="block py-2.5 px-4 hover:bg-blue-50 rounded-lg text-gray-700 hover:text-blue-600">My Bookings</Link>
