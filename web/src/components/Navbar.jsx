@@ -100,7 +100,7 @@ export default function Navbar() {
                   <Link to="/help" className="block px-4 py-2.5 text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors">Help & Support</Link>
                   <a href="/#contact" onClick={(e) => goToSection(e, 'contact')} className="block px-4 py-2.5 text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors">Contact Us</a>
                   <hr className="my-2" />
-                  <button className="block w-full text-left px-4 py-2.5 text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors">Become a Professional</button>
+                  <Link to="/professional" className="block px-4 py-2.5 text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors">Become a Professional</Link>
                 </div>
               </div>
             </div>

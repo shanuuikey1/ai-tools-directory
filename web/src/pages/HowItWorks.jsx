@@ -125,9 +125,12 @@ export default function HowItWorks() {
           </div>
           <div className="text-center mt-12">
             <p className="text-lg text-gray-600 mb-6">Ready to grow your business?</p>
-            <button className="bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 transition-all duration-300 font-semibold">
+            <Link
+              to="/professional"
+              className="inline-block bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 transition-all duration-300 font-semibold"
+            >
               Join as a Professional
-            </button>
+            </Link>
           </div>
         </div>
       </section>
@@ -162,9 +165,13 @@ export default function HowItWorks() {
               <span>Book a Service</span>
               <ArrowRight size={20} />
             </Link>
-            <button className="bg-blue-700 text-white px-8 py-3 rounded-lg hover:bg-blue-800 transition-all duration-300 font-semibold">
-              Become a Professional
-            </button>
+            <Link
+              to="/professional"
+              className="inline-flex items-center space-x-2 bg-blue-700 text-white px-8 py-3 rounded-lg hover:bg-blue-800 transition-all duration-300 font-semibold"
+            >
+              <span>Become a Professional</span>
+              <ArrowRight size={20} />
+            </Link>
           </div>
         </div>
       </section>
