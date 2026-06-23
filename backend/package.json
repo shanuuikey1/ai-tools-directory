@@ -1,7 +1,7 @@
 {
-  "name": "urban-services-backend",
+  "name": "ghar-pahuch-seva-backend",
   "version": "1.0.0",
-  "description": "Urban Services Marketplace Backend API",
+  "description": "Ghar Pahuch Seva Marketplace Backend API",
   "main": "src/app.js",
   "scripts": {
     "start": "node src/app.js",

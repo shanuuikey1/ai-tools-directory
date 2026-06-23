@@ -1,5 +1,5 @@
-name: urban_services
-description: "Urban Services - Book trusted home services in Chhindwara."
+name: ghar_pahuch_seva
+description: "Ghar Pahuch Seva - Book trusted home services in Chhindwara."
 publish_to: 'none'
 version: 1.0.0+1
 

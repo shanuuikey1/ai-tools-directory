@@ -114,7 +114,7 @@ class ProfileScreen extends StatelessWidget {
           ],
           const SizedBox(height: 20),
           const Center(
-            child: Text('Urban Services v1.0.0',
+            child: Text('Ghar Pahuch Seva v1.0.0',
                 style: TextStyle(color: AppColors.textMuted, fontSize: 12)),
           ),
           const SizedBox(height: 30),
