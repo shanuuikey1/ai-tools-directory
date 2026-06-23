@@ -110,6 +110,20 @@ class ApiService {
     _decode(res);
   }
 
+  /// Permanently delete the signed-in customer's account. Requires the
+  /// account password for re-authentication.
+  static Future<void> deleteAccount({
+    required String token,
+    required String password,
+  }) async {
+    final res = await http
+        .delete(_u('/auth/delete-account'),
+            headers: _headers(token),
+            body: jsonEncode({'password': password}))
+        .timeout(_timeout);
+    _decode(res);
+  }
+
   /// Simple health check used by the settings screen.
   static Future<bool> health() async {
     try {

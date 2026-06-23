@@ -111,6 +111,17 @@ class AppState extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// Permanently delete the account. When online, asks the backend to erase
+  /// the user's data (re-authenticating with [password]); then clears all
+  /// local data. Throws [ApiException] on backend errors.
+  Future<void> deleteAccount({required String password}) async {
+    if (ApiConfig.isConfigured && _token != null) {
+      await ApiService.deleteAccount(token: _token!, password: password);
+    }
+    _bookings.clear();
+    await logout();
+  }
+
   /// Add a booking locally and, when online, best-effort sync to the backend.
   Future<void> addBooking(Booking booking) async {
     _bookings.add(booking);

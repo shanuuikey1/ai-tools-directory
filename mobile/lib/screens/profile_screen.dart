@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../api_service.dart';
 import '../app_state.dart';
 import '../theme.dart';
 import 'auth_screen.dart';
@@ -100,15 +101,26 @@ class ProfileScreen extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: OutlinedButton.icon(
                 onPressed: () => state.logout(),
-                icon: const Icon(Icons.logout_rounded, color: AppColors.danger),
+                icon: const Icon(Icons.logout_rounded, color: AppColors.textDark),
                 label: const Text('Logout',
-                    style: TextStyle(color: AppColors.danger)),
+                    style: TextStyle(color: AppColors.textDark)),
                 style: OutlinedButton.styleFrom(
                   minimumSize: const Size.fromHeight(52),
-                  side: const BorderSide(color: Color(0xFFF3C7C7)),
+                  side: const BorderSide(color: Color(0xFFE4E7F0)),
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(14)),
                 ),
+              ),
+            ),
+            const SizedBox(height: 10),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: TextButton.icon(
+                onPressed: () => _confirmDelete(context, state),
+                icon: const Icon(Icons.delete_outline_rounded,
+                    color: AppColors.danger, size: 20),
+                label: const Text('Delete my account',
+                    style: TextStyle(color: AppColors.danger)),
               ),
             ),
           ],
@@ -120,6 +132,95 @@ class ProfileScreen extends StatelessWidget {
           const SizedBox(height: 30),
         ],
       ),
+    );
+  }
+
+  Future<void> _confirmDelete(BuildContext context, AppState state) async {
+    final controller = TextEditingController();
+    final online = state.isOnline;
+
+    await showDialog<void>(
+      context: context,
+      builder: (dialogContext) {
+        bool busy = false;
+        String? error;
+        return StatefulBuilder(
+          builder: (context, setState) {
+            Future<void> doDelete() async {
+              if (online && controller.text.isEmpty) {
+                setState(() => error = 'Please enter your password to confirm.');
+                return;
+              }
+              setState(() {
+                busy = true;
+                error = null;
+              });
+              try {
+                await state.deleteAccount(password: controller.text);
+                if (dialogContext.mounted) Navigator.pop(dialogContext);
+              } on ApiException catch (e) {
+                setState(() {
+                  busy = false;
+                  error = e.message;
+                });
+              } catch (_) {
+                setState(() {
+                  busy = false;
+                  error = 'Could not delete your account. Please try again.';
+                });
+              }
+            }
+
+            return AlertDialog(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(18)),
+              title: const Text('Delete your account?'),
+              content: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    'This permanently deletes your account and personal data. '
+                    'Records we are legally required to keep (such as paid '
+                    'transactions for tax) are anonymised, not removed. This '
+                    'cannot be undone.',
+                    style: TextStyle(fontSize: 13, color: AppColors.textMuted),
+                  ),
+                  if (online) ...[
+                    const SizedBox(height: 16),
+                    TextField(
+                      controller: controller,
+                      obscureText: true,
+                      enabled: !busy,
+                      decoration: const InputDecoration(
+                        labelText: 'Confirm your password',
+                      ),
+                    ),
+                  ],
+                  if (error != null) ...[
+                    const SizedBox(height: 10),
+                    Text(error!,
+                        style: const TextStyle(
+                            color: AppColors.danger, fontSize: 13)),
+                  ],
+                ],
+              ),
+              actions: [
+                TextButton(
+                  onPressed: busy ? null : () => Navigator.pop(dialogContext),
+                  child: const Text('Cancel'),
+                ),
+                FilledButton(
+                  onPressed: busy ? null : doDelete,
+                  style: FilledButton.styleFrom(
+                      backgroundColor: AppColors.danger),
+                  child: Text(busy ? 'Deleting…' : 'Delete'),
+                ),
+              ],
+            );
+          },
+        );
+      },
     );
   }
 

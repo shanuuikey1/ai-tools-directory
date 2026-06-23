@@ -22,6 +22,8 @@ api.interceptors.request.use((config) => {
 export const authAPI = {
   registerCustomer: (data) => api.post('/auth/register-customer', data),
   loginCustomer: (data) => api.post('/auth/login-customer', data),
+  deleteAccount: (password) =>
+    api.delete('/auth/delete-account', { data: { password } }),
 };
 
 // Services endpoints

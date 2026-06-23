@@ -1,15 +1,48 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { User, Mail, Phone, LogOut } from 'lucide-react';
+import { authAPI } from '../services/api';
+import { User, Mail, Phone, LogOut, Trash2, AlertTriangle } from 'lucide-react';
 
 export default function Profile() {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
 
+  const [showDelete, setShowDelete] = useState(false);
+  const [password, setPassword] = useState('');
+  const [deleting, setDeleting] = useState(false);
+  const [error, setError] = useState('');
+
   const handleLogout = () => {
     logout();
     navigate('/');
+  };
+
+  const handleDeleteAccount = async () => {
+    if (!password) {
+      setError('Please enter your password to confirm.');
+      return;
+    }
+    setDeleting(true);
+    setError('');
+    try {
+      await authAPI.deleteAccount(password);
+      logout();
+      navigate('/');
+    } catch (err) {
+      setError(
+        err.response?.data?.message ||
+          'Could not delete your account. Please try again.'
+      );
+      setDeleting(false);
+    }
+  };
+
+  const closeModal = () => {
+    if (deleting) return;
+    setShowDelete(false);
+    setPassword('');
+    setError('');
   };
 
   return (
@@ -94,7 +127,7 @@ export default function Profile() {
             </button>
             <button
               onClick={handleLogout}
-              className="w-full px-6 py-3 border-2 border-red-600 text-red-600 rounded-lg hover:bg-red-50 transition font-semibold flex items-center justify-center space-x-2"
+              className="w-full px-6 py-3 border-2 border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition font-semibold flex items-center justify-center space-x-2"
             >
               <LogOut size={20} />
               <span>Logout</span>
@@ -106,15 +139,91 @@ export default function Profile() {
             <h3 className="font-semibold text-gray-900 mb-4">Need Help?</h3>
             <div className="space-y-2 text-sm">
               <p>
-                Email: <span className="text-blue-600">support@urbanservices.com</span>
-              </p>
-              <p>
-                Phone: <span className="text-blue-600">+91-9999-9999-99</span>
+                Email:{' '}
+                <span className="text-blue-600">shanuuikey1@gmail.com</span>
               </p>
             </div>
           </div>
+
+          {/* Danger Zone */}
+          <div className="mt-8 pt-8 border-t">
+            <h3 className="font-semibold text-red-600 mb-2">Danger Zone</h3>
+            <p className="text-sm text-gray-600 mb-4">
+              Permanently delete your account and personal data. This cannot be
+              undone.
+            </p>
+            <button
+              onClick={() => setShowDelete(true)}
+              className="w-full px-6 py-3 border-2 border-red-600 text-red-600 rounded-lg hover:bg-red-50 transition font-semibold flex items-center justify-center space-x-2"
+            >
+              <Trash2 size={20} />
+              <span>Delete My Account</span>
+            </button>
+          </div>
         </div>
       </div>
+
+      {/* Delete confirmation modal */}
+      {showDelete && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-4"
+          onClick={closeModal}
+        >
+          <div
+            className="bg-white rounded-2xl shadow-xl max-w-md w-full p-6"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-center space-x-3 mb-4">
+              <div className="w-11 h-11 rounded-full bg-red-100 flex items-center justify-center">
+                <AlertTriangle size={22} className="text-red-600" />
+              </div>
+              <h2 className="text-xl font-bold text-gray-900">
+                Delete your account?
+              </h2>
+            </div>
+
+            <p className="text-sm text-gray-600 mb-4">
+              This permanently deletes your account and personal data. Records
+              we are legally required to keep (such as paid transactions for
+              tax) are anonymised, not removed. This action cannot be undone.
+            </p>
+
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Confirm your password
+            </label>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              disabled={deleting}
+              autoFocus
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 mb-3"
+              placeholder="Your password"
+            />
+
+            {error && (
+              <p className="text-sm text-red-600 mb-3">{error}</p>
+            )}
+
+            <div className="flex gap-3 mt-2">
+              <button
+                onClick={closeModal}
+                disabled={deleting}
+                className="flex-1 px-4 py-2.5 border-2 border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition font-semibold disabled:opacity-60"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleDeleteAccount}
+                disabled={deleting}
+                className="flex-1 px-4 py-2.5 bg-red-600 text-white rounded-lg hover:bg-red-700 transition font-semibold disabled:opacity-60"
+              >
+                {deleting ? 'Deleting…' : 'Delete Account'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

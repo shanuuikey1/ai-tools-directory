@@ -1,7 +1,11 @@
 const User = require('../models/User');
 const ServiceProvider = require('../models/ServiceProvider');
+const Booking = require('../models/Booking');
+const sequelize = require('../config/database');
 const bcrypt = require('bcryptjs');
+const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
+const { Op } = require('sequelize');
 
 // Customer Registration
 exports.registerCustomer = async (req, res) => {
@@ -164,6 +168,82 @@ exports.loginCustomer = async (req, res) => {
         lastName: user.last_name,
       },
     });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
+// Delete Customer Account (DPDP Act, 2023 — right to erasure)
+//
+// Removes the customer's personal data. Bookings without a completed payment
+// contain personal data (service address) and are deleted outright. Bookings
+// with a completed payment are transaction records we are required to retain
+// for tax purposes, so when any exist the user row is anonymised (PII scrubbed,
+// login disabled) instead of deleted, which also keeps the foreign key valid.
+exports.deleteCustomerAccount = async (req, res) => {
+  try {
+    const { password } = req.body;
+    const userId = req.user.id;
+
+    if (!password) {
+      return res
+        .status(400)
+        .json({ message: 'Please confirm your password to delete your account' });
+    }
+
+    const user = await User.findByPk(userId);
+    if (!user) {
+      return res.status(404).json({ message: 'Account not found' });
+    }
+
+    // Re-authenticate before this irreversible action.
+    const isValidPassword = await bcrypt.compare(password, user.password_hash);
+    if (!isValidPassword) {
+      return res.status(401).json({ message: 'Incorrect password' });
+    }
+
+    await sequelize.transaction(async (t) => {
+      // Delete bookings that are not retained financial records.
+      await Booking.destroy({
+        where: {
+          customer_id: userId,
+          payment_status: { [Op.ne]: 'completed' },
+        },
+        transaction: t,
+      });
+
+      // Any paid bookings we must keep for tax records?
+      const retained = await Booking.count({
+        where: { customer_id: userId, payment_status: 'completed' },
+        transaction: t,
+      });
+
+      if (retained > 0) {
+        // Anonymise: scrub PII and disable login while preserving the row
+        // (and its foreign-key links to retained transaction records).
+        const randomHash = await bcrypt.hash(crypto.randomBytes(32).toString('hex'), 10);
+        await user.update(
+          {
+            email: `deleted+${userId}@deleted.gharpahuchseva.com`,
+            phone: `DELETED-${userId}`,
+            password_hash: randomHash,
+            first_name: 'Deleted',
+            last_name: 'User',
+            profile_picture: null,
+            address: null,
+            city: null,
+            pincode: null,
+          },
+          { transaction: t }
+        );
+      } else {
+        // No records to retain — remove the account entirely.
+        await user.destroy({ transaction: t });
+      }
+    });
+
+    res.json({ message: 'Your account has been deleted' });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Internal server error' });
