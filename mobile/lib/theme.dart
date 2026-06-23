@@ -23,6 +23,7 @@ class AppColors {
 ThemeData buildAppTheme() {
   final base = ThemeData(
     useMaterial3: true,
+    fontFamily: 'ClashDisplay',
     colorScheme: ColorScheme.fromSeed(
       seedColor: AppColors.primary,
       primary: AppColors.primary,
@@ -54,7 +55,7 @@ ThemeData buildAppTheme() {
         foregroundColor: Colors.white,
         elevation: 0,
         minimumSize: const Size.fromHeight(54),
-        textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+        textStyle: const TextStyle(fontFamily: 'ClashDisplay', fontSize: 16, fontWeight: FontWeight.w700),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16),
         ),
@@ -72,7 +73,7 @@ ThemeData buildAppTheme() {
         borderRadius: BorderRadius.circular(14),
         borderSide: const BorderSide(color: AppColors.primary, width: 1.6),
       ),
-      hintStyle: const TextStyle(color: AppColors.textMuted),
+      hintStyle: const TextStyle(fontFamily: 'ClashDisplay', color: AppColors.textMuted),
     ),
     chipTheme: base.chipTheme.copyWith(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
