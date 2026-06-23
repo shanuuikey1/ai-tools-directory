@@ -4,9 +4,9 @@ import axios from 'axios';
 
 export default function Admin() {
   const [applications, setApplications] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
   const [adminKey, setAdminKey] = useState(localStorage.getItem('adminKey') || '');
+  const [loading, setLoading] = useState(!!adminKey);
+  const [error, setError] = useState('');
   const [keyInput, setKeyInput] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
   const [filterStatus, setFilterStatus] = useState('all');
@@ -100,6 +100,13 @@ export default function Admin() {
           <h1 className="text-3xl font-bold text-gray-900 mb-2">Admin Dashboard</h1>
           <p className="text-gray-600 mb-6">Professional Applications Management</p>
 
+          {error && (
+            <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm flex items-start gap-2">
+              <AlertCircle size={18} className="shrink-0 mt-0.5" />
+              <span>{error}</span>
+            </div>
+          )}
+
           <form onSubmit={handleLogin} className="space-y-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">Admin API Key</label>
@@ -116,9 +123,10 @@ export default function Admin() {
             </div>
             <button
               type="submit"
-              className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition-all duration-300 font-semibold"
+              disabled={loading}
+              className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition-all duration-300 font-semibold disabled:bg-gray-400"
             >
-              Access Dashboard
+              {loading ? 'Checking...' : 'Access Dashboard'}
             </button>
           </form>
         </div>
