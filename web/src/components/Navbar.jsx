@@ -1,85 +1,119 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { Menu, X, Home, Wrench, Calendar, LogOut, User } from 'lucide-react';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { Menu, X, Home, User, ChevronDown } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const [logoError, setLogoError] = useState(false);
   const { user, logout } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleLogout = () => {
     logout();
     navigate('/');
   };
 
+  const isActive = (path) => location.pathname === path;
+
+  const navLink = (to, label) => (
+    <Link
+      to={to}
+      className={`relative font-medium transition-colors duration-200 py-1 ${
+        isActive(to)
+          ? 'text-blue-600'
+          : 'text-gray-700 hover:text-blue-600'
+      }`}
+    >
+      {label}
+      {isActive(to) && (
+        <span className="absolute -bottom-1 left-0 right-0 h-0.5 bg-blue-600 rounded-full" />
+      )}
+    </Link>
+  );
+
   return (
-    <nav className="bg-white text-gray-900 shadow-md sticky top-0 z-50">
+    <nav className="bg-white shadow-sm sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
           {/* Logo */}
-          <Link to="/" className="flex items-center space-x-2 font-bold text-2xl">
-            <div className="w-10 h-10 bg-gradient-to-br from-indigo-600 to-indigo-800 rounded-lg flex items-center justify-center">
-              <Home size={24} className="text-white" />
-            </div>
-            <span className="text-gray-900">Ghar Pahuch Seva</span>
+          <Link to="/" className="flex items-center space-x-2.5">
+            {logoError ? (
+              <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-blue-800 rounded-xl flex items-center justify-center">
+                <Home size={22} className="text-white" />
+              </div>
+            ) : (
+              <img
+                src="/logo.png"
+                alt="Ghar Pahuch Seva"
+                className="w-10 h-10 object-contain"
+                onError={() => setLogoError(true)}
+              />
+            )}
+            <span className="font-bold text-xl text-blue-600">Ghar Pahuch Seva</span>
           </Link>
 
           {/* Desktop Menu */}
           <div className="hidden md:flex items-center space-x-8">
-            <Link to="/" className="text-gray-700 hover:text-indigo-600 font-medium transition-colors duration-200">
-              Home
-            </Link>
+            {navLink('/', 'Home')}
+
             <div className="relative group">
-              <button className="text-gray-700 hover:text-indigo-600 font-medium transition-colors duration-200 flex items-center space-x-1">
+              <button className="flex items-center space-x-1 text-gray-700 hover:text-blue-600 font-medium transition-colors duration-200">
                 <span>Services</span>
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-                </svg>
+                <ChevronDown size={16} className="group-hover:rotate-180 transition-transform duration-300" />
               </button>
-              <div className="absolute left-0 mt-0 w-48 bg-white rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 py-2">
-                <Link to="/services" className="block px-4 py-2 hover:bg-indigo-50 text-gray-700 hover:text-indigo-600">Services</Link>
-                <a href="#" className="block px-4 py-2 hover:bg-indigo-50 text-gray-700 hover:text-indigo-600">Browse All</a>
+              <div className="absolute left-0 top-full pt-3 w-52 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">
+                <div className="bg-white rounded-xl shadow-lg border border-gray-100 py-2">
+                  <Link to="/services" className="block px-4 py-2.5 text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors">All Services</Link>
+                  <Link to="/services" className="block px-4 py-2.5 text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors">Home Cleaning</Link>
+                  <Link to="/services" className="block px-4 py-2.5 text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors">Plumbing &amp; Electrical</Link>
+                  <Link to="/services" className="block px-4 py-2.5 text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors">Beauty &amp; AC Repair</Link>
+                </div>
               </div>
             </div>
-            <a href="#" className="text-gray-700 hover:text-indigo-600 font-medium transition-colors duration-200">
-              About Us
-            </a>
-            <a href="#" className="text-gray-700 hover:text-indigo-600 font-medium transition-colors duration-200">
-              How It Works
-            </a>
-            <a href="#" className="text-gray-700 hover:text-indigo-600 font-medium transition-colors duration-200">
-              Contact
-            </a>
 
+            <a href="#about" className="text-gray-700 hover:text-blue-600 font-medium transition-colors duration-200">About Us</a>
+            <a href="#how-it-works" className="text-gray-700 hover:text-blue-600 font-medium transition-colors duration-200">How It Works</a>
+            <a href="#contact" className="text-gray-700 hover:text-blue-600 font-medium transition-colors duration-200">Contact</a>
+          </div>
+
+          {/* Right side auth */}
+          <div className="hidden md:flex items-center space-x-5">
             {user ? (
-              <div className="flex items-center space-x-4 pl-8 border-l border-gray-200">
+              <>
                 <div className="relative group">
-                  <button className="flex items-center space-x-2 text-gray-700 hover:text-indigo-600 font-medium transition-colors">
+                  <button className="flex items-center space-x-2 text-gray-700 hover:text-blue-600 font-medium transition-colors">
                     <User size={20} />
                     <span>{user.firstName || user.email}</span>
+                    <ChevronDown size={16} className="group-hover:rotate-180 transition-transform duration-300" />
                   </button>
-                  <div className="absolute right-0 mt-0 w-48 bg-white rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 py-2">
-                    <Link to="/profile" className="block px-4 py-2 hover:bg-indigo-50 text-gray-700 hover:text-indigo-600">Profile</Link>
-                    <Link to="/bookings" className="block px-4 py-2 hover:bg-indigo-50 text-gray-700 hover:text-indigo-600">Bookings</Link>
+                  <div className="absolute right-0 top-full pt-3 w-48 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">
+                    <div className="bg-white rounded-xl shadow-lg border border-gray-100 py-2">
+                      <Link to="/profile" className="block px-4 py-2.5 text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors">Profile</Link>
+                      <Link to="/bookings" className="block px-4 py-2.5 text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors">My Bookings</Link>
+                    </div>
                   </div>
                 </div>
                 <button
                   onClick={handleLogout}
-                  className="text-gray-700 hover:text-indigo-600 font-medium transition-colors"
+                  className="text-gray-700 hover:text-blue-600 font-medium transition-colors"
                 >
                   Logout
                 </button>
-              </div>
+              </>
             ) : (
-              <div className="flex items-center space-x-4 pl-8 border-l border-gray-200">
-                <Link to="/login" className="text-gray-700 hover:text-indigo-600 font-medium transition-colors duration-200">
+              <>
+                <Link to="/login" className="text-gray-700 hover:text-blue-600 font-medium transition-colors duration-200">
                   Login
                 </Link>
-                <Link to="/register" className="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 transition-colors duration-200 font-semibold">
+                <Link
+                  to="/register"
+                  className="bg-blue-600 text-white px-6 py-2.5 rounded-lg hover:bg-blue-700 transition-all duration-200 font-semibold shadow-sm hover:shadow-md"
+                >
                   Sign Up
                 </Link>
-              </div>
+              </>
             )}
           </div>
 
@@ -94,45 +128,22 @@ export default function Navbar() {
 
         {/* Mobile Menu */}
         {isOpen && (
-          <div className="md:hidden pb-4 space-y-2 border-t border-gray-200 pt-4">
-            <Link to="/" className="block py-2 px-4 hover:bg-indigo-50 rounded text-gray-700 hover:text-indigo-600">
-              Home
-            </Link>
-            <Link to="/services" className="block py-2 px-4 hover:bg-indigo-50 rounded text-gray-700 hover:text-indigo-600">
-              Services
-            </Link>
-            <a href="#" className="block py-2 px-4 hover:bg-indigo-50 rounded text-gray-700 hover:text-indigo-600">
-              About Us
-            </a>
-            <a href="#" className="block py-2 px-4 hover:bg-indigo-50 rounded text-gray-700 hover:text-indigo-600">
-              How It Works
-            </a>
-            <a href="#" className="block py-2 px-4 hover:bg-indigo-50 rounded text-gray-700 hover:text-indigo-600">
-              Contact
-            </a>
+          <div className="md:hidden pb-4 space-y-1 border-t border-gray-100 pt-3">
+            <Link to="/" className="block py-2.5 px-4 hover:bg-blue-50 rounded-lg text-gray-700 hover:text-blue-600">Home</Link>
+            <Link to="/services" className="block py-2.5 px-4 hover:bg-blue-50 rounded-lg text-gray-700 hover:text-blue-600">Services</Link>
+            <a href="#about" className="block py-2.5 px-4 hover:bg-blue-50 rounded-lg text-gray-700 hover:text-blue-600">About Us</a>
+            <a href="#how-it-works" className="block py-2.5 px-4 hover:bg-blue-50 rounded-lg text-gray-700 hover:text-blue-600">How It Works</a>
+            <a href="#contact" className="block py-2.5 px-4 hover:bg-blue-50 rounded-lg text-gray-700 hover:text-blue-600">Contact</a>
             {user ? (
               <>
-                <Link to="/bookings" className="block py-2 px-4 hover:bg-indigo-50 rounded text-gray-700 hover:text-indigo-600">
-                  Bookings
-                </Link>
-                <Link to="/profile" className="block py-2 px-4 hover:bg-indigo-50 rounded text-gray-700 hover:text-indigo-600">
-                  Profile
-                </Link>
-                <button
-                  onClick={handleLogout}
-                  className="block w-full text-left py-2 px-4 hover:bg-indigo-50 rounded text-gray-700 hover:text-indigo-600"
-                >
-                  Logout
-                </button>
+                <Link to="/bookings" className="block py-2.5 px-4 hover:bg-blue-50 rounded-lg text-gray-700 hover:text-blue-600">My Bookings</Link>
+                <Link to="/profile" className="block py-2.5 px-4 hover:bg-blue-50 rounded-lg text-gray-700 hover:text-blue-600">Profile</Link>
+                <button onClick={handleLogout} className="block w-full text-left py-2.5 px-4 hover:bg-blue-50 rounded-lg text-gray-700 hover:text-blue-600">Logout</button>
               </>
             ) : (
               <>
-                <Link to="/login" className="block py-2 px-4 hover:bg-indigo-50 rounded text-gray-700 hover:text-indigo-600">
-                  Login
-                </Link>
-                <Link to="/register" className="block py-2 px-4 bg-indigo-600 text-white rounded hover:bg-indigo-700">
-                  Sign Up
-                </Link>
+                <Link to="/login" className="block py-2.5 px-4 hover:bg-blue-50 rounded-lg text-gray-700 hover:text-blue-600">Login</Link>
+                <Link to="/register" className="block py-2.5 px-4 bg-blue-600 text-white rounded-lg hover:bg-blue-700 text-center font-semibold">Sign Up</Link>
               </>
             )}
           </div>
