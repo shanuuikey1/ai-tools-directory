@@ -8,7 +8,7 @@ Copy-paste these to recruit service workers. Replace **[bracketed]** bits.
 
 > नमस्ते [नाम] जी 🙏
 >
-> मैं [आपका नाम] बोल रहा हूँ। हम Chhindwara में एक नया **Urban Services** app
+> मैं [आपका नाम] बोल रहा हूँ। हम Chhindwara में एक नया **Ghar Pahuch Seva** app
 > शुरू कर रहे हैं — जैसे Urban Company, जहाँ लोग घर बैठे प्लंबर, इलेक्ट्रिशियन,
 > सफाई, AC रिपेयर जैसी सेवाएँ बुक कर सकते हैं।
 >
@@ -27,7 +27,7 @@ Copy-paste these to recruit service workers. Replace **[bracketed]** bits.
 
 > Hi [Name] 🙏
 >
-> This is [Your Name]. We're launching **Urban Services** in Chhindwara — a
+> This is [Your Name]. We're launching **Ghar Pahuch Seva** in Chhindwara — a
 > Urban Company-style app where people book trusted home services (plumbing,
 > electrical, cleaning, AC repair, beauty) online.
 >

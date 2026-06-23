@@ -1,12 +1,12 @@
-# Urban Services vs Urban Company — Feature Comparison
+# Ghar Pahuch Seva vs Urban Company — Feature Comparison
 
-**Scope:** Urban Services (what we built for Chhindwara) vs Urban Company (nationwide Indian + UAE/Singapore scale)
+**Scope:** Ghar Pahuch Seva (what we built for Chhindwara) vs Urban Company (nationwide Indian + UAE/Singapore scale)
 
 ---
 
 ## 📱 App & Web Platform
 
-| Feature | Urban Services | Urban Company |
+| Feature | Ghar Pahuch Seva | Urban Company |
 |---------|---|---|
 | Mobile app | ✅ Flutter (Material 3) | ✅ iOS + Android native |
 | Web platform | ✅ React SPA | ✅ Full web marketplace |
@@ -23,7 +23,7 @@
 
 ### Categories offered
 
-**Urban Services (8 core categories for Chhindwara):**
+**Ghar Pahuch Seva (8 core categories for Chhindwara):**
 - Cleaning (home, bathroom)
 - Plumbing (tap/pipe repair)
 - Electrical (wiring, switches, fans)
@@ -39,13 +39,13 @@
 - **Appliance Repair** (fridge, washer, microwave, water purifier, geyser, TV, laptop)
 - **Specialized** (furniture assembly, deep cleaning, painting, waterproofing, cooking subscriptions)
 
-**Verdict:** Urban Company covers ~3x more service categories + appliance repair + specialized services. Urban Services is focused on home essentials in one city.
+**Verdict:** Urban Company covers ~3x more service categories + appliance repair + specialized services. Ghar Pahuch Seva is focused on home essentials in one city.
 
 ---
 
 ## 💰 Pricing & Tiers
 
-| Feature | Urban Services | Urban Company |
+| Feature | Ghar Pahuch Seva | Urban Company |
 |---------|---|---|
 | Pricing model | Fixed base_price per service | ✅ Multiple tiers: Classic, Prime, Luxe |
 | Subscription services | ❌ Not implemented | ✅ Monthly cleaning, meal prep packages |
@@ -59,7 +59,7 @@
 
 ## 👤 Service Professional Management
 
-| Feature | Urban Services | Urban Company |
+| Feature | Ghar Pahuch Seva | Urban Company |
 |---------|---|---|
 | Worker verification | ✅ Manual (admin marks verified) | ✅ "Hand-picked" experts, background checks |
 | Quality guarantee | ❌ Not promised | ✅ "100% Quality Assured" |
@@ -73,7 +73,7 @@
 
 ## 💳 Payment & Payouts
 
-| Feature | Urban Services | Urban Company |
+| Feature | Ghar Pahuch Seva | Urban Company |
 |---------|---|---|
 | Payment gateway | ✅ Razorpay (test/live) | ✅ Razorpay (live) |
 | Payment methods | Card, UPI (via Razorpay) | Cards, UPI, wallets, prepaid |
@@ -85,7 +85,7 @@
 
 ## 🔒 Security & Trust
 
-| Feature | Urban Services | Urban Company |
+| Feature | Ghar Pahuch Seva | Urban Company |
 |---------|---|---|
 | JWT auth | ✅ 7-day tokens | ✅ Likely similar |
 | Rate limiting | ✅ 20 login attempts/15 min | ✅ Likely enforced |
@@ -99,7 +99,7 @@
 
 ## 📊 Admin & Operations
 
-| Feature | Urban Services | Urban Company |
+| Feature | Ghar Pahuch Seva | Urban Company |
 |---------|---|---|
 | Admin dashboard | ❌ Shell + psql only | ✅ Full web dashboard |
 | Worker management | ✅ Seed script + SQL | ✅ Dedicated admin panel |
@@ -113,7 +113,7 @@
 
 ## 📲 Booking Flow
 
-| Step | Urban Services | Urban Company |
+| Step | Ghar Pahuch Seva | Urban Company |
 |------|---|---|
 | Browse services | ✅ Category + search | ✅ Category + advanced filters |
 | View provider details | ✅ Name, phone, rating | ✅ Name, photo, bio, availability, reviews |
@@ -129,7 +129,7 @@
 
 ## 🚀 Scale & Coverage
 
-| Metric | Urban Services | Urban Company |
+| Metric | Ghar Pahuch Seva | Urban Company |
 |---|---|---|
 | **Cities** | 1 (Chhindwara) | 30+ Indian cities + UAE + Singapore |
 | **Services** | 8 categories | 15+ categories |
@@ -142,7 +142,7 @@
 
 ## 🎯 Business Model Differences
 
-### Urban Services (bootstrap, city-focused)
+### Ghar Pahuch Seva (bootstrap, city-focused)
 - **Vertical:** Hyper-local marketplace (Chhindwara only)
 - **Commission:** Fixed 25% to platform, 75% to workers
 - **Growth:** Recruit 5–10 workers → referrals from their customers → first bookings
@@ -158,7 +158,7 @@
 
 ---
 
-## ✅ What Urban Services Does Better
+## ✅ What Ghar Pahuch Seva Does Better
 
 1. **Offline mode** — Works without internet (sample services)
 2. **Simplicity** — Single-tier pricing, no confusion
@@ -185,9 +185,9 @@
 
 ---
 
-## 🛤️ Path from Urban Services → Urban Company Scale
+## 🛤️ Path from Ghar Pahuch Seva → Urban Company Scale
 
-**To move Urban Services toward Urban Company's feature set:**
+**To move Ghar Pahuch Seva toward Urban Company's feature set:**
 
 | Phase | Timeline | Features to add |
 |-------|----------|---|
@@ -200,7 +200,7 @@
 
 ## 📝 Recommendation
 
-Your **Urban Services MVP is enterprise-grade for launch** — it has everything needed for Month 1 profitability in Chhindwara with 5–10 workers. The gap to Urban Company is not code or features, but **scale and marketing budget**.
+Your **Ghar Pahuch Seva MVP is enterprise-grade for launch** — it has everything needed for Month 1 profitability in Chhindwara with 5–10 workers. The gap to Urban Company is not code or features, but **scale and marketing budget**.
 
 **Focus on execution:**
 1. Deploy the backend + web + app (done code-side)

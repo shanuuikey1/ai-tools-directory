@@ -1,4 +1,4 @@
-# Deployment Guide - Urban Services
+# Deployment Guide - Ghar Pahuch Seva
 ## Deploy Frontend to Netlify + Backend to Heroku
 
 Complete guide to get your app live and accessible from anywhere! 🌐
@@ -37,7 +37,7 @@ All are free! Let's go! 💪
 
 1. Go to Heroku Dashboard
 2. Click "New" → "Create new app"
-3. App name: `urban-services-backend` (or your name)
+3. App name: `ghar-pahuch-seva-backend` (or your name)
 4. Region: Choose closest to you
 5. Click "Create app"
 
@@ -88,7 +88,7 @@ heroku login
 cd backend
 
 # Add Heroku remote
-heroku git:remote -a urban-services-backend
+heroku git:remote -a ghar-pahuch-seva-backend
 
 # Push code to Heroku
 git push heroku main
@@ -103,7 +103,7 @@ heroku logs --tail
 
 Your backend is now live at:
 ```
-https://urban-services-backend.herokuapp.com/api/health
+https://ghar-pahuch-seva-backend.herokuapp.com/api/health
 ```
 
 ---
@@ -142,7 +142,7 @@ In Netlify Dashboard:
 4. Add variable:
 
 ```
-VITE_API_URL = https://urban-services-backend.herokuapp.com/api
+VITE_API_URL = https://ghar-pahuch-seva-backend.herokuapp.com/api
 ```
 
 ### Step 5: Deploy
@@ -198,14 +198,14 @@ If everything works → **Congratulations!** 🎉
 **Solution:**
 ```bash
 # Check your Heroku backend is running
-curl https://urban-services-backend.herokuapp.com/api/health
+curl https://ghar-pahuch-seva-backend.herokuapp.com/api/health
 
 # Should return: {"message": "Server is running!"}
 ```
 
 If not running, check Heroku logs:
 ```bash
-heroku logs --tail -a urban-services-backend
+heroku logs --tail -a ghar-pahuch-seva-backend
 ```
 
 ### Database connection error on backend?
@@ -243,7 +243,7 @@ https://your-site.netlify.app
 
 **Backend API:**
 ```
-https://urban-services-backend.herokuapp.com/api
+https://ghar-pahuch-seva-backend.herokuapp.com/api
 ```
 
 Just open the Netlify URL on your phone and you're good to go! 📱
@@ -252,7 +252,7 @@ Just open the Netlify URL on your phone and you're good to go! 📱
 
 ## 🚀 Custom Domain (Optional)
 
-Want your own domain like `urbanservices.com`?
+Want your own domain like `gharpahuchseva.com`?
 
 **For Frontend (Netlify):**
 1. Netlify Dashboard → Site settings
@@ -288,13 +288,13 @@ Want your own domain like `urbanservices.com`?
 ### Heroku
 ```bash
 # View logs
-heroku logs --tail -a urban-services-backend
+heroku logs --tail -a ghar-pahuch-seva-backend
 
 # Check app status
-heroku apps:info -a urban-services-backend
+heroku apps:info -a ghar-pahuch-seva-backend
 
 # Restart app if needed
-heroku restart -a urban-services-backend
+heroku restart -a ghar-pahuch-seva-backend
 ```
 
 ---
@@ -344,7 +344,7 @@ git push heroku main
 
 ## 🎉 You're Live!
 
-Congratulations! Your Urban Services marketplace is now:
+Congratulations! Your Ghar Pahuch Seva marketplace is now:
 
 ✅ Deployed to Netlify (Frontend)
 ✅ Deployed to Heroku (Backend)
@@ -380,7 +380,7 @@ heroku status
 netlify deploy --status
 
 # Check backend health
-curl https://urban-services-backend.herokuapp.com/api/health
+curl https://ghar-pahuch-seva-backend.herokuapp.com/api/health
 
 # Check frontend loads
 curl https://your-site.netlify.app
@@ -388,7 +388,7 @@ curl https://your-site.netlify.app
 
 ---
 
-**Your Urban Services marketplace is now LIVE on the internet!** 🌍🚀
+**Your Ghar Pahuch Seva marketplace is now LIVE on the internet!** 🌍🚀
 
 Share the link with anyone and they can use it! 📱
 

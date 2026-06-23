@@ -1,4 +1,4 @@
-# Urban Services Chhindwara - Bootstrap Model
+# Ghar Pahuch Seva Chhindwara - Bootstrap Model
 ## Lean Startup Financial Projections (25% Commission)
 
 ---

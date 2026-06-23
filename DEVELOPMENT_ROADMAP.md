@@ -1,4 +1,4 @@
-# Urban Services App - Complete Development Roadmap
+# Ghar Pahuch Seva App - Complete Development Roadmap
 ## Node.js + React + React Native Stack
 
 ---
@@ -6,7 +6,7 @@
 ## 1. Project Structure Overview
 
 ```
-urban-services/
+ghar-pahuch-seva/
 ├── backend/                    # Node.js + Express API
 │   ├── src/
 │   │   ├── config/            # Database, environment
@@ -395,8 +395,8 @@ GET    /api/providers/:id/ratings       - Provider ratings
 
 #### Initialize Project
 ```bash
-mkdir urban-services-backend
-cd urban-services-backend
+mkdir ghar-pahuch-seva-backend
+cd ghar-pahuch-seva-backend
 npm init -y
 npm install express cors dotenv nodemon
 npm install --save-dev nodemon
@@ -773,7 +773,7 @@ Create `.env` files:
 ```
 PORT=5000
 DB_HOST=localhost
-DB_NAME=urban_services
+DB_NAME=ghar_pahuch_seva
 DB_USER=postgres
 DB_PASSWORD=your_password
 JWT_SECRET=your_super_secret_key

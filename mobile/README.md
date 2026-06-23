@@ -1,6 +1,6 @@
-# Urban Services — Flutter App
+# Ghar Pahuch Seva — Flutter App
 
-A modern, production-style mobile app for the Urban Services marketplace
+A modern, production-style mobile app for the Ghar Pahuch Seva marketplace
 (book trusted home services in Chhindwara). Built with **Flutter** (Material 3).
 
 ## ✨ Features

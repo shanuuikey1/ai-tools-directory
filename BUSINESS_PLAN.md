@@ -1,11 +1,11 @@
-# Urban Services Marketplace - Chhindwara
+# Ghar Pahuch Seva Marketplace - Chhindwara
 ## Comprehensive Business Plan
 
 ---
 
 ## 1. Executive Summary
 
-**Company Name:** Urban Services Chhindwara (or similar branding)
+**Company Name:** Ghar Pahuch Seva Chhindwara (or similar branding)
 
 **Mission:** To provide affordable, reliable, and convenient home and professional services to residents of Chhindwara through a digital marketplace platform.
 

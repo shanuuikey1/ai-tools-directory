@@ -29,9 +29,9 @@ heroku login
 ### 3. Deploy Backend
 ```bash
 cd backend
-heroku create my-urban-services-api
-heroku addons:create heroku-postgresql:hobby-dev -a my-urban-services-api
-heroku config:set JWT_SECRET=test123 RAZORPAY_KEY_ID=rzp_test RAZORPAY_KEY_SECRET=secret NODE_ENV=production -a my-urban-services-api
+heroku create my-ghar-pahuch-seva-api
+heroku addons:create heroku-postgresql:hobby-dev -a my-ghar-pahuch-seva-api
+heroku config:set JWT_SECRET=test123 RAZORPAY_KEY_ID=rzp_test RAZORPAY_KEY_SECRET=secret NODE_ENV=production -a my-ghar-pahuch-seva-api
 git push heroku main
 ```
 
@@ -39,12 +39,12 @@ Wait 3 minutes for deployment...
 
 **Your Backend URL:**
 ```
-https://my-urban-services-api.herokuapp.com/api
+https://my-ghar-pahuch-seva-api.herokuapp.com/api
 ```
 
 Test it:
 ```
-https://my-urban-services-api.herokuapp.com/api/health
+https://my-ghar-pahuch-seva-api.herokuapp.com/api/health
 ```
 
 ---
@@ -69,16 +69,16 @@ vercel --prod
 ```
 
 Choose:
-- **Project name:** urban-services
+- **Project name:** ghar-pahuch-seva
 - **Framework:** Vite
 - **Output directory:** dist (it auto-detects)
-- **Environment:** VITE_API_URL = https://my-urban-services-api.herokuapp.com/api
+- **Environment:** VITE_API_URL = https://my-ghar-pahuch-seva-api.herokuapp.com/api
 
 Wait 2 minutes...
 
 **Your Frontend URL:**
 ```
-https://urban-services.vercel.app
+https://ghar-pahuch-seva.vercel.app
 ```
 
 ---
@@ -87,10 +87,10 @@ https://urban-services.vercel.app
 
 ### Open This URL on Your Phone:
 ```
-https://urban-services.vercel.app
+https://ghar-pahuch-seva.vercel.app
 ```
 
-You should see your beautiful Urban Services app! 🎉
+You should see your beautiful Ghar Pahuch Seva app! 🎉
 
 ---
 
@@ -145,7 +145,7 @@ Click "Rate Service" and give 5 stars ⭐
 
 Share this URL with anyone:
 ```
-https://urban-services.vercel.app
+https://ghar-pahuch-seva.vercel.app
 ```
 
 They can:
@@ -170,15 +170,15 @@ All from their mobile phone! 📱
 
 ## 📊 Your URLs
 
-**Frontend:** https://urban-services.vercel.app
-**Backend:** https://my-urban-services-api.herokuapp.com/api
+**Frontend:** https://ghar-pahuch-seva.vercel.app
+**Backend:** https://my-ghar-pahuch-seva-api.herokuapp.com/api
 
 ---
 
 ## 🔧 Troubleshooting
 
 ### Page loads but no services?
-- Check backend is running: `https://my-urban-services-api.herokuapp.com/api/health`
+- Check backend is running: `https://my-ghar-pahuch-seva-api.herokuapp.com/api/health`
 - Update VITE_API_URL in Vercel environment
 
 ### Payment not working?
@@ -213,7 +213,7 @@ No manual steps needed! 🤖
 Your app is LIVE! Open on your phone:
 
 ```
-https://urban-services.vercel.app
+https://ghar-pahuch-seva.vercel.app
 ```
 
 **🎊 Congratulations!** Your marketplace is on the internet! 🌍
@@ -230,4 +230,4 @@ https://urban-services.vercel.app
 
 ---
 
-**Your Urban Services marketplace is LIVE!** 🚀📱
+**Your Ghar Pahuch Seva marketplace is LIVE!** 🚀📱

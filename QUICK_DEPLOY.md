@@ -21,12 +21,12 @@ git push origin claude/urban-company-chhindwara-ywd8k9
 npm install -g heroku-cli
 heroku login
 cd backend
-heroku create urban-services-backend
+heroku create ghar-pahuch-seva-backend
 ```
 
 ### Add PostgreSQL
 ```bash
-heroku addons:create heroku-postgresql:hobby-dev -a urban-services-backend
+heroku addons:create heroku-postgresql:hobby-dev -a ghar-pahuch-seva-backend
 ```
 
 ### Set Config Variables
@@ -36,7 +36,7 @@ heroku config:set \
   RAZORPAY_KEY_ID=rzp_test_your_key \
   RAZORPAY_KEY_SECRET=your_secret_key \
   NODE_ENV=production \
-  -a urban-services-backend
+  -a ghar-pahuch-seva-backend
 ```
 
 ### Deploy
@@ -44,7 +44,7 @@ heroku config:set \
 git push heroku main
 ```
 
-**Status:** Backend live at `https://urban-services-backend.herokuapp.com` ✓
+**Status:** Backend live at `https://ghar-pahuch-seva-backend.herokuapp.com` ✓
 
 ---
 
@@ -57,7 +57,7 @@ git push heroku main
 4. Select your repository
 5. Build command: `cd web && npm run build`
 6. Publish: `web/dist`
-7. Set env var: `VITE_API_URL=https://urban-services-backend.herokuapp.com/api`
+7. Set env var: `VITE_API_URL=https://ghar-pahuch-seva-backend.herokuapp.com/api`
 8. Click "Deploy"
 
 **Status:** Frontend live at `https://your-site.netlify.app` ✓
@@ -79,7 +79,7 @@ In web app on Netlify:
 
 Add:
 ```
-VITE_API_URL = https://urban-services-backend.herokuapp.com/api
+VITE_API_URL = https://ghar-pahuch-seva-backend.herokuapp.com/api
 ```
 
 Then redeploy.
@@ -102,7 +102,7 @@ Open: `https://your-site.netlify.app`
 ## Your Live URLs
 
 **Frontend:** `https://your-site.netlify.app`
-**Backend:** `https://urban-services-backend.herokuapp.com/api`
+**Backend:** `https://ghar-pahuch-seva-backend.herokuapp.com/api`
 
 Share the frontend URL with anyone! 📱
 
@@ -124,13 +124,13 @@ Share the frontend URL with anyone! 📱
 
 ```bash
 # Check backend
-curl https://urban-services-backend.herokuapp.com/api/health
+curl https://ghar-pahuch-seva-backend.herokuapp.com/api/health
 
 # Check frontend loads
 curl https://your-site.netlify.app
 
 # Check Heroku logs
-heroku logs --tail -a urban-services-backend
+heroku logs --tail -a ghar-pahuch-seva-backend
 ```
 
 ### Need help?

@@ -96,7 +96,7 @@ The APK/AAB will be at:
 
 1. Replace the old files:
    ```bash
-   rm apk/UrbanServices.*
+   rm apk/GharPahuchSeva.*
    cp build/app/outputs/apk/release/app-release.apk apk/GharPahuchSeva.apk
    cp build/app/outputs/bundle/release/app-release.aab apk/GharPahuchSeva.aab
    ```

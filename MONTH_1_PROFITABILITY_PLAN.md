@@ -164,7 +164,7 @@ With 100 services = ₹7,200 profit ✅
 ```
 Hey [Name]! 👋
 
-I'm launching Urban Services - an app to get you more customers.
+I'm launching Ghar Pahuch Seva - an app to get you more customers.
 
 How it works:
 ✅ Customers book through the app

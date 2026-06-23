@@ -13,7 +13,7 @@ app.use(express.static(path.join(__dirname, 'dist')));
 app.all('/api/*', (req, res) => {
   res.status(503).json({
     message: 'Backend API not configured. Deploy backend to Heroku first.',
-    backend_url: 'https://urban-services-api.herokuapp.com/api'
+    backend_url: 'https://ghar-pahuch-seva-api.herokuapp.com/api'
   });
 });
 

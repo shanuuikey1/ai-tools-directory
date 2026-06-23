@@ -1,6 +1,6 @@
-# Urban Services Backend API
+# Ghar Pahuch Seva Backend API
 
-Complete Node.js + Express + PostgreSQL backend for Urban Services marketplace.
+Complete Node.js + Express + PostgreSQL backend for Ghar Pahuch Seva marketplace.
 
 ## Quick Start
 
@@ -15,7 +15,7 @@ npm install
 **Option A: Local PostgreSQL**
 ```bash
 # Create database
-createdb urban_services
+createdb ghar_pahuch_seva
 
 # Create .env file
 cp .env.example .env
@@ -156,7 +156,7 @@ PORT=5000                          # Server port
 NODE_ENV=development               # Environment
 DB_HOST=localhost                  # Database host
 DB_PORT=5432                       # Database port
-DB_NAME=urban_services             # Database name
+DB_NAME=ghar_pahuch_seva             # Database name
 DB_USER=postgres                   # Database user
 DB_PASSWORD=password               # Database password
 JWT_SECRET=your_secret_key         # JWT signing key

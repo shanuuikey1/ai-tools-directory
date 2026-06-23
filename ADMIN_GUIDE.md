@@ -1,4 +1,4 @@
-# Admin Guide — Running Urban Services
+# Admin Guide — Running Ghar Pahuch Seva
 
 How to manage workers, services, bookings and payouts day-to-day.
 There is no admin web dashboard yet, so management is done via the
@@ -8,7 +8,7 @@ There is no admin web dashboard yet, so management is done via the
 
 ## Opening a database shell
 
-1. Render dashboard → your **urban-services-backend** service → **Shell** tab
+1. Render dashboard → your **ghar-pahuch-seva-backend** service → **Shell** tab
 2. Connect to Postgres:
    ```bash
    psql $DATABASE_URL

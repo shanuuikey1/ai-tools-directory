@@ -1,4 +1,4 @@
-# Urban Services Go-Live Checklist
+# Ghar Pahuch Seva Go-Live Checklist
 
 Everything code-side is **release-grade and pushed**. Below is your step-by-step execution plan.
 
@@ -27,10 +27,10 @@ Everything code-side is **release-grade and pushed**. Below is your step-by-step
 3. Pick repo: **shanuuikey1/ai-tools-directory**
 4. Pick branch: **claude/urban-company-chhindwara-ywd8k9**
 5. Render auto-detects `render.yaml` and shows:
-   - 1 web service (urban-services-backend)
+   - 1 web service (ghar-pahuch-seva-backend)
    - 1 PostgreSQL database
 6. Click **"Apply"** → waits 3–4 min
-7. ✅ You get a live URL like `https://urban-services-backend.onrender.com`
+7. ✅ You get a live URL like `https://ghar-pahuch-seva-backend.onrender.com`
 8. Test: open `https://YOUR-URL/api/health` in browser
    - Should see: `{"message":"Server is running!",...}`
 
@@ -50,11 +50,11 @@ Everything code-side is **release-grade and pushed**. Below is your step-by-step
 4. Set branch to: **claude-urban-company-chhindwara-ywd8k9**
 5. Build settings auto-fill from `netlify.toml` at root
 6. Click **"Deploy"** → waits ~2 min
-7. ✅ You get a live URL like `https://urban-services-chhindwara.netlify.app`
+7. ✅ You get a live URL like `https://ghar-pahuch-seva-chhindwara.netlify.app`
 
 **After deploy, update environment variable:**
 1. Netlify → **Site settings → Environment**
-2. Set `VITE_API_URL` = your Render backend URL (e.g. `https://urban-services-backend.onrender.com/api`)
+2. Set `VITE_API_URL` = your Render backend URL (e.g. `https://ghar-pahuch-seva-backend.onrender.com/api`)
 3. Click **"Deploy"** again to rebuild
 
 ---
@@ -162,11 +162,11 @@ For full reference, see **ADMIN_GUIDE.md**:
 - Accept policies
 
 ### Prepare store listing
-1. **App name:** Urban Services
+1. **App name:** Ghar Pahuch Seva
 2. **Short description (80 chars):** 
    > "Book trusted home services in Chhindwara — plumbing, cleaning, electrical & more."
 3. **Full description (4000 chars):**
-   > "Urban Services connects you with verified home-service professionals in Chhindwara.
+   > "Ghar Pahuch Seva connects you with verified home-service professionals in Chhindwara.
    > 
    > ✓ Cleaning, plumbing, electrical, beauty, AC repair, carpentry, painting, pest control
    > ✓ Transparent pricing — no hidden charges

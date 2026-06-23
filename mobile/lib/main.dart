@@ -17,13 +17,13 @@ void main() {
   runApp(
     ChangeNotifierProvider(
       create: (_) => AppState()..load(),
-      child: const UrbanServicesApp(),
+      child: const GharPahuchSevaApp(),
     ),
   );
 }
 
-class UrbanServicesApp extends StatelessWidget {
-  const UrbanServicesApp({super.key});
+class GharPahuchSevaApp extends StatelessWidget {
+  const GharPahuchSevaApp({super.key});
 
   @override
   Widget build(BuildContext context) {

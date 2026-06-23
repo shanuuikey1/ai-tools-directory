@@ -1,6 +1,6 @@
-# Urban Services - Customer Web App
+# Ghar Pahuch Seva - Customer Web App
 
-Complete React frontend for Urban Services marketplace platform.
+Complete React frontend for Ghar Pahuch Seva marketplace platform.
 
 ## Features
 
