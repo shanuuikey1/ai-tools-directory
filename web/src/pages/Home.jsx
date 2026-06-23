@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Home, Wrench, Zap, Sparkles, Wind, Hammer, Clock, Star, CheckCircle, ArrowRight, Facebook, Instagram, MessageCircle } from 'lucide-react';
+import { Home as HomeIcon, Wrench, Zap, Sparkles, Wind, Hammer, Clock, Star, CheckCircle, ArrowRight, Facebook, Instagram, MessageCircle } from 'lucide-react';
 
 export default function Home() {
   const stats = [
@@ -31,7 +31,7 @@ export default function Home() {
     {
       name: 'Home Cleaning',
       price: '₹500 - 800',
-      icon: <Home size={40} className="text-indigo-600" />
+      icon: <HomeIcon size={40} className="text-indigo-600" />
     },
     {
       name: 'Plumbing',
@@ -223,7 +223,7 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
             <div>
               <div className="flex items-center space-x-2 mb-4">
-                <Home size={28} className="text-indigo-600" />
+                <HomeIcon size={28} className="text-indigo-600" />
                 <h3 className="text-xl font-bold">Ghar Pahuch Seva</h3>
               </div>
               <p className="text-gray-400">
