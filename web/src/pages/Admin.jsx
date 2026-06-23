@@ -7,6 +7,7 @@ export default function Admin() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [adminKey, setAdminKey] = useState(localStorage.getItem('adminKey') || '');
+  const [keyInput, setKeyInput] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
   const [filterStatus, setFilterStatus] = useState('all');
   const [selectedApp, setSelectedApp] = useState(null);
@@ -27,6 +28,7 @@ export default function Admin() {
         headers: { 'x-admin-key': key },
       });
       setApplications(response.data.applications);
+      setAdminKey(key);
       localStorage.setItem('adminKey', key);
     } catch (err) {
       setError(err.response?.data?.message || 'Failed to fetch applications. Check your admin key.');
@@ -44,7 +46,7 @@ export default function Admin() {
 
   const handleLogin = (e) => {
     e.preventDefault();
-    fetchApplications(adminKey);
+    fetchApplications(keyInput);
   };
 
   const updateApplicationStatus = async (appId, status, notes = '') => {
@@ -103,8 +105,8 @@ export default function Admin() {
               <label className="block text-sm font-medium text-gray-700 mb-2">Admin API Key</label>
               <input
                 type="password"
-                value={adminKey}
-                onChange={(e) => setAdminKey(e.target.value)}
+                value={keyInput}
+                onChange={(e) => setKeyInput(e.target.value)}
                 placeholder="Enter your admin key"
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent outline-none transition"
               />
