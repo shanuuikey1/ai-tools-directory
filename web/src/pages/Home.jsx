@@ -248,13 +248,13 @@ export default function Home() {
                 Professional services at your doorstep in Chhindwara.
               </p>
               <div className="flex space-x-3 mt-5">
-                <a href="#" className="w-9 h-9 bg-white/5 rounded-full flex items-center justify-center hover:bg-blue-600 transition-colors duration-300">
+                <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer" title="Facebook" className="w-9 h-9 bg-white/5 rounded-full flex items-center justify-center hover:bg-blue-600 transition-colors duration-300 cursor-pointer">
                   <Facebook size={17} />
                 </a>
-                <a href="#" className="w-9 h-9 bg-white/5 rounded-full flex items-center justify-center hover:bg-blue-600 transition-colors duration-300">
+                <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" title="Instagram" className="w-9 h-9 bg-white/5 rounded-full flex items-center justify-center hover:bg-blue-600 transition-colors duration-300 cursor-pointer">
                   <Instagram size={17} />
                 </a>
-                <a href="#" className="w-9 h-9 bg-white/5 rounded-full flex items-center justify-center hover:bg-blue-600 transition-colors duration-300">
+                <a href="https://wa.me/919999999999" target="_blank" rel="noopener noreferrer" title="WhatsApp" className="w-9 h-9 bg-white/5 rounded-full flex items-center justify-center hover:bg-green-600 transition-colors duration-300 cursor-pointer">
                   <MessageCircle size={17} />
                 </a>
               </div>
@@ -278,9 +278,9 @@ export default function Home() {
               <ul className="space-y-3 text-sm">
                 <li><Link to="/services" className="text-gray-400 hover:text-white transition-colors">Book a Service</Link></li>
                 <li><a href="#how-it-works" className="text-gray-400 hover:text-white transition-colors">How It Works</a></li>
-                <li><a href="#contact" className="text-gray-400 hover:text-white transition-colors">Help &amp; Support</a></li>
-                <li><a href="/terms.html" className="text-gray-400 hover:text-white transition-colors">Terms &amp; Conditions</a></li>
-                <li><a href="/privacy.html" className="text-gray-400 hover:text-white transition-colors">Privacy Policy</a></li>
+                <li><a href="mailto:info@gharpahuchseva.com?subject=Support Request" className="text-gray-400 hover:text-white transition-colors">Help &amp; Support</a></li>
+                <li><a href="/terms.html" target="_blank" className="text-gray-400 hover:text-white transition-colors">Terms &amp; Conditions</a></li>
+                <li><a href="/privacy.html" target="_blank" className="text-gray-400 hover:text-white transition-colors">Privacy Policy</a></li>
               </ul>
             </div>
 
@@ -288,17 +288,23 @@ export default function Home() {
             <div>
               <h4 className="font-semibold mb-5">Contact</h4>
               <ul className="space-y-4 text-sm">
-                <li className="flex items-center space-x-3 text-gray-400">
-                  <Mail size={17} className="text-blue-400 shrink-0" />
-                  <span>info@gharpahuchseva.com</span>
+                <li>
+                  <a href="mailto:info@gharpahuchseva.com" className="flex items-center space-x-3 text-gray-400 hover:text-white transition-colors duration-300 group">
+                    <Mail size={17} className="text-blue-400 shrink-0 group-hover:scale-110 transition-transform duration-300" />
+                    <span className="group-hover:text-blue-400 transition-colors">info@gharpahuchseva.com</span>
+                  </a>
                 </li>
-                <li className="flex items-center space-x-3 text-gray-400">
-                  <Phone size={17} className="text-blue-400 shrink-0" />
-                  <span>+91-9999-9999-99</span>
+                <li>
+                  <a href="tel:+919999999999" className="flex items-center space-x-3 text-gray-400 hover:text-white transition-colors duration-300 group">
+                    <Phone size={17} className="text-blue-400 shrink-0 group-hover:scale-110 transition-transform duration-300" />
+                    <span className="group-hover:text-blue-400 transition-colors">+91-9999-9999-99</span>
+                  </a>
                 </li>
-                <li className="flex items-center space-x-3 text-gray-400">
-                  <MapPin size={17} className="text-blue-400 shrink-0" />
-                  <span>Chhindwara, Madhya Pradesh</span>
+                <li>
+                  <a href="https://www.google.com/maps/search/Chhindwara,+Madhya+Pradesh" target="_blank" rel="noopener noreferrer" className="flex items-center space-x-3 text-gray-400 hover:text-white transition-colors duration-300 group">
+                    <MapPin size={17} className="text-blue-400 shrink-0 group-hover:scale-110 transition-transform duration-300" />
+                    <span className="group-hover:text-blue-400 transition-colors">Chhindwara, Madhya Pradesh</span>
+                  </a>
                 </li>
               </ul>
             </div>
