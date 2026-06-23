@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { CheckCircle, ArrowRight, Briefcase, TrendingUp, Users, Shield } from 'lucide-react';
+import axios from 'axios';
+import { CheckCircle, ArrowRight, Briefcase, TrendingUp, Users, Shield, Loader } from 'lucide-react';
 
 export default function Professional() {
   const [formStep, setFormStep] = useState(1);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -18,14 +22,35 @@ export default function Professional() {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setError('');
+
     if (formStep < 3) {
       setFormStep(formStep + 1);
     } else {
-      alert('Thank you! We will contact you soon to verify your profile.');
-      setFormStep(1);
-      setFormData({ name: '', email: '', phone: '', service: '', experience: '', price: '' });
+      // Submit to backend
+      setLoading(true);
+      try {
+        const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+        const response = await axios.post(`${apiUrl}/professionals/apply`, {
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          service: formData.service,
+          experience: parseInt(formData.experience),
+          price: parseFloat(formData.price),
+        });
+
+        setSuccess(true);
+        setFormStep(1);
+        setFormData({ name: '', email: '', phone: '', service: '', experience: '', price: '' });
+      } catch (err) {
+        setError(err.response?.data?.message || 'Failed to submit application');
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
     }
   };
 
@@ -167,6 +192,30 @@ export default function Professional() {
           <h2 className="text-3xl font-bold text-gray-900 mb-10 text-center">Join Now</h2>
 
           <div className="bg-white border border-gray-200 rounded-2xl p-8 shadow-sm">
+            {/* Success Message */}
+            {success && (
+              <div className="mb-8 p-6 bg-green-50 border border-green-200 rounded-xl text-center">
+                <CheckCircle size={48} className="text-green-600 mx-auto mb-4" />
+                <h3 className="text-2xl font-bold text-green-900 mb-2">Application Submitted!</h3>
+                <p className="text-green-700 mb-4">
+                  Thank you for applying. We will verify your profile and contact you within 24-48 hours.
+                </p>
+                <button
+                  onClick={() => setSuccess(false)}
+                  className="text-green-600 hover:text-green-700 font-semibold"
+                >
+                  Submit Another Application
+                </button>
+              </div>
+            )}
+
+            {/* Error Message */}
+            {error && (
+              <div className="mb-8 p-4 bg-red-50 border border-red-200 rounded-xl text-red-700">
+                {error}
+              </div>
+            )}
+
             {/* Progress */}
             <div className="flex items-center justify-between mb-8">
               {[1, 2, 3].map((step) => (
@@ -316,9 +365,11 @@ export default function Professional() {
                 )}
                 <button
                   type="submit"
-                  className="flex-1 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all duration-300 font-semibold"
+                  disabled={loading}
+                  className="flex-1 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all duration-300 font-semibold disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                 >
-                  {formStep === 3 ? 'Submit Application' : 'Next'}
+                  {loading && <Loader size={18} className="animate-spin" />}
+                  {loading ? 'Submitting...' : (formStep === 3 ? 'Submit Application' : 'Next')}
                 </button>
               </div>
             </form>

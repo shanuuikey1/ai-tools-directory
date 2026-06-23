@@ -9,6 +9,7 @@ const User = require('./models/User');
 const ServiceProvider = require('./models/ServiceProvider');
 const Service = require('./models/Service');
 const Booking = require('./models/Booking');
+const ProfessionalApplication = require('./models/ProfessionalApplication');
 
 // Model associations. The booking controllers eager-load these relations
 // (e.g. include: [{ model: ServiceProvider }, { model: Service }]), which
@@ -25,6 +26,7 @@ const authRoutes = require('./routes/auth');
 const serviceRoutes = require('./routes/services');
 const bookingRoutes = require('./routes/bookings');
 const paymentRoutes = require('./routes/payments');
+const professionalRoutes = require('./routes/professionals');
 
 const app = express();
 
@@ -55,6 +57,7 @@ app.use('/api/auth', authLimiter, authRoutes);
 app.use('/api/services', serviceRoutes);
 app.use('/api/bookings', bookingRoutes);
 app.use('/api/payments', paymentRoutes);
+app.use('/api/professionals', professionalRoutes);
 
 // Error handling middleware
 app.use((err, req, res, next) => {
