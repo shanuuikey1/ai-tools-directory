@@ -1,4 +1,4 @@
-package com.urbanservices.urban_services
+package com.gharpahuchseva.app
 
 import io.flutter.embedding.android.FlutterActivity
 
