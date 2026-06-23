@@ -9,6 +9,7 @@ import {
 
 export default function Home() {
   const [heroError, setHeroError] = useState(false);
+  const [footerLogoError, setFooterLogoError] = useState(false);
 
   const stats = [
     { icon: <User size={20} className="text-blue-600" />, number: '500+', label: 'Verified Professionals' },
@@ -239,9 +240,20 @@ export default function Home() {
             {/* Brand */}
             <div>
               <div className="flex items-center space-x-2.5 mb-4">
-                <div className="w-9 h-9 bg-gradient-to-br from-blue-500 to-blue-700 rounded-lg flex items-center justify-center">
-                  <HomeIcon size={20} className="text-white" />
-                </div>
+                {footerLogoError ? (
+                  <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-700 rounded-lg flex items-center justify-center">
+                    <HomeIcon size={20} className="text-white" />
+                  </div>
+                ) : (
+                  <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center p-1 shrink-0">
+                    <img
+                      src="/logo.png"
+                      alt="Ghar Pahuch Seva"
+                      className="w-full h-full object-contain"
+                      onError={() => setFooterLogoError(true)}
+                    />
+                  </div>
+                )}
                 <span className="font-bold text-lg">Ghar Pahuch Seva</span>
               </div>
               <p className="text-gray-400 text-sm leading-relaxed">
