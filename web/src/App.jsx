@@ -13,6 +13,7 @@ import About from './pages/About';
 import HowItWorks from './pages/HowItWorks';
 import Help from './pages/Help';
 import Professional from './pages/Professional';
+import Admin from './pages/Admin';
 
 function PrivateRoute({ children }) {
   const { token, loading } = useAuth();
@@ -38,6 +39,7 @@ function AppRoutes() {
         <Route path="/how-it-works" element={<HowItWorks />} />
         <Route path="/help" element={<Help />} />
         <Route path="/professional" element={<Professional />} />
+        <Route path="/admin" element={<Admin />} />
 
         {!token ? (
           <>
