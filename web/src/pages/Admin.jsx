@@ -31,6 +31,13 @@ export default function Admin() {
       setAdminKey(key);
       localStorage.setItem('adminKey', key);
     } catch (err) {
+      // A bad/expired key (or unreachable backend) must drop back to the
+      // login form. adminKey is only persisted on success, so clearing it
+      // here is a no-op during manual login but unsticks an invalid stored
+      // key on initial load (otherwise the dashboard renders empty with no
+      // way back to the login screen except Logout).
+      setAdminKey('');
+      localStorage.removeItem('adminKey');
       setError(err.response?.data?.message || 'Failed to fetch applications. Check your admin key.');
       console.error(err);
     } finally {

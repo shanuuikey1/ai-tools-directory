@@ -4,7 +4,11 @@ exports.submitApplication = async (req, res) => {
   try {
     const { name, email, phone, service, experience, price } = req.body;
 
-    if (!name || !email || !phone || !service || !experience || !price) {
+    // Treat only missing/blank values as errors — a numeric 0 (e.g. a fresher
+    // with 0 years experience) is a valid value, so don't use falsy checks.
+    const fields = { name, email, phone, service, experience, price };
+    const isMissing = (v) => v === undefined || v === null || v === '';
+    if (Object.values(fields).some(isMissing)) {
       return res.status(400).json({ message: 'All fields are required' });
     }
 
