@@ -253,6 +253,7 @@ export default function Professional() {
                       value={formData.name}
                       onChange={handleInputChange}
                       placeholder="Your full name"
+                      maxLength="100"
                       required
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent outline-none transition"
                     />
@@ -265,6 +266,7 @@ export default function Professional() {
                       value={formData.email}
                       onChange={handleInputChange}
                       placeholder="your@email.com"
+                      pattern="[^\s@]+@[^\s@]+\.[^\s@]+"
                       required
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent outline-none transition"
                     />
@@ -277,6 +279,7 @@ export default function Professional() {
                       value={formData.phone}
                       onChange={handleInputChange}
                       placeholder="+91 999 999 9999"
+                      pattern="[\d+\s\-()]{10,}"
                       required
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent outline-none transition"
                     />
@@ -315,6 +318,8 @@ export default function Professional() {
                       value={formData.experience}
                       onChange={handleInputChange}
                       placeholder="e.g., 5"
+                      min="0"
+                      max="99"
                       required
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent outline-none transition"
                     />
@@ -327,6 +332,8 @@ export default function Professional() {
                       value={formData.price}
                       onChange={handleInputChange}
                       placeholder="e.g., 500"
+                      min="0"
+                      step="0.01"
                       required
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent outline-none transition"
                     />

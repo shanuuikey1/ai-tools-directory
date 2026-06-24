@@ -12,6 +12,28 @@ exports.submitApplication = async (req, res) => {
       return res.status(400).json({ message: 'All fields are required' });
     }
 
+    // Validate experience and price are non-negative
+    const experienceNum = parseInt(experience);
+    const priceNum = parseFloat(price);
+    if (isNaN(experienceNum) || experienceNum < 0) {
+      return res.status(400).json({ message: 'Experience must be a non-negative number' });
+    }
+    if (isNaN(priceNum) || priceNum < 0) {
+      return res.status(400).json({ message: 'Price must be a non-negative number' });
+    }
+
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return res.status(400).json({ message: 'Invalid email format' });
+    }
+
+    // Validate phone (basic: only digits and +, at least 10 chars)
+    const phoneRegex = /^[\d+\s\-()]{10,}$/;
+    if (!phoneRegex.test(phone)) {
+      return res.status(400).json({ message: 'Invalid phone format' });
+    }
+
     const application = await ProfessionalApplication.create({
       name,
       email,

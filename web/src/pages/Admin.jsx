@@ -12,6 +12,7 @@ export default function Admin() {
   const [filterStatus, setFilterStatus] = useState('all');
   const [selectedApp, setSelectedApp] = useState(null);
   const [updating, setUpdating] = useState(false);
+  const [successMessage, setSuccessMessage] = useState('');
 
   const fetchApplications = async (key) => {
     if (!key.trim()) {
@@ -65,16 +66,17 @@ export default function Admin() {
         { headers: { 'x-admin-key': adminKey } }
       );
 
-      // Update local state
+      setError('');
+      setSuccessMessage(`Application marked as ${status}`);
+      setTimeout(() => setSuccessMessage(''), 3000);
       setApplications(prev =>
         prev.map(app =>
           app.id === appId ? { ...app, status, notes } : app
         )
       );
       setSelectedApp(null);
-      alert(`Application ${status.toUpperCase()} successfully!`);
     } catch (err) {
-      alert('Failed to update application');
+      setError(err.response?.data?.message || 'Failed to update application');
       console.error(err);
     } finally {
       setUpdating(false);
@@ -193,6 +195,13 @@ export default function Admin() {
           </div>
         )}
 
+        {successMessage && (
+          <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg text-green-700 flex items-start gap-3">
+            <CheckCircle size={20} className="shrink-0 mt-0.5" />
+            <p>{successMessage}</p>
+          </div>
+        )}
+
         {/* Filters */}
         <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -252,7 +261,7 @@ export default function Admin() {
                     </td>
                     <td className="px-6 py-4 text-sm text-gray-900 capitalize">{app.service}</td>
                     <td className="px-6 py-4 text-sm text-gray-900">{app.experience} years</td>
-                    <td className="px-6 py-4 text-sm font-medium text-gray-900">₹{app.price}</td>
+                    <td className="px-6 py-4 text-sm font-medium text-gray-900">₹{parseFloat(app.price).toFixed(2)}</td>
                     <td className="px-6 py-4">
                       <span className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-sm font-medium ${
                         app.status === 'pending' ? 'bg-yellow-100 text-yellow-800' :
@@ -316,11 +325,11 @@ export default function Admin() {
                 </div>
                 <div>
                   <p className="text-sm text-gray-600 mb-1">Base Price</p>
-                  <p className="font-medium text-gray-900">₹{selectedApp.price}</p>
+                  <p className="font-medium text-gray-900">₹{parseFloat(selectedApp.price).toFixed(2)}</p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-600 mb-1">Applied On</p>
-                  <p className="font-medium text-gray-900">{new Date(selectedApp.createdAt).toLocaleDateString()}</p>
+                  <p className="font-medium text-gray-900">{new Date(selectedApp.createdAt).toLocaleDateString('en-IN', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
                 </div>
               </div>
 
