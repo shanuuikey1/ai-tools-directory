@@ -440,8 +440,8 @@ export default function Home() {
                 <li><Link to="/services" className="text-gray-400 hover:text-white transition-colors">Book a Service</Link></li>
                 <li><a href="#how-it-works" className="text-gray-400 hover:text-white transition-colors">How It Works</a></li>
                 <li><a href="mailto:info@gharpahuchseva.com?subject=Support Request" className="text-gray-400 hover:text-white transition-colors">Help &amp; Support</a></li>
-                <li><a href="/terms.html" target="_blank" className="text-gray-400 hover:text-white transition-colors">Terms &amp; Conditions</a></li>
-                <li><a href="/privacy.html" target="_blank" className="text-gray-400 hover:text-white transition-colors">Privacy Policy</a></li>
+                <li><a href="/terms.html" className="text-gray-400 hover:text-white transition-colors">Terms &amp; Conditions</a></li>
+                <li><a href="/privacy.html" className="text-gray-400 hover:text-white transition-colors">Privacy Policy</a></li>
               </ul>
             </div>
 
