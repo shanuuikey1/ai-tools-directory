@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { professionalsAPI } from '../services/api';
 import { CheckCircle, ArrowRight, Briefcase, TrendingUp, Users, Shield, Loader } from 'lucide-react';
+import { useLanguage } from '../context/LanguageContext';
 
 export default function Professional() {
+  const { t } = useLanguage();
   const [formStep, setFormStep] = useState(1);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -53,41 +55,41 @@ export default function Professional() {
     }
   };
 
-  const benefits = [
+  const benefitsData = [
     {
       icon: <TrendingUp size={32} className="text-blue-600" />,
-      title: 'Grow Your Business',
-      description: 'Access thousands of verified customers in Chhindwara',
+      titleKey: 'professional.benefitGrowth',
+      descKey: 'professional.benefitGrowthDesc',
     },
     {
       icon: <Users size={32} className="text-blue-600" />,
-      title: 'More Bookings',
-      description: 'Get consistent service requests from our platform',
+      titleKey: 'professional.benefitBookings',
+      descKey: 'professional.benefitBookingsDesc',
     },
     {
       icon: <Shield size={32} className="text-blue-600" />,
-      title: 'Secure Payments',
-      description: 'Guaranteed payment for every completed service',
+      titleKey: 'professional.benefitPayments',
+      descKey: 'professional.benefitPaymentsDesc',
     },
     {
       icon: <Briefcase size={32} className="text-blue-600" />,
-      title: 'Professional Tools',
-      description: 'Manage bookings, ratings, and earnings easily',
+      titleKey: 'professional.benefitTools',
+      descKey: 'professional.benefitToolsDesc',
     },
   ];
 
-  const requirements = [
-    'Valid government ID',
-    'Age 18 or above',
-    'Background verification clearance',
-    'Professional experience in your field',
-    'Reliable phone for customer contact',
+  const requirementsKeys = [
+    'professional.validGovId',
+    'professional.age18',
+    'professional.backgroundVerification',
+    'professional.professionalExperience',
+    'professional.reliablePhone',
   ];
 
-  const steps = [
-    { number: '1', title: 'Sign Up', description: 'Complete your profile with basic details' },
-    { number: '2', title: 'Verification', description: 'We verify your background (24-48 hours)' },
-    { number: '3', title: 'Go Live', description: 'Start receiving bookings and earn money' },
+  const stepsData = [
+    { number: '1', titleKey: 'professional.step1Title', descKey: 'professional.step1Desc' },
+    { number: '2', titleKey: 'professional.step2Title', descKey: 'professional.step2Desc' },
+    { number: '3', titleKey: 'professional.step3Title', descKey: 'professional.step3Desc' },
   ];
 
   return (
@@ -96,10 +98,10 @@ export default function Professional() {
       <section className="bg-gradient-to-br from-blue-50 via-white to-blue-50 py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-4">
-            Grow Your Service <span className="text-blue-600">Business</span>
+            {t('professional.title')}
           </h1>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Join 500+ service professionals earning ₹15,000 - ₹50,000+ per month on Ghar Pahuch Seva
+            {t('professional.subtitle')}
           </p>
         </div>
       </section>
@@ -107,13 +109,13 @@ export default function Professional() {
       {/* Benefits */}
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-4xl font-bold text-gray-900 mb-12 text-center">Why Join Us?</h2>
+          <h2 className="text-4xl font-bold text-gray-900 mb-12 text-center">{t('professional.whyJoin')}</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {benefits.map((benefit, idx) => (
+            {benefitsData.map((benefit, idx) => (
               <div key={idx} className="bg-gray-50 p-8 rounded-2xl hover:shadow-lg transition-all duration-300 text-center">
                 <div className="flex justify-center mb-4">{benefit.icon}</div>
-                <h3 className="text-xl font-bold text-gray-900 mb-3">{benefit.title}</h3>
-                <p className="text-gray-600">{benefit.description}</p>
+                <h3 className="text-xl font-bold text-gray-900 mb-3">{t(benefit.titleKey)}</h3>
+                <p className="text-gray-600">{t(benefit.descKey)}</p>
               </div>
             ))}
           </div>
@@ -123,18 +125,18 @@ export default function Professional() {
       {/* How It Works */}
       <section className="bg-blue-50 py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-4xl font-bold text-gray-900 mb-12 text-center">Getting Started is Easy</h2>
+          <h2 className="text-4xl font-bold text-gray-900 mb-12 text-center">{t('professional.gettingStarted')}</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {steps.map((step, idx) => (
+            {stepsData.map((step, idx) => (
               <div key={idx} className="relative">
                 <div className="bg-white p-8 rounded-2xl shadow-md text-center">
                   <div className="w-16 h-16 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold text-2xl mx-auto mb-4">
                     {step.number}
                   </div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-3">{step.title}</h3>
-                  <p className="text-gray-600">{step.description}</p>
+                  <h3 className="text-xl font-bold text-gray-900 mb-3">{t(step.titleKey)}</h3>
+                  <p className="text-gray-600">{t(step.descKey)}</p>
                 </div>
-                {idx < steps.length - 1 && (
+                {idx < stepsData.length - 1 && (
                   <div className="hidden md:block absolute top-1/2 -right-4 transform -translate-y-1/2">
                     <ArrowRight size={24} className="text-blue-300" />
                   </div>
@@ -149,21 +151,21 @@ export default function Professional() {
       <section className="py-20">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="bg-gradient-to-r from-blue-600 to-blue-700 rounded-2xl p-12 text-white text-center">
-            <h2 className="text-3xl font-bold mb-6">Earn 75% Commission</h2>
+            <h2 className="text-3xl font-bold mb-6">{t('professional.earnCommission')}</h2>
             <div className="grid grid-cols-2 md:grid-cols-3 gap-8">
               <div>
                 <p className="text-4xl font-bold">₹500</p>
-                <p className="text-blue-100">Service Price</p>
+                <p className="text-blue-100">{t('professional.servicePrice')}</p>
               </div>
               <div className="flex items-center justify-center">
                 <ArrowRight size={32} className="text-blue-200" />
               </div>
               <div>
                 <p className="text-4xl font-bold text-green-300">₹375</p>
-                <p className="text-blue-100">You Keep</p>
+                <p className="text-blue-100">{t('professional.youKeep')}</p>
               </div>
             </div>
-            <p className="text-blue-100 mt-8">25% platform fee • Instant payment • No hidden charges</p>
+            <p className="text-blue-100 mt-8">{t('professional.platformFeeNote')}</p>
           </div>
         </div>
       </section>
@@ -171,13 +173,13 @@ export default function Professional() {
       {/* Requirements */}
       <section className="bg-gray-50 py-20">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">Requirements</h2>
+          <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">{t('professional.requirements')}</h2>
           <div className="bg-white p-8 rounded-2xl shadow-md">
             <ul className="space-y-4">
-              {requirements.map((req, idx) => (
+              {requirementsKeys.map((key, idx) => (
                 <li key={idx} className="flex items-center space-x-4">
                   <CheckCircle size={24} className="text-green-600 shrink-0" />
-                  <span className="text-gray-700 font-medium">{req}</span>
+                  <span className="text-gray-700 font-medium">{t(key)}</span>
                 </li>
               ))}
             </ul>
@@ -188,22 +190,22 @@ export default function Professional() {
       {/* Signup Form */}
       <section className="py-20">
         <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-gray-900 mb-10 text-center">Join Now</h2>
+          <h2 className="text-3xl font-bold text-gray-900 mb-10 text-center">{t('professional.joinNow')}</h2>
 
           <div className="bg-white border border-gray-200 rounded-2xl p-8 shadow-sm">
             {/* Success Message */}
             {success && (
               <div className="mb-8 p-6 bg-green-50 border border-green-200 rounded-xl text-center">
                 <CheckCircle size={48} className="text-green-600 mx-auto mb-4" />
-                <h3 className="text-2xl font-bold text-green-900 mb-2">Application Submitted!</h3>
+                <h3 className="text-2xl font-bold text-green-900 mb-2">{t('professional.success')}</h3>
                 <p className="text-green-700 mb-4">
-                  Thank you for applying. We will verify your profile and contact you within 24-48 hours.
+                  {t('professional.successMessage')}
                 </p>
                 <button
                   onClick={() => setSuccess(false)}
                   className="text-green-600 hover:text-green-700 font-semibold"
                 >
-                  Submit Another Application
+                  {t('professional.submitAnother')}
                 </button>
               </div>
             )}
@@ -243,41 +245,41 @@ export default function Professional() {
               {/* Step 1 */}
               {formStep === 1 && (
                 <div className="space-y-4">
-                  <h3 className="text-xl font-bold text-gray-900 mb-6">Basic Information</h3>
+                  <h3 className="text-xl font-bold text-gray-900 mb-6">{t('professional.basicInfo')}</h3>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">{t('professional.fullName')}</label>
                     <input
                       type="text"
                       name="name"
                       value={formData.name}
                       onChange={handleInputChange}
-                      placeholder="Your full name"
+                      placeholder={t('professional.fullNamePlaceholder')}
                       maxLength="100"
                       required
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent outline-none transition"
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">{t('professional.email')}</label>
                     <input
                       type="email"
                       name="email"
                       value={formData.email}
                       onChange={handleInputChange}
-                      placeholder="your@email.com"
+                      placeholder={t('professional.emailPlaceholder')}
                       pattern="[^\s@]+@[^\s@]+\.[^\s@]+"
                       required
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent outline-none transition"
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">{t('professional.phoneNumber')}</label>
                     <input
                       type="tel"
                       name="phone"
                       value={formData.phone}
                       onChange={handleInputChange}
-                      placeholder="+91 999 999 9999"
+                      placeholder={t('professional.phoneNumberPlaceholder')}
                       pattern="[\d+\s\-()]{10,}"
                       required
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent outline-none transition"
@@ -289,9 +291,9 @@ export default function Professional() {
               {/* Step 2 */}
               {formStep === 2 && (
                 <div className="space-y-4">
-                  <h3 className="text-xl font-bold text-gray-900 mb-6">Service Details</h3>
+                  <h3 className="text-xl font-bold text-gray-900 mb-6">{t('professional.serviceDetails')}</h3>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Service Type</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">{t('professional.serviceType')}</label>
                     <select
                       name="service"
                       value={formData.service}
@@ -299,24 +301,24 @@ export default function Professional() {
                       required
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent outline-none transition"
                     >
-                      <option value="">Select a service</option>
-                      <option value="plumbing">Plumbing</option>
-                      <option value="electrical">Electrical</option>
-                      <option value="cleaning">Home Cleaning</option>
-                      <option value="carpentry">Carpentry</option>
-                      <option value="beauty">Beauty Services</option>
-                      <option value="ac-repair">AC Repair</option>
-                      <option value="other">Other</option>
+                      <option value="">{t('professional.selectService')}</option>
+                      <option value="plumbing">{t('professional.plumbing')}</option>
+                      <option value="electrical">{t('professional.electrical')}</option>
+                      <option value="cleaning">{t('professional.cleaning')}</option>
+                      <option value="carpentry">{t('professional.carpentry')}</option>
+                      <option value="beauty">{t('professional.beauty')}</option>
+                      <option value="ac-repair">{t('professional.acRepair')}</option>
+                      <option value="other">{t('professional.other')}</option>
                     </select>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Years of Experience</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">{t('professional.yearsExperience')}</label>
                     <input
                       type="number"
                       name="experience"
                       value={formData.experience}
                       onChange={handleInputChange}
-                      placeholder="e.g., 5"
+                      placeholder={t('professional.yearsPlaceholder')}
                       min="0"
                       max="99"
                       required
@@ -324,13 +326,13 @@ export default function Professional() {
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Base Price (₹)</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">{t('professional.basePrice')}</label>
                     <input
                       type="number"
                       name="price"
                       value={formData.price}
                       onChange={handleInputChange}
-                      placeholder="e.g., 500"
+                      placeholder={t('professional.basePricePlaceholder')}
                       min="0"
                       step="0.01"
                       required
@@ -343,17 +345,17 @@ export default function Professional() {
               {/* Step 3 */}
               {formStep === 3 && (
                 <div className="text-center py-6">
-                  <h3 className="text-xl font-bold text-gray-900 mb-6">Review Your Information</h3>
+                  <h3 className="text-xl font-bold text-gray-900 mb-6">{t('professional.reviewInfo')}</h3>
                   <div className="bg-gray-50 p-6 rounded-xl mb-6">
-                    <p className="text-sm text-gray-600 mb-2"><strong>Name:</strong> {formData.name}</p>
-                    <p className="text-sm text-gray-600 mb-2"><strong>Email:</strong> {formData.email}</p>
-                    <p className="text-sm text-gray-600 mb-2"><strong>Phone:</strong> {formData.phone}</p>
-                    <p className="text-sm text-gray-600 mb-2"><strong>Service:</strong> {formData.service}</p>
-                    <p className="text-sm text-gray-600 mb-2"><strong>Experience:</strong> {formData.experience} years</p>
-                    <p className="text-sm text-gray-600"><strong>Base Price:</strong> ₹{formData.price}</p>
+                    <p className="text-sm text-gray-600 mb-2"><strong>{t('professional.nameLabel')}</strong> {formData.name}</p>
+                    <p className="text-sm text-gray-600 mb-2"><strong>{t('professional.emailLabel')}</strong> {formData.email}</p>
+                    <p className="text-sm text-gray-600 mb-2"><strong>{t('professional.phoneLabel')}</strong> {formData.phone}</p>
+                    <p className="text-sm text-gray-600 mb-2"><strong>{t('professional.serviceLabel')}</strong> {formData.service}</p>
+                    <p className="text-sm text-gray-600 mb-2"><strong>{t('professional.experienceLabel')}</strong> {formData.experience} {t('professional.yearsUnit')}</p>
+                    <p className="text-sm text-gray-600"><strong>{t('professional.basePriceLabel')}</strong> ₹{formData.price}</p>
                   </div>
                   <p className="text-sm text-gray-600 mb-4">
-                    Your profile will be verified within 24-48 hours. You'll receive an email confirmation.
+                    {t('professional.verificationNote')}
                   </p>
                 </div>
               )}
@@ -366,7 +368,7 @@ export default function Professional() {
                     onClick={() => setFormStep(formStep - 1)}
                     className="flex-1 px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-all duration-300 font-semibold"
                   >
-                    Back
+                    {t('professional.back')}
                   </button>
                 )}
                 <button
@@ -375,14 +377,14 @@ export default function Professional() {
                   className="flex-1 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all duration-300 font-semibold disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                 >
                   {loading && <Loader size={18} className="animate-spin" />}
-                  {loading ? 'Submitting...' : (formStep === 3 ? 'Submit Application' : 'Next')}
+                  {loading ? t('professional.submitting') : (formStep === 3 ? t('professional.submit') : t('professional.next'))}
                 </button>
               </div>
             </form>
           </div>
 
           <p className="text-center text-gray-600 text-sm mt-6">
-            Already a professional? <Link to="/login" className="text-blue-600 hover:underline font-semibold">Log in here</Link>
+            {t('professional.alreadyPro')} <Link to="/login" className="text-blue-600 hover:underline font-semibold">{t('professional.loginHere')}</Link>
           </p>
         </div>
       </section>
@@ -390,13 +392,13 @@ export default function Professional() {
       {/* CTA */}
       <section className="bg-blue-600 text-white py-16">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl font-bold mb-4">Ready to grow your business?</h2>
-          <p className="text-blue-100 mb-8">Join thousands of service professionals earning steady income on Ghar Pahuch Seva.</p>
+          <h2 className="text-3xl font-bold mb-4">{t('professional.readyToGrow')}</h2>
+          <p className="text-blue-100 mb-8">{t('professional.readyToGrowDesc')}</p>
           <button
             onClick={() => document.querySelector('form')?.scrollIntoView({ behavior: 'smooth' })}
             className="bg-white text-blue-600 px-8 py-3 rounded-lg hover:bg-gray-100 transition-all duration-300 font-semibold"
           >
-            Start Your Application Now
+            {t('professional.startApplication')}
           </button>
         </div>
       </section>
