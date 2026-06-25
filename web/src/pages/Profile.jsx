@@ -1,11 +1,13 @@
 import React from 'react';
 import { useAuth } from '../context/AuthContext';
+import { useLanguage } from '../context/LanguageContext';
 import { useNavigate } from 'react-router-dom';
 import { User, Mail, Phone, Calendar } from 'lucide-react';
 import SEO from '../components/SEO';
 
 export default function Profile() {
   const { user, logout } = useAuth();
+  const { t } = useLanguage();
   const navigate = useNavigate();
 
   if (!user) {
@@ -14,7 +16,7 @@ export default function Profile() {
         <SEO title="Profile" description="Your Ghar Pahuch Seva profile." />
         <div className="min-h-screen flex items-center justify-center">
           <div className="text-center">
-            <p className="text-gray-600">Please log in to view your profile.</p>
+            <p className="text-gray-600">{t('profile.loginToView')}</p>
           </div>
         </div>
       </>
@@ -31,7 +33,7 @@ export default function Profile() {
       <SEO title="My Profile" description="Manage your Ghar Pahuch Seva account profile and settings." />
       <div className="min-h-screen bg-gray-50 py-12">
         <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-8">My Profile</h1>
+          <h1 className="text-3xl font-bold text-gray-900 mb-8">{t('profile.title')}</h1>
 
           <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-8">
             <div className="flex items-center space-x-4 mb-8">
@@ -42,7 +44,7 @@ export default function Profile() {
                 <h2 className="text-xl font-bold text-gray-900">
                   {user.firstName} {user.lastName}
                 </h2>
-                <p className="text-gray-500">Customer</p>
+                <p className="text-gray-500">{t('profile.customer')}</p>
               </div>
             </div>
 
@@ -50,23 +52,23 @@ export default function Profile() {
               <div className="flex items-center space-x-3 p-4 bg-gray-50 rounded-lg">
                 <Mail size={20} className="text-gray-400" aria-hidden="true" />
                 <div>
-                  <p className="text-sm text-gray-500">Email</p>
+                  <p className="text-sm text-gray-500">{t('profile.email')}</p>
                   <p className="font-medium text-gray-900">{user.email}</p>
                 </div>
               </div>
               <div className="flex items-center space-x-3 p-4 bg-gray-50 rounded-lg">
                 <Phone size={20} className="text-gray-400" aria-hidden="true" />
                 <div>
-                  <p className="text-sm text-gray-500">Phone</p>
-                  <p className="font-medium text-gray-900">{user.phone || 'Not provided'}</p>
+                  <p className="text-sm text-gray-500">{t('profile.phone')}</p>
+                  <p className="font-medium text-gray-900">{user.phone || t('profile.notProvided')}</p>
                 </div>
               </div>
               <div className="flex items-center space-x-3 p-4 bg-gray-50 rounded-lg">
                 <Calendar size={20} className="text-gray-400" aria-hidden="true" />
                 <div>
-                  <p className="text-sm text-gray-500">Member Since</p>
+                  <p className="text-sm text-gray-500">{t('profile.memberSince')}</p>
                   <p className="font-medium text-gray-900">
-                    {user.createdAt ? new Date(user.createdAt).toLocaleDateString() : 'Recently'}
+                    {user.createdAt ? new Date(user.createdAt).toLocaleDateString() : t('profile.recently')}
                   </p>
                 </div>
               </div>
@@ -77,7 +79,7 @@ export default function Profile() {
                 onClick={handleLogout}
                 className="w-full bg-red-50 text-red-600 font-semibold py-3 rounded-lg hover:bg-red-100 transition"
               >
-                Log Out
+                {t('profile.logOut')}
               </button>
             </div>
           </div>

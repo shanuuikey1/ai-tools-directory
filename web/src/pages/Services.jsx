@@ -4,8 +4,10 @@ import { servicesAPI } from '../services/api';
 import { Wrench, AlertCircle, Loader, Search, X } from 'lucide-react';
 import { SkeletonCard } from '../components/Skeleton';
 import SEO from '../components/SEO';
+import { useLanguage } from '../context/LanguageContext';
 
 export default function Services() {
+  const { t } = useLanguage();
   const [searchParams, setSearchParams] = useSearchParams();
   const categoryParam = searchParams.get('category') || '';
 
@@ -34,7 +36,7 @@ export default function Services() {
       setServices(servicesRes.data.services || []);
       setCategories(categoriesRes.data.categories || []);
     } catch (err) {
-      setError('Failed to load services');
+      setError(t('services.loadFailed'));
     } finally {
       setLoading(false);
     }
@@ -76,8 +78,8 @@ export default function Services() {
       <div className="min-h-screen bg-gray-50 py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-12">
-            <h1 className="text-4xl font-bold text-gray-900 mb-2">All Services</h1>
-            <p className="text-gray-600">Browse and book from our wide range of professional services</p>
+            <h1 className="text-4xl font-bold text-gray-900 mb-2">{t('services.title')}</h1>
+            <p className="text-gray-600">{t('services.subtitle')}</p>
           </div>
 
           {error && (
@@ -95,7 +97,7 @@ export default function Services() {
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search services..."
+                placeholder={t('services.searchPlaceholder')}
                 className="w-full pl-10 pr-10 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 aria-label="Search services"
               />
@@ -123,7 +125,7 @@ export default function Services() {
                       : 'bg-white text-gray-700 border border-gray-300 hover:border-blue-600'
                   }`}
                 >
-                  All Services
+                  {t('services.allServices')}
                 </button>
                 {categories.map((category) => (
                   <button
@@ -143,7 +145,7 @@ export default function Services() {
                     onClick={clearFilters}
                     className="text-sm text-gray-500 hover:text-red-600 underline ml-2"
                   >
-                    Clear filters
+                    {t('services.clearFilters')}
                   </button>
                 )}
               </div>
@@ -181,10 +183,10 @@ export default function Services() {
                   )}
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-sm text-gray-500">Starting from</p>
+                      <p className="text-sm text-gray-500">{t('services.startingFrom')}</p>
                       <p className="text-2xl font-bold text-blue-600">₹{service.base_price}</p>
                     </div>
-                    <span className="text-blue-600 font-semibold hover:text-blue-700">Book Now →</span>
+                    <span className="text-blue-600 font-semibold hover:text-blue-700">{t('services.bookNow')}</span>
                   </div>
                 </Link>
               ))}
@@ -192,8 +194,8 @@ export default function Services() {
           ) : !loading && (
             <div className="text-center py-12">
               <Wrench size={48} className="text-gray-400 mx-auto mb-4" />
-              <p className="text-gray-600 text-lg">No services found</p>
-              <p className="text-gray-500 text-sm mt-1">Try adjusting your search or filters</p>
+              <p className="text-gray-600 text-lg">{t('services.noServices')}</p>
+              <p className="text-gray-500 text-sm mt-1">{t('services.noServicesHint')}</p>
             </div>
           )}
         </div>

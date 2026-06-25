@@ -4,8 +4,10 @@ import { bookingsAPI } from '../services/api';
 import { AlertCircle, Calendar, Clock, MapPin, Star } from 'lucide-react';
 import SEO from '../components/SEO';
 import { Skeleton } from '../components/Skeleton';
+import { useLanguage } from '../context/LanguageContext';
 
 export default function Bookings() {
+  const { t } = useLanguage();
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -22,7 +24,7 @@ export default function Bookings() {
       const response = await bookingsAPI.getMyBookings();
       setBookings(response.data.bookings || []);
     } catch (err) {
-      setError('Failed to load bookings');
+      setError(t('bookings.loadFailed'));
     } finally {
       setLoading(false);
     }
@@ -34,9 +36,9 @@ export default function Bookings() {
       setRatingBookingId(null);
       setRatingData({ rating: 5, feedback: '' });
       fetchBookings();
-      alert('Thank you for your rating!');
+      alert(t('bookings.ratingThanks'));
     } catch (err) {
-      setError('Failed to submit rating');
+      setError(t('bookings.ratingFailed'));
     }
   };
 
@@ -50,12 +52,18 @@ export default function Bookings() {
     }
   };
 
+  const getStatusLabel = (status) => {
+    const key = `bookings.status${status.charAt(0).toUpperCase() + status.slice(1)}`;
+    const label = t(key);
+    return label === key ? status.charAt(0).toUpperCase() + status.slice(1) : label;
+  };
+
   const formatDate = (dateString) => {
-    if (!dateString) return 'Not scheduled';
+    if (!dateString) return t('bookings.notScheduled');
     try {
       return new Date(dateString).toLocaleDateString();
     } catch {
-      return 'Invalid date';
+      return t('bookings.invalidDate');
     }
   };
 
@@ -63,7 +71,7 @@ export default function Bookings() {
     return (
       <div className="min-h-screen bg-gray-50 py-12">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-8">My Bookings</h1>
+          <h1 className="text-3xl font-bold text-gray-900 mb-8">{t('bookings.title')}</h1>
           <div className="space-y-4">
             {Array.from({ length: 3 }).map((_, i) => (
               <div key={i} className="bg-white rounded-lg shadow-md p-6">
@@ -93,8 +101,8 @@ export default function Bookings() {
       <div className="min-h-screen bg-gray-50 py-12">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-8">
-            <h1 className="text-3xl font-bold text-gray-900">My Bookings</h1>
-            <p className="text-gray-600">Track and manage your service bookings</p>
+            <h1 className="text-3xl font-bold text-gray-900">{t('bookings.title')}</h1>
+            <p className="text-gray-600">{t('bookings.subtitle')}</p>
           </div>
 
           {error && (
@@ -113,10 +121,10 @@ export default function Bookings() {
                       <div className="flex items-start justify-between mb-4">
                         <div>
                           <h3 className="text-xl font-semibold text-gray-900">{booking.Service?.name}</h3>
-                          <p className="text-sm text-gray-500">Booking #{booking.id}</p>
+                          <p className="text-sm text-gray-500">{t('bookings.bookingNo', { id: booking.id })}</p>
                         </div>
                         <span className={`px-3 py-1 rounded-full border text-sm font-semibold ${getStatusColor(booking.status)}`}>
-                          {booking.status.charAt(0).toUpperCase() + booking.status.slice(1)}
+                          {getStatusLabel(booking.status)}
                         </span>
                       </div>
 
@@ -127,18 +135,18 @@ export default function Bookings() {
                         </div>
                         <div className="flex items-center space-x-3">
                           <Clock size={18} className="text-gray-400" aria-hidden="true" />
-                          <span className="text-gray-700">{booking.service_time || 'Not scheduled'}</span>
+                          <span className="text-gray-700">{booking.service_time || t('bookings.notScheduled')}</span>
                         </div>
                         <div className="flex items-center space-x-3">
                           <MapPin size={18} className="text-gray-400" aria-hidden="true" />
-                          <span className="text-gray-700">{booking.service_address || 'No address provided'}</span>
+                          <span className="text-gray-700">{booking.service_address || t('bookings.noAddress')}</span>
                         </div>
                       </div>
 
                       {booking.ServiceProvider && (
                         <div className="mt-4 pt-4 border-t">
-                          <p className="text-sm text-gray-500 mb-1">Service Provider:</p>
-                          <p className="font-semibold text-gray-900">{booking.ServiceProvider.name || 'Unknown'}</p>
+                          <p className="text-sm text-gray-500 mb-1">{t('bookings.provider')}</p>
+                          <p className="font-semibold text-gray-900">{booking.ServiceProvider.name || t('bookings.unknown')}</p>
                           <p className="text-sm text-gray-600">{booking.ServiceProvider.phone || ''}</p>
                           <div className="flex items-center space-x-1 mt-1">
                             <Star size={16} className="text-yellow-400" aria-hidden="true" />
@@ -151,16 +159,16 @@ export default function Bookings() {
                     <div className="flex flex-col justify-between">
                       <div>
                         <div className="bg-gray-50 rounded-lg p-4 mb-4">
-                          <p className="text-sm text-gray-600 mb-2">Amount Paid</p>
+                          <p className="text-sm text-gray-600 mb-2">{t('bookings.amountPaid')}</p>
                           <p className="text-3xl font-bold text-blue-600">₹{booking.service_price}</p>
-                          <p className="text-xs text-gray-500 mt-2">All-inclusive · No hidden charges</p>
+                          <p className="text-xs text-gray-500 mt-2">{t('bookings.allInclusive')}</p>
                         </div>
 
                         {booking.status === 'completed' && !booking.customer_rating && (
                           <div className="mb-4">
                             {ratingBookingId === booking.id ? (
                               <div className="bg-blue-50 rounded-lg p-4 space-y-3">
-                                <h4 className="font-semibold text-gray-900">Rate This Service</h4>
+                                <h4 className="font-semibold text-gray-900">{t('bookings.rateThisService')}</h4>
                                 <div className="flex space-x-1">
                                   {[1, 2, 3, 4, 5].map((star) => (
                                     <button
@@ -175,18 +183,18 @@ export default function Bookings() {
                                 <textarea
                                   value={ratingData.feedback}
                                   onChange={(e) => setRatingData({ ...ratingData, feedback: e.target.value })}
-                                  placeholder="Share your experience..."
+                                  placeholder={t('bookings.shareExperience')}
                                   className="input-field resize-none"
                                   rows="2"
                                 />
                                 <div className="flex space-x-2">
-                                  <button onClick={() => handleRateBooking(booking.id)} className="flex-1 btn-primary">Submit Rating</button>
-                                  <button onClick={() => setRatingBookingId(null)} className="flex-1 btn-secondary">Cancel</button>
+                                  <button onClick={() => handleRateBooking(booking.id)} className="flex-1 btn-primary">{t('bookings.submitRating')}</button>
+                                  <button onClick={() => setRatingBookingId(null)} className="flex-1 btn-secondary">{t('common.cancel')}</button>
                                 </div>
                               </div>
                             ) : (
                               <button onClick={() => setRatingBookingId(booking.id)} className="w-full px-4 py-2 border border-blue-600 text-blue-600 rounded-lg hover:bg-blue-50 transition">
-                                Rate Service
+                                {t('bookings.rateService')}
                               </button>
                             )}
                           </div>
@@ -194,7 +202,7 @@ export default function Bookings() {
 
                         {booking.customer_rating && (
                           <div className="bg-green-50 rounded-lg p-4 mb-4">
-                            <p className="text-sm text-green-700 mb-1">✓ You rated this service</p>
+                            <p className="text-sm text-green-700 mb-1">{t('bookings.youRated')}</p>
                             <div className="flex items-center space-x-1">
                               {[...Array(5)].map((_, i) => (
                                 <Star key={i} size={16} className={i < booking.customer_rating ? 'text-yellow-400 fill-yellow-400' : 'text-gray-300'} />
@@ -208,9 +216,9 @@ export default function Bookings() {
                       </div>
 
                       <div className="mt-4 pt-4 border-t">
-                        <p className="text-sm text-gray-600 mb-1">Payment Status</p>
+                        <p className="text-sm text-gray-600 mb-1">{t('bookings.paymentStatus')}</p>
                         <p className={`font-semibold ${booking.payment_status === 'completed' ? 'text-green-600' : 'text-yellow-600'}`}>
-                          {booking.payment_status === 'completed' ? '✓ Paid' : 'Pending'}
+                          {booking.payment_status === 'completed' ? t('bookings.paid') : t('bookings.pending')}
                         </p>
                       </div>
                     </div>
@@ -221,9 +229,9 @@ export default function Bookings() {
           ) : (
             <div className="text-center py-12 bg-white rounded-lg shadow-md">
               <Calendar size={48} className="text-gray-400 mx-auto mb-4" aria-hidden="true" />
-              <p className="text-gray-600 text-lg mb-4">No bookings yet</p>
+              <p className="text-gray-600 text-lg mb-4">{t('bookings.noBookings')}</p>
               <Link to="/services" className="text-blue-600 hover:text-blue-700 font-semibold">
-                Browse services to make your first booking →
+                {t('bookings.browseToBook')}
               </Link>
             </div>
           )}
