@@ -17,10 +17,10 @@
 # (Site settings → Environment variables → VITE_API_URL) once the
 # backend is deployed, then trigger a redeploy.
 [context.production.environment]
-  VITE_API_URL = "https://ghar-pahuch-seva-backend.onrender.com/api"
+  VITE_API_URL = "https://urban-services-backend-1khb.onrender.com/api"
 
 [context.deploy-preview.environment]
-  VITE_API_URL = "https://ghar-pahuch-seva-backend.onrender.com/api"
+  VITE_API_URL = "https://urban-services-backend-1khb.onrender.com/api"
 
 [context.branch-deploy.environment]
-  VITE_API_URL = "https://ghar-pahuch-seva-backend.onrender.com/api"
+  VITE_API_URL = "https://urban-services-backend-1khb.onrender.com/api"
