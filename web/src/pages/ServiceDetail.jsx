@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { servicesAPI, bookingsAPI, paymentsAPI } from '../services/api';
 import { useAuth } from '../context/AuthContext';
+import { useLanguage } from '../context/LanguageContext';
 import { AlertCircle, Loader, MapPin, Calendar, Clock } from 'lucide-react';
 import { bookingSchema } from '../validation/schemas';
 import SEO from '../components/SEO';
@@ -12,6 +13,7 @@ export default function ServiceDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
   const { token, user } = useAuth();
+  const { t } = useLanguage();
   const [service, setService] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -139,7 +141,7 @@ export default function ServiceDetail() {
       const response = await servicesAPI.getById(id);
       setService(response.data.service);
     } catch (err) {
-      setError('Failed to load service details');
+      setError(t('serviceDetail.loadFailed'));
     } finally {
       setLoading(false);
     }
@@ -184,10 +186,10 @@ export default function ServiceDetail() {
             razorpayOrderId: orderResponse.data.orderId,
             razorpaySignature: 'mock_signature',
           });
-          alert('Booking confirmed! (Sandbox Mode)');
+          alert(t('serviceDetail.bookingConfirmedSandbox'));
           navigate('/bookings');
         } catch (err) {
-          setError(err.response?.data?.message || 'Payment verification failed (Sandbox Mode)');
+          setError(err.response?.data?.message || t('serviceDetail.paymentVerifyFailedSandbox'));
         } finally {
           setBookingLoading(false);
         }
@@ -201,13 +203,13 @@ export default function ServiceDetail() {
       document.body.appendChild(script);
 
       script.onerror = () => {
-        setError('Failed to load payment gateway. Please check your internet connection.');
+        setError(t('serviceDetail.gatewayLoadFailed'));
         setBookingLoading(false);
       };
 
       script.onload = () => {
         if (typeof window.Razorpay === 'undefined') {
-          setError('Razorpay SDK failed to load. Please check your network connection.');
+          setError(t('serviceDetail.sdkLoadFailed'));
           setBookingLoading(false);
           return;
         }
@@ -226,10 +228,10 @@ export default function ServiceDetail() {
                 razorpayOrderId: response.razorpay_order_id,
                 razorpaySignature: response.razorpay_signature,
               });
-              alert('Booking confirmed! You will receive updates via SMS and email.');
+              alert(t('serviceDetail.bookingConfirmed'));
               navigate('/bookings');
             } catch (err) {
-              setError('Payment verification failed');
+              setError(t('serviceDetail.paymentVerifyFailed'));
             }
           },
           prefill: {
@@ -243,7 +245,7 @@ export default function ServiceDetail() {
         rzp.open();
       };
     } catch (err) {
-      setError(err.response?.data?.message || 'Booking failed. Please try again.');
+      setError(err.response?.data?.message || t('serviceDetail.bookingFailed'));
     } finally {
       setBookingLoading(false);
     }
@@ -262,7 +264,7 @@ export default function ServiceDetail() {
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <AlertCircle size={48} className="text-red-600 mx-auto mb-4" aria-hidden="true" />
-          <p className="text-gray-600 text-lg">Service not found</p>
+          <p className="text-gray-600 text-lg">{t('serviceDetail.notFound')}</p>
         </div>
       </div>
     );
@@ -279,7 +281,7 @@ export default function ServiceDetail() {
               className="text-blue-600 hover:text-blue-700 font-semibold mb-4"
               aria-label="Back to services list"
             >
-              ← Back to Services
+              {t('serviceDetail.backToServices')}
             </button>
             <h1 className="text-4xl font-bold text-gray-900">{service.name}</h1>
             <p className="text-gray-600 mt-2">{service.category}</p>
@@ -299,21 +301,21 @@ export default function ServiceDetail() {
                   ₹{service.base_price}
                 </h2>
                 <p className="text-gray-600 leading-relaxed mb-6">
-                  {service.description || 'Professional ' + service.name + ' service by verified providers'}
+                  {service.description || t('serviceDetail.defaultDesc', { name: service.name })}
                 </p>
 
                 <div className="space-y-4">
                   <div className="flex items-center space-x-3">
                     <Clock size={20} className="text-blue-600" aria-hidden="true" />
-                    <span className="text-gray-700">Flexible timing available</span>
+                    <span className="text-gray-700">{t('serviceDetail.flexibleTiming')}</span>
                   </div>
                   <div className="flex items-center space-x-3">
                     <MapPin size={20} className="text-blue-600" aria-hidden="true" />
-                    <span className="text-gray-700">Service at your location</span>
+                    <span className="text-gray-700">{t('serviceDetail.atYourLocation')}</span>
                   </div>
                   <div className="flex items-center space-x-3">
                     <AlertCircle size={20} className="text-blue-600" aria-hidden="true" />
-                    <span className="text-gray-700">Verified & professional</span>
+                    <span className="text-gray-700">{t('serviceDetail.verifiedPro')}</span>
                   </div>
                 </div>
               </div>
@@ -323,7 +325,7 @@ export default function ServiceDetail() {
               <div className="bg-white rounded-lg shadow-lg p-8">
                 {bookingStep === 1 ? (
                   <>
-                    <h3 className="text-2xl font-bold mb-6">Book This Service</h3>
+                    <h3 className="text-2xl font-bold mb-6">{t('serviceDetail.bookThisService')}</h3>
                     <form onSubmit={handleSubmit(onSubmitBooking)} className="space-y-6" noValidate>
                       {/* Hide scrollbar styles */}
                       <style>{`
@@ -334,7 +336,7 @@ export default function ServiceDetail() {
                       <div>
                         <label className="block text-xs font-bold text-gray-700 uppercase tracking-widest mb-3 flex items-center gap-1.5">
                           <Calendar size={14} className="text-indigo-605" />
-                          Select Service Date
+                          {t('serviceDetail.selectDate')}
                         </label>
                         <input type="hidden" {...register('serviceDate')} />
                         
@@ -379,13 +381,13 @@ export default function ServiceDetail() {
                                 >
                                   {isCustomDateSelected ? (
                                     <>
-                                      <span className="text-[9px] uppercase font-bold tracking-wider opacity-85">Custom</span>
+                                      <span className="text-[9px] uppercase font-bold tracking-wider opacity-85">{t('serviceDetail.custom')}</span>
                                       <span className="text-sm font-black mt-0.5 leading-none">{formatDisplayDateShort(watchDate)}</span>
                                     </>
                                   ) : (
                                     <>
                                       <Calendar size={14} className="text-gray-500 mx-auto" />
-                                      <span className="text-[8px] font-bold mt-1.5 uppercase opacity-80">More...</span>
+                                      <span className="text-[8px] font-bold mt-1.5 uppercase opacity-80">{t('serviceDetail.more')}</span>
                                     </>
                                   )}
                                 </button>
@@ -411,7 +413,7 @@ export default function ServiceDetail() {
                       <div>
                         <label className="block text-xs font-bold text-gray-700 uppercase tracking-widest mb-3 flex items-center gap-1.5">
                           <Clock size={14} className="text-indigo-605" />
-                          Select Service Time Slot
+                          {t('serviceDetail.selectTime')}
                         </label>
                         <input type="hidden" {...register('serviceTime')} />
                         
@@ -456,7 +458,7 @@ export default function ServiceDetail() {
                             }`}
                           >
                             <Clock size={12} className={showCustomTimePicker ? 'text-white' : 'text-gray-500'} />
-                            <span>Custom...</span>
+                            <span>{t('serviceDetail.customTime')}</span>
                           </button>
                         </div>
 
@@ -464,7 +466,7 @@ export default function ServiceDetail() {
                         {showCustomTimePicker && (
                           <div className="mt-3 p-3.5 bg-slate-50 border border-gray-200 rounded-2xl flex items-center gap-2 animate-fade-in">
                             <div className="flex-1">
-                              <label className="block text-[8px] font-bold text-gray-400 uppercase tracking-wider mb-1 px-1">Hour</label>
+                              <label className="block text-[8px] font-bold text-gray-400 uppercase tracking-wider mb-1 px-1">{t('serviceDetail.hour')}</label>
                               <select
                                 value={customHour}
                                 onChange={(e) => handleCustomTimeChange(e.target.value, customMinute, customAmPm)}
@@ -477,7 +479,7 @@ export default function ServiceDetail() {
                             </div>
                             <span className="text-gray-300 font-black pt-4">:</span>
                             <div className="flex-1">
-                              <label className="block text-[8px] font-bold text-gray-400 uppercase tracking-wider mb-1 px-1">Minute</label>
+                              <label className="block text-[8px] font-bold text-gray-400 uppercase tracking-wider mb-1 px-1">{t('serviceDetail.minute')}</label>
                               <select
                                 value={customMinute}
                                 onChange={(e) => handleCustomTimeChange(customHour, e.target.value, customAmPm)}
@@ -489,7 +491,7 @@ export default function ServiceDetail() {
                               </select>
                             </div>
                             <div className="flex-1">
-                              <label className="block text-[8px] font-bold text-gray-400 uppercase tracking-wider mb-1 px-1">Period</label>
+                              <label className="block text-[8px] font-bold text-gray-400 uppercase tracking-wider mb-1 px-1">{t('serviceDetail.period')}</label>
                               <select
                                 value={customAmPm}
                                 onChange={(e) => handleCustomTimeChange(customHour, customMinute, e.target.value)}
@@ -506,12 +508,12 @@ export default function ServiceDetail() {
 
                       <div>
                         <label htmlFor="serviceAddress" className="block text-sm font-medium text-gray-700 mb-2">
-                          Service Address
+                          {t('serviceDetail.serviceAddress')}
                         </label>
                         <textarea
                           id="serviceAddress"
                           {...register('serviceAddress')}
-                          placeholder="Enter your complete address"
+                          placeholder={t('serviceDetail.addressPlaceholder')}
                           rows="3"
                           className={`input-field resize-none ${errors.serviceAddress ? 'border-red-300 focus:ring-red-500' : ''}`}
                           aria-invalid={errors.serviceAddress ? 'true' : 'false'}
@@ -522,10 +524,10 @@ export default function ServiceDetail() {
 
                       <div className="border-t pt-4 mt-4">
                         <div className="flex justify-between text-lg font-bold">
-                          <span>Total Amount</span>
+                          <span>{t('serviceDetail.totalAmount')}</span>
                           <span className="text-blue-600">₹{service.base_price}</span>
                         </div>
-                        <p className="text-xs text-gray-500 mt-1">All-inclusive price · No hidden charges</p>
+                        <p className="text-xs text-gray-500 mt-1">{t('serviceDetail.allInclusive')}</p>
                       </div>
 
                       <button
@@ -534,25 +536,25 @@ export default function ServiceDetail() {
                         className="w-full btn-primary mt-6 disabled:opacity-50"
                         aria-label="Proceed to payment"
                       >
-                        Proceed to Payment
+                        {t('serviceDetail.proceedToPayment')}
                       </button>
                     </form>
                   </>
                 ) : (
                   <>
-                    <h3 className="text-2xl font-bold mb-6">Confirm Booking</h3>
+                    <h3 className="text-2xl font-bold mb-6">{t('serviceDetail.confirmBooking')}</h3>
                     <div className="bg-gray-50 rounded-lg p-4 mb-6">
-                      <h4 className="font-semibold mb-3">Booking Details</h4>
+                      <h4 className="font-semibold mb-3">{t('serviceDetail.bookingDetails')}</h4>
                       <div className="space-y-2 text-sm">
-                        <div className="flex justify-between"><span className="text-gray-600">Service:</span><span className="font-medium">{service.name}</span></div>
-                        <div className="flex justify-between"><span className="text-gray-600">Date:</span><span className="font-medium">{formatDisplayDate(watchDate)}</span></div>
-                        <div className="flex justify-between"><span className="text-gray-600">Time:</span><span className="font-medium">{formatDisplayTime(watchTime)}</span></div>
+                        <div className="flex justify-between"><span className="text-gray-600">{t('serviceDetail.serviceLabel')}</span><span className="font-medium">{service.name}</span></div>
+                        <div className="flex justify-between"><span className="text-gray-600">{t('serviceDetail.dateLabel')}</span><span className="font-medium">{formatDisplayDate(watchDate)}</span></div>
+                        <div className="flex justify-between"><span className="text-gray-600">{t('serviceDetail.timeLabel')}</span><span className="font-medium">{formatDisplayTime(watchTime)}</span></div>
                       </div>
                     </div>
 
                     <div className="border-t pt-4 mb-6">
                       <div className="flex justify-between mb-2">
-                        <span className="text-gray-600">Total Amount</span>
+                        <span className="text-gray-600">{t('serviceDetail.totalAmount')}</span>
                         <span className="text-2xl font-bold text-blue-600">₹{service.base_price}</span>
                       </div>
                     </div>
@@ -562,14 +564,14 @@ export default function ServiceDetail() {
                       disabled={bookingLoading}
                       className="w-full btn-primary disabled:opacity-50 disabled:cursor-not-allowed"
                     >
-                      {bookingLoading ? 'Processing...' : 'Pay Now with Razorpay'}
+                      {bookingLoading ? t('serviceDetail.processing') : t('serviceDetail.payNow')}
                     </button>
                     <button
                       onClick={() => setBookingStep(1)}
                       disabled={bookingLoading}
                       className="w-full btn-secondary mt-2"
                     >
-                      Back
+                      {t('serviceDetail.back')}
                     </button>
                   </>
                 )}
