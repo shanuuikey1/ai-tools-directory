@@ -77,11 +77,13 @@ app.use((req, res) => {
 
 // Database sync and server start
 const PORT = process.env.PORT || 5000;
+const autoSeed = require('./seed/autoSeed');
 
 sequelize
   .sync({ alter: true })
-  .then(() => {
+  .then(async () => {
     console.log('✓ Database synced successfully');
+    await autoSeed();
     app.listen(PORT, () => {
       console.log(`✓ Server running on http://localhost:${PORT}`);
       console.log(`✓ API docs: http://localhost:${PORT}/api`);
