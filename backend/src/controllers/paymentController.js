@@ -119,7 +119,8 @@ exports.verifyPayment = async (req, res) => {
       return res.status(400).json({ message: 'Required fields missing' });
     }
 
-    const isMock = razorpayOrderId.startsWith('order_mock_') || !RAZORPAY_KEY_ID || RAZORPAY_KEY_ID === 'your_razorpay_key_id';
+    const isPlaceholderKey = !RAZORPAY_KEY_ID || RAZORPAY_KEY_ID === 'your_razorpay_key_id' || RAZORPAY_KEY_ID.startsWith('your_');
+    const isMock = isPlaceholderKey && (razorpayOrderId.startsWith('order_mock_') || razorpayOrderId.startsWith('order_fallback_'));
 
     if (!isMock) {
       const crypto = require('crypto');
