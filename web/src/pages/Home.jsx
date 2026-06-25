@@ -7,46 +7,48 @@ import {
   Facebook, Instagram, MessageCircle, Mail, Phone, MapPin,
   ArrowUpRight, Award, Smile, ShieldAlert
 } from 'lucide-react';
+import { useLanguage } from '../context/LanguageContext';
 
 export default function Home() {
   const [heroError, setHeroError] = useState(false);
   const [footerLogoError, setFooterLogoError] = useState(false);
   const [activeFaq, setActiveFaq] = useState(null);
+  const { t } = useLanguage();
 
   const stats = [
-    { icon: <User size={22} className="text-indigo-600" />, number: '500+', label: 'Verified Professionals' },
-    { icon: <ThumbsUp size={22} className="text-emerald-600" />, number: '10K+', label: 'Happy Customers' },
-    { icon: <Star size={22} className="text-amber-500 fill-amber-500" />, number: '4.8★', label: 'Average Rating' },
+    { icon: <User size={22} className="text-indigo-600" />, number: '500+', label: t('home.statProfessionals') },
+    { icon: <ThumbsUp size={22} className="text-emerald-600" />, number: '10K+', label: t('home.statCustomers') },
+    { icon: <Star size={22} className="text-amber-500 fill-amber-500" />, number: '4.8★', label: t('home.statRating') },
   ];
 
   const features = [
     {
       icon: <ShieldCheck size={28} className="text-indigo-600" />,
       bg: 'bg-indigo-100/60 text-indigo-700 border-indigo-200/50',
-      title: 'Verified Experts',
-      description: 'Every professional undergoes strict background and skill checks.',
+      title: t('home.featExpertsTitle'),
+      description: t('home.featExpertsDesc'),
     },
     {
       icon: <Clock size={28} className="text-emerald-600" />,
       bg: 'bg-emerald-100/60 text-emerald-700 border-emerald-200/50',
-      title: 'Instant Booking',
-      description: 'Book home services in under two minutes with guaranteed schedules.',
+      title: t('home.featBookingTitle'),
+      description: t('home.featBookingDesc'),
     },
     {
       icon: <Award size={28} className="text-amber-500" />,
       bg: 'bg-amber-100/60 text-amber-700 border-amber-200/50',
-      title: 'Satisfaction Promised',
-      description: 'Our top priority is your happiness, backed by premium support.',
+      title: t('home.featSatisfactionTitle'),
+      description: t('home.featSatisfactionDesc'),
     },
   ];
 
   const services = [
-    { name: 'Home Cleaning', price: '₹500 - 800', icon: <HomeIcon size={28} className="text-indigo-600" />, bg: 'from-indigo-500/10 to-indigo-600/5 border-indigo-100' },
-    { name: 'Plumbing Services', price: '₹600 - 1,000', icon: <Wrench size={28} className="text-sky-600" />, bg: 'from-sky-500/10 to-sky-600/5 border-sky-100' },
-    { name: 'Electrical Works', price: '₹600 - 1,000', icon: <Zap size={28} className="text-amber-500 fill-amber-500/20" />, bg: 'from-amber-500/10 to-amber-600/5 border-amber-100' },
-    { name: 'Beauty & Grooming', price: '₹1,000 - 1,500', icon: <Sparkles size={28} className="text-pink-500" />, bg: 'from-pink-500/10 to-pink-600/5 border-pink-100' },
-    { name: 'AC Servicing', price: '₹800 - 1,200', icon: <Wind size={28} className="text-teal-500" />, bg: 'from-teal-500/10 to-teal-600/5 border-teal-100' },
-    { name: 'Carpentry', price: '₹800 - 1,500', icon: <Hammer size={28} className="text-orange-500" />, bg: 'from-orange-500/10 to-orange-600/5 border-orange-100' },
+    { name: t('home.svcCleaning'), price: '₹500 - 800', icon: <HomeIcon size={28} className="text-indigo-600" />, bg: 'from-indigo-500/10 to-indigo-600/5 border-indigo-100' },
+    { name: t('home.svcPlumbing'), price: '₹600 - 1,000', icon: <Wrench size={28} className="text-sky-600" />, bg: 'from-sky-500/10 to-sky-600/5 border-sky-100' },
+    { name: t('home.svcElectrical'), price: '₹600 - 1,000', icon: <Zap size={28} className="text-amber-500 fill-amber-500/20" />, bg: 'from-amber-500/10 to-amber-600/5 border-amber-100' },
+    { name: t('home.svcBeauty'), price: '₹1,000 - 1,500', icon: <Sparkles size={28} className="text-pink-500" />, bg: 'from-pink-500/10 to-pink-600/5 border-pink-100' },
+    { name: t('home.svcAc'), price: '₹800 - 1,200', icon: <Wind size={28} className="text-teal-500" />, bg: 'from-teal-500/10 to-teal-600/5 border-teal-100' },
+    { name: t('home.svcCarpentry'), price: '₹800 - 1,500', icon: <Hammer size={28} className="text-orange-500" />, bg: 'from-orange-500/10 to-orange-600/5 border-orange-100' },
   ];
 
   const toggleFaq = (idx) => {
@@ -68,18 +70,18 @@ export default function Home() {
             <div className="lg:col-span-7 space-y-8 text-center lg:text-left">
               <div className="inline-flex items-center space-x-2 bg-indigo-50/85 backdrop-blur-md border border-indigo-100/80 px-4 py-2 rounded-full shadow-sm hover:shadow-md transition-all duration-300 transform hover:scale-[1.02] cursor-default mx-auto lg:mx-0">
                 <CheckCircle size={16} className="text-indigo-600 animate-spin" style={{ animationDuration: '6s' }} />
-                <span className="text-xs md:text-sm font-semibold text-indigo-900 tracking-wide">Trusted Home Services, On Demand</span>
+                <span className="text-xs md:text-sm font-semibold text-indigo-900 tracking-wide">{t('home.badge')}</span>
               </div>
 
               <h1 className="text-4xl md:text-6xl lg:text-[4.25rem] font-black tracking-tight text-gray-900 leading-[1.05]">
-                Professional services <br />
+                {t('home.heroTitle1')} <br />
                 <span className="bg-gradient-to-r from-indigo-600 via-blue-600 to-purple-600 bg-clip-text text-transparent drop-shadow-sm">
-                  at your doorstep
+                  {t('home.heroTitle2')}
                 </span>
               </h1>
 
               <p className="text-base md:text-xl text-gray-600 max-w-2xl mx-auto lg:mx-0 leading-relaxed font-normal">
-                Book premium, vetted service professionals in Chhindwara. From deep cleaning to expert repairs, enjoy flat-rate transparent pricing and guaranteed satisfaction.
+                {t('home.heroSubtitle')}
               </p>
 
               <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2">
@@ -87,7 +89,7 @@ export default function Home() {
                   to="/services"
                   className="w-full sm:w-auto inline-flex items-center justify-center space-x-2 bg-gradient-to-r from-indigo-600 to-blue-600 text-white font-bold px-8 py-4 rounded-xl hover:from-indigo-700 hover:to-blue-700 transition-all duration-300 transform hover:-translate-y-0.5 shadow-lg shadow-indigo-600/20 hover:shadow-indigo-600/35"
                 >
-                  <span>Explore Services</span>
+                  <span>{t('home.exploreServices')}</span>
                   <ArrowRight size={20} />
                 </Link>
                 <a
@@ -97,7 +99,7 @@ export default function Home() {
                   <span className="w-8 h-8 rounded-full bg-indigo-50 flex items-center justify-center group-hover:bg-indigo-600 transition-colors duration-300">
                     <Play size={14} className="text-indigo-600 fill-indigo-600 group-hover:text-white group-hover:fill-white transition-colors duration-300 ml-0.5" />
                   </span>
-                  <span className="text-gray-700 group-hover:text-indigo-700 transition-colors">How It Works</span>
+                  <span className="text-gray-700 group-hover:text-indigo-700 transition-colors">{t('home.howItWorks')}</span>
                 </a>
               </div>
 
@@ -129,8 +131,8 @@ export default function Home() {
                         <Wrench size={38} className="text-indigo-200" />
                       </div>
                       <div className="space-y-1">
-                        <p className="text-xl font-extrabold">Professional Services</p>
-                        <p className="text-sm text-indigo-200">Ghar Pahuch Seva Chhindwara</p>
+                        <p className="text-xl font-extrabold">{t('home.heroImgAlt1')}</p>
+                        <p className="text-sm text-indigo-200">{t('home.heroImgAlt2')}</p>
                       </div>
                     </div>
                   </div>
@@ -151,8 +153,8 @@ export default function Home() {
                   <ShieldCheck size={24} className="text-indigo-600" />
                 </div>
                 <div>
-                  <p className="font-extrabold text-gray-900 text-sm tracking-tight">100% Certified</p>
-                  <p className="text-[11px] text-gray-500 font-semibold">Background Verified</p>
+                  <p className="font-extrabold text-gray-900 text-sm tracking-tight">{t('home.certified')}</p>
+                  <p className="text-[11px] text-gray-500 font-semibold">{t('home.backgroundVerified')}</p>
                 </div>
               </div>
             </div>
@@ -186,10 +188,10 @@ export default function Home() {
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-center max-w-3xl mx-auto mb-16 space-y-3">
-            <span className="text-xs md:text-sm font-extrabold text-indigo-600 tracking-widest uppercase">Our Service Catalog</span>
-            <h2 className="text-3xl md:text-5xl font-black tracking-tight text-gray-900">Popular Services</h2>
+            <span className="text-xs md:text-sm font-extrabold text-indigo-600 tracking-widest uppercase">{t('home.catalogEyebrow')}</span>
+            <h2 className="text-3xl md:text-5xl font-black tracking-tight text-gray-900">{t('home.popularServices')}</h2>
             <p className="text-sm md:text-lg text-gray-500 leading-relaxed font-normal">
-              Select a category to browse local verified experts and secure immediate booking.
+              {t('home.popularSubtitle')}
             </p>
           </div>
 
@@ -213,7 +215,7 @@ export default function Home() {
                   <div className="space-y-2">
                     <h3 className="text-xl font-extrabold text-gray-900 tracking-tight">{service.name}</h3>
                     <div className="flex items-baseline space-x-2">
-                      <span className="text-xs text-gray-400 font-medium">Starts from</span>
+                      <span className="text-xs text-gray-400 font-medium">{t('home.startsFrom')}</span>
                       <span className="text-2xl font-black text-indigo-600 tracking-tight">{service.price}</span>
                     </div>
                   </div>
@@ -228,7 +230,7 @@ export default function Home() {
               className="inline-flex items-center space-x-2.5 bg-white hover:bg-gray-50 border border-gray-200/80 text-gray-800 font-bold px-8 py-4 rounded-xl shadow-sm hover:shadow transition-all duration-300"
             >
               <LayoutGrid size={18} className="text-gray-500" />
-              <span>View All Services</span>
+              <span>{t('home.viewAllServices')}</span>
             </Link>
           </div>
         </div>
@@ -248,9 +250,9 @@ export default function Home() {
                   <Calendar size={28} className="text-indigo-400" />
                 </div>
                 <div className="space-y-2">
-                  <h2 className="text-2xl md:text-4xl font-black text-white tracking-tight">Ready to get started?</h2>
+                  <h2 className="text-2xl md:text-4xl font-black text-white tracking-tight">{t('home.ctaTitle')}</h2>
                   <p className="text-gray-400 text-sm md:text-base font-normal max-w-xl">
-                    Onboard as a customer to schedule services, track professionals, or join us as a provider to grow your business in Chhindwara.
+                    {t('home.ctaSubtitle')}
                   </p>
                 </div>
               </div>
@@ -260,14 +262,14 @@ export default function Home() {
                   to="/services"
                   className="w-full sm:w-auto shrink-0 inline-flex items-center justify-center space-x-2 bg-gradient-to-r from-indigo-500 to-blue-500 text-white font-bold px-8 py-4 rounded-xl hover:from-indigo-600 hover:to-blue-600 transition-all duration-300 transform hover:scale-105 shadow-lg shadow-indigo-500/20"
                 >
-                  <span>Book a Service</span>
+                  <span>{t('home.bookAService')}</span>
                   <ArrowRight size={18} />
                 </Link>
                 <Link
                   to="/professional"
                   className="w-full sm:w-auto shrink-0 inline-flex items-center justify-center space-x-2 bg-white/10 hover:bg-white/15 border border-white/10 text-white font-bold px-8 py-4 rounded-xl transition-all duration-300"
                 >
-                  <span>Join as Professional</span>
+                  <span>{t('home.joinAsPro')}</span>
                 </Link>
               </div>
             </div>
@@ -279,19 +281,19 @@ export default function Home() {
       <section className="bg-gray-50/70 py-20 md:py-28 relative border-y border-gray-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-16 space-y-3">
-            <span className="text-xs md:text-sm font-extrabold text-indigo-600 tracking-widest uppercase">Our Commitment</span>
-            <h2 className="text-3xl md:text-5xl font-black tracking-tight text-gray-900">Why Choose Us?</h2>
+            <span className="text-xs md:text-sm font-extrabold text-indigo-600 tracking-widest uppercase">{t('home.commitmentEyebrow')}</span>
+            <h2 className="text-3xl md:text-5xl font-black tracking-tight text-gray-900">{t('home.whyChoose')}</h2>
             <p className="text-sm md:text-lg text-gray-500 leading-relaxed">
-              We bring trust, transparency, and top-tier professionalism to the local services sector in Chhindwara.
+              {t('home.whySubtitle')}
             </p>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {[
-              { label: 'Verified Experts', value: '500+', desc: 'Thorough background & identity checks.', icon: '🛡️', color: 'text-indigo-600 bg-indigo-50' },
-              { label: 'Happy Customers', value: '10K+', desc: 'Highly rated home services completed.', icon: '😊', color: 'text-emerald-600 bg-emerald-50' },
-              { label: 'Dedicated Support', value: '24/7', desc: 'Real-time booking and resolution assistance.', icon: '💬', color: 'text-sky-600 bg-sky-50' },
-              { label: 'Average Rating', value: '4.8★', desc: 'Consistently high customer feedback scores.', icon: '⭐', color: 'text-amber-500 bg-amber-50' },
+              { label: t('home.featExpertsTitle'), value: '500+', desc: t('home.whyExpertsDesc'), icon: '🛡️', color: 'text-indigo-600 bg-indigo-50' },
+              { label: t('home.statCustomers'), value: '10K+', desc: t('home.whyCustomersDesc'), icon: '😊', color: 'text-emerald-600 bg-emerald-50' },
+              { label: t('home.supportLabel'), value: '24/7', desc: t('home.supportDesc'), icon: '💬', color: 'text-sky-600 bg-sky-50' },
+              { label: t('home.statRating'), value: '4.8★', desc: t('home.ratingDesc'), icon: '⭐', color: 'text-amber-500 bg-amber-50' },
             ].map((stat, idx) => (
               <div key={idx} className="bg-white p-8 rounded-3xl shadow-[0_4px_20px_rgba(0,0,0,0.01)] border border-gray-100/80 text-center hover:shadow-lg transition-all duration-300">
                 <div className={`w-14 h-14 rounded-2xl ${stat.color} flex items-center justify-center text-2xl mx-auto mb-6 shadow-sm`}>
@@ -310,10 +312,10 @@ export default function Home() {
       <section className="py-20 md:py-28 relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-16 space-y-3">
-            <span className="text-xs md:text-sm font-extrabold text-indigo-600 tracking-widest uppercase">Testimonials</span>
-            <h2 className="text-3xl md:text-5xl font-black tracking-tight text-gray-900">What Our Customers Say</h2>
+            <span className="text-xs md:text-sm font-extrabold text-indigo-600 tracking-widest uppercase">{t('home.testimonialsEyebrow')}</span>
+            <h2 className="text-3xl md:text-5xl font-black tracking-tight text-gray-900">{t('home.testimonialsTitle')}</h2>
             <p className="text-sm md:text-lg text-gray-500 leading-relaxed">
-              Read honest experiences from families and professionals using our marketplace.
+              {t('home.testimonialsSubtitle')}
             </p>
           </div>
 
@@ -321,22 +323,22 @@ export default function Home() {
             {[
               {
                 name: 'Priya Sharma',
-                role: 'Homeowner, Chhindwara',
-                text: 'Finding a reliable plumber used to take hours. On Ghar Pahuch Seva, I booked a verified professional in minutes. The work was clean and affordable.',
+                role: t('home.review1Role'),
+                text: t('home.review1Text'),
                 rating: 5,
                 avatar: 'PS'
               },
               {
                 name: 'Rajesh Patel',
-                role: 'Business Owner, Ward No. 12',
-                text: 'Excellent electrical service for our shop. The technician was certified, wore a proper ID, and solved our complex wiring issue efficiently.',
+                role: t('home.review2Role'),
+                text: t('home.review2Text'),
                 rating: 5,
                 avatar: 'RP'
               },
               {
                 name: 'Meera Gupta',
-                role: 'Resident, Parasia Road',
-                text: 'The deep home cleaning service was outstanding. The team arrived fully equipped, worked professionally, and left the house spotless. Absolute value for money.',
+                role: t('home.review3Role'),
+                text: t('home.review3Text'),
                 rating: 5,
                 avatar: 'MG'
               },
@@ -371,31 +373,19 @@ export default function Home() {
       <section className="bg-gray-50/70 py-20 md:py-28 border-t border-gray-100">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16 space-y-3">
-            <span className="text-xs md:text-sm font-extrabold text-indigo-600 tracking-widest uppercase">FAQ</span>
-            <h2 className="text-3xl md:text-5xl font-black tracking-tight text-gray-900">Frequently Asked Questions</h2>
+            <span className="text-xs md:text-sm font-extrabold text-indigo-600 tracking-widest uppercase">{t('home.faqEyebrow')}</span>
+            <h2 className="text-3xl md:text-5xl font-black tracking-tight text-gray-900">{t('home.faqTitle')}</h2>
             <p className="text-sm md:text-lg text-gray-500 leading-relaxed">
-              Find quick answers to common operational questions.
+              {t('home.faqSubtitle')}
             </p>
           </div>
 
           <div className="space-y-4">
             {[
-              {
-                q: 'How do I book a service on the platform?',
-                a: 'Simply click "Book a Service", choose a category, pick your preferred date and time, fill in your address, and complete the secure payment. A verified local expert will be assigned to your job.',
-              },
-              {
-                q: 'Are the service professionals background verified?',
-                a: 'Absolutely. Every service professional undergoes background screening and government ID (Aadhar/PAN) checks before they are verified and allowed to accept bookings.',
-              },
-              {
-                q: 'What if I am not satisfied with the service?',
-                a: 'Customer satisfaction is our promise. If the service quality does not meet standard expectations, contact our support team within 24 hours to coordinate a resolution or refund.',
-              },
-              {
-                q: 'How are payments and cancellations handled?',
-                a: 'Payments are securely processed online via Razorpay (UPI, Cards, NetBanking). You can cancel your booking directly from your customer dashboard. Refund processing conforms to our transparent cancellation policy.',
-              },
+              { q: t('home.faq1Q'), a: t('home.faq1A') },
+              { q: t('home.faq2Q'), a: t('home.faq2A') },
+              { q: t('home.faq3Q'), a: t('home.faq3A') },
+              { q: t('home.faq4Q'), a: t('home.faq4A') },
             ].map((faq, idx) => (
               <div key={idx} className="bg-white border border-gray-100/80 rounded-2xl overflow-hidden shadow-[0_4px_15px_rgba(0,0,0,0.005)] transition-all duration-300">
                 <button
@@ -423,12 +413,12 @@ export default function Home() {
           </div>
 
           <div className="mt-12 text-center">
-            <p className="text-sm text-gray-600 mb-3 font-normal">Still have unanswered questions?</p>
+            <p className="text-sm text-gray-600 mb-3 font-normal">{t('home.faqStillQuestions')}</p>
             <Link
               to="/help"
               className="inline-flex items-center space-x-1.5 text-indigo-600 font-bold hover:text-indigo-700 transition-colors"
             >
-              <span>View All Support FAQs</span>
+              <span>{t('home.viewAllFaqs')}</span>
               <ArrowRight size={16} />
             </Link>
           </div>
@@ -439,19 +429,19 @@ export default function Home() {
       <section className="py-20 md:py-28 border-t border-gray-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-16 space-y-3">
-            <span className="text-xs md:text-sm font-extrabold text-indigo-600 tracking-widest uppercase">Security</span>
-            <h2 className="text-3xl md:text-5xl font-black tracking-tight text-gray-900">Safe &amp; Secure</h2>
+            <span className="text-xs md:text-sm font-extrabold text-indigo-600 tracking-widest uppercase">{t('home.securityEyebrow')}</span>
+            <h2 className="text-3xl md:text-5xl font-black tracking-tight text-gray-900">{t('home.safeSecure')}</h2>
             <p className="text-sm md:text-lg text-gray-500 leading-relaxed">
-              Your security, privacy, and peace of mind are built into every step of our platform.
+              {t('home.safeSubtitle')}
             </p>
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {[
-              { icon: '🔒', title: 'Vetted Providers', desc: 'Thorough identity checks' },
-              { icon: '💳', title: 'Secure Payments', desc: 'Razorpay encrypted checkout' },
-              { icon: '💬', title: 'Verified Ratings', desc: 'Reviews from real bookings' },
-              { icon: '🛡️', title: 'Service Insurance', desc: 'Protection for your home' },
+              { icon: '🔒', title: t('home.badgeVettedTitle'), desc: t('home.badgeVettedDesc') },
+              { icon: '💳', title: t('home.badgePaymentsTitle'), desc: t('home.badgePaymentsDesc') },
+              { icon: '💬', title: t('home.badgeRatingsTitle'), desc: t('home.badgeRatingsDesc') },
+              { icon: '🛡️', title: t('home.badgeInsuranceTitle'), desc: t('home.badgeInsuranceDesc') },
             ].map((badge, idx) => (
               <div key={idx} className="text-center space-y-2">
                 <div className="w-16 h-16 rounded-2xl bg-indigo-50 flex items-center justify-center text-3xl mx-auto mb-4 shadow-inner">
@@ -490,7 +480,7 @@ export default function Home() {
                 <span className="font-extrabold text-xl tracking-tight">Ghar Pahuch Seva</span>
               </div>
               <p className="text-gray-400 text-sm leading-relaxed font-normal">
-                Connecting skilled local professionals with household customers in Chhindwara. Premium quality home services, guaranteed.
+                {t('footer.tagline')}
               </p>
               <div className="flex space-x-3.5 pt-2">
                 <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer" title="Facebook" className="w-10 h-10 bg-white/5 border border-white/5 rounded-xl flex items-center justify-center hover:bg-indigo-600 hover:border-indigo-500 transition-all duration-300">
@@ -507,31 +497,31 @@ export default function Home() {
 
             {/* Quick Links */}
             <div className="space-y-6">
-              <h4 className="font-extrabold text-base tracking-tight border-b border-gray-800 pb-2.5">Quick Links</h4>
+              <h4 className="font-extrabold text-base tracking-tight border-b border-gray-800 pb-2.5">{t('footer.quickLinks')}</h4>
               <ul className="space-y-3.5 text-sm text-gray-400 font-medium">
-                <li><Link to="/" className="hover:text-white transition-colors duration-200">Home Page</Link></li>
-                <li><Link to="/services" className="hover:text-white transition-colors duration-200">Services Catalog</Link></li>
-                <li><a href="#about" className="hover:text-white transition-colors duration-200">About Our Company</a></li>
-                <li><a href="#how-it-works" className="hover:text-white transition-colors duration-200">How Platform Works</a></li>
-                <li><Link to="/login" className="hover:text-white transition-colors duration-200">User Login</Link></li>
+                <li><Link to="/" className="hover:text-white transition-colors duration-200">{t('footer.homePage')}</Link></li>
+                <li><Link to="/services" className="hover:text-white transition-colors duration-200">{t('footer.servicesCatalog')}</Link></li>
+                <li><a href="#about" className="hover:text-white transition-colors duration-200">{t('footer.aboutCompany')}</a></li>
+                <li><a href="#how-it-works" className="hover:text-white transition-colors duration-200">{t('footer.howPlatformWorks')}</a></li>
+                <li><Link to="/login" className="hover:text-white transition-colors duration-200">{t('footer.userLogin')}</Link></li>
               </ul>
             </div>
 
             {/* Customers Area */}
             <div className="space-y-6">
-              <h4 className="font-extrabold text-base tracking-tight border-b border-gray-800 pb-2.5">For Customers</h4>
+              <h4 className="font-extrabold text-base tracking-tight border-b border-gray-800 pb-2.5">{t('footer.forCustomers')}</h4>
               <ul className="space-y-3.5 text-sm text-gray-400 font-medium">
-                <li><Link to="/services" className="hover:text-white transition-colors duration-200">Schedule Service</Link></li>
-                <li><a href="mailto:support@gharpahuchseva.com?subject=Help Request" className="hover:text-white transition-colors duration-200">Help &amp; Support</a></li>
-                <li><Link to="/help" className="hover:text-white transition-colors duration-200">FAQs &amp; Guidelines</Link></li>
-                <li><Link to="/terms" className="hover:text-white transition-colors duration-200">Terms of Service</Link></li>
-                <li><Link to="/privacy" className="hover:text-white transition-colors duration-200">Privacy Policy</Link></li>
+                <li><Link to="/services" className="hover:text-white transition-colors duration-200">{t('footer.scheduleService')}</Link></li>
+                <li><a href="mailto:support@gharpahuchseva.com?subject=Help Request" className="hover:text-white transition-colors duration-200">{t('footer.helpSupport')}</a></li>
+                <li><Link to="/help" className="hover:text-white transition-colors duration-200">{t('footer.faqsGuidelines')}</Link></li>
+                <li><Link to="/terms" className="hover:text-white transition-colors duration-200">{t('footer.terms')}</Link></li>
+                <li><Link to="/privacy" className="hover:text-white transition-colors duration-200">{t('footer.privacy')}</Link></li>
               </ul>
             </div>
 
             {/* Contact Details */}
             <div className="space-y-6">
-              <h4 className="font-extrabold text-base tracking-tight border-b border-gray-800 pb-2.5">Contact Us</h4>
+              <h4 className="font-extrabold text-base tracking-tight border-b border-gray-800 pb-2.5">{t('footer.contactUs')}</h4>
               <ul className="space-y-4 text-sm text-gray-400 font-medium">
                 <li>
                   <a href="mailto:info@gharpahuchseva.com" className="flex items-center space-x-3.5 hover:text-indigo-400 transition-colors duration-200 group">
@@ -557,8 +547,8 @@ export default function Home() {
           </div>
 
           <div className="border-t border-gray-900 pt-8 flex flex-col md:flex-row items-center justify-between text-gray-500 text-xs font-semibold gap-4">
-            <p>&copy; 2026 Ghar Pahuch Seva. All rights reserved.</p>
-            <p className="font-normal text-[11px] text-gray-600">Designed for modern on-demand hyperlocal marketplaces.</p>
+            <p>{t('footer.rights')}</p>
+            <p className="font-normal text-[11px] text-gray-600">{t('footer.designedFor')}</p>
           </div>
         </div>
       </footer>

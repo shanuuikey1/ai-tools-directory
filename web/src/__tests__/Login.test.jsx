@@ -4,6 +4,7 @@ import { MemoryRouter } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import Login from '../pages/Login';
 import { AuthProvider } from '../context/AuthContext';
+import { LanguageProvider } from '../context/LanguageContext';
 
 // Mock the API module
 vi.mock('../services/api', () => ({
@@ -17,9 +18,11 @@ describe('Login Page', () => {
     render(
       <HelmetProvider>
         <MemoryRouter>
-          <AuthProvider>
-            <Login />
-          </AuthProvider>
+          <LanguageProvider>
+            <AuthProvider>
+              <Login />
+            </AuthProvider>
+          </LanguageProvider>
         </MemoryRouter>
       </HelmetProvider>
     );
@@ -34,9 +37,11 @@ describe('Login Page', () => {
     render(
       <HelmetProvider>
         <MemoryRouter>
-          <AuthProvider>
-            <Login />
-          </AuthProvider>
+          <LanguageProvider>
+            <AuthProvider>
+              <Login />
+            </AuthProvider>
+          </LanguageProvider>
         </MemoryRouter>
       </HelmetProvider>
     );

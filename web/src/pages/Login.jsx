@@ -5,6 +5,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Mail, Lock, AlertCircle, Eye, EyeOff } from 'lucide-react';
 import { authAPI } from '../services/api';
 import { useAuth } from '../context/AuthContext';
+import { useLanguage } from '../context/LanguageContext';
 import { loginSchema } from '../validation/schemas';
 import SEO from '../components/SEO';
 
@@ -21,6 +22,7 @@ export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const { login } = useAuth();
+  const { t } = useLanguage();
 
   const onSubmit = async (data) => {
     setError('');
@@ -30,7 +32,7 @@ export default function Login() {
       login(user, token);
       navigate('/');
     } catch (err) {
-      setError(err.response?.data?.message || 'Login failed. Please try again.');
+      setError(err.response?.data?.message || t('auth.loginFailed'));
     }
   };
 
@@ -39,8 +41,8 @@ export default function Login() {
       <SEO title="Login" description="Log in to your Ghar Pahuch Seva account to book home services in Chhindwara." />
       <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center px-4">
         <div className="bg-white rounded-lg shadow-xl p-8 w-full max-w-md">
-          <h1 className="text-3xl font-bold text-center text-gray-800 mb-2">Welcome Back</h1>
-          <p className="text-center text-gray-600 mb-6">Login to your Ghar Pahuch Seva account</p>
+          <h1 className="text-3xl font-bold text-center text-gray-800 mb-2">{t('auth.welcomeBack')}</h1>
+          <p className="text-center text-gray-600 mb-6">{t('auth.loginSubtitle')}</p>
 
           {error && (
             <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-lg flex items-start space-x-3" role="alert" aria-live="polite">
@@ -53,7 +55,7 @@ export default function Login() {
             {/* Email */}
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                Email Address
+                {t('auth.emailLabel')}
               </label>
               <div className={`flex items-center space-x-3 border rounded-lg px-4 py-2 focus-within:ring-2 focus-within:ring-blue-500 ${errors.email ? 'border-red-300' : 'border-gray-300'}`}>
                 <Mail size={20} className="text-gray-400" aria-hidden="true" />
@@ -75,7 +77,7 @@ export default function Login() {
             {/* Password */}
             <div>
               <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
-                Password
+                {t('auth.passwordLabel')}
               </label>
               <div className={`flex items-center space-x-3 border rounded-lg px-4 py-2 focus-within:ring-2 focus-within:ring-blue-500 ${errors.password ? 'border-red-300' : 'border-gray-300'}`}>
                 <Lock size={20} className="text-gray-400" aria-hidden="true" />
@@ -109,15 +111,15 @@ export default function Login() {
               className="w-full btn-primary disabled:opacity-50 disabled:cursor-not-allowed"
               aria-label={isSubmitting ? 'Logging in, please wait' : 'Log in to your account'}
             >
-              {isSubmitting ? 'Logging in...' : 'Login'}
+              {isSubmitting ? t('auth.loggingIn') : t('auth.loginButton')}
             </button>
           </form>
 
           {/* Sign Up Link */}
           <p className="text-center text-gray-600 mt-6">
-            Don&apos;t have an account?{' '}
+            {t('auth.noAccount')}{' '}
             <Link to="/register" className="text-blue-600 hover:text-blue-700 font-semibold">
-              Sign up
+              {t('auth.signUpLink')}
             </Link>
           </p>
         </div>

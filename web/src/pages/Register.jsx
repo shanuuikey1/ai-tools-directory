@@ -5,6 +5,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Mail, Lock, User, Phone, AlertCircle, Eye, EyeOff } from 'lucide-react';
 import { authAPI } from '../services/api';
 import { useAuth } from '../context/AuthContext';
+import { useLanguage } from '../context/LanguageContext';
 import { registerSchema } from '../validation/schemas';
 import SEO from '../components/SEO';
 
@@ -22,6 +23,7 @@ export default function Register() {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const navigate = useNavigate();
   const { login } = useAuth();
+  const { t } = useLanguage();
 
   const onSubmit = async (data) => {
     setError('');
@@ -38,7 +40,7 @@ export default function Register() {
       login(user, token);
       navigate('/');
     } catch (err) {
-      setError(err.response?.data?.message || 'Registration failed. Please try again.');
+      setError(err.response?.data?.message || t('auth.registerFailed'));
     }
   };
 
@@ -47,8 +49,8 @@ export default function Register() {
       <SEO title="Sign Up" description="Create a Ghar Pahuch Seva account and book home services in Chhindwara." />
       <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center px-4 py-8">
         <div className="bg-white rounded-lg shadow-xl p-8 w-full max-w-md">
-          <h1 className="text-3xl font-bold text-center text-gray-800 mb-2">Create Account</h1>
-          <p className="text-center text-gray-600 mb-6">Join Ghar Pahuch Seva today</p>
+          <h1 className="text-3xl font-bold text-center text-gray-800 mb-2">{t('auth.createAccount')}</h1>
+          <p className="text-center text-gray-600 mb-6">{t('auth.registerSubtitle')}</p>
 
           {error && (
             <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-lg flex items-start space-x-3" role="alert" aria-live="polite">
@@ -62,7 +64,7 @@ export default function Register() {
             <div className="grid grid-cols-2 gap-3">
               <div>
                 <label htmlFor="firstName" className="block text-sm font-medium text-gray-700 mb-1">
-                  First Name
+                  {t('auth.firstName')}
                 </label>
                 <div className={`flex items-center space-x-2 border rounded-lg px-3 py-2 focus-within:ring-2 focus-within:ring-blue-500 ${errors.firstName ? 'border-red-300' : 'border-gray-300'}`}>
                   <User size={18} className="text-gray-400" aria-hidden="true" />
@@ -80,7 +82,7 @@ export default function Register() {
               </div>
               <div>
                 <label htmlFor="lastName" className="block text-sm font-medium text-gray-700 mb-1">
-                  Last Name
+                  {t('auth.lastName')}
                 </label>
                 <div className={`flex items-center space-x-2 border rounded-lg px-3 py-2 focus-within:ring-2 focus-within:ring-blue-500 ${errors.lastName ? 'border-red-300' : 'border-gray-300'}`}>
                   <User size={18} className="text-gray-400" aria-hidden="true" />
@@ -101,7 +103,7 @@ export default function Register() {
             {/* Email */}
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-                Email Address
+                {t('auth.emailLabel')}
               </label>
               <div className={`flex items-center space-x-2 border rounded-lg px-3 py-2 focus-within:ring-2 focus-within:ring-blue-500 ${errors.email ? 'border-red-300' : 'border-gray-300'}`}>
                 <Mail size={18} className="text-gray-400" aria-hidden="true" />
@@ -121,7 +123,7 @@ export default function Register() {
             {/* Phone */}
             <div>
               <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
-                Phone Number
+                {t('auth.phoneLabel')}
               </label>
               <div className={`flex items-center space-x-2 border rounded-lg px-3 py-2 focus-within:ring-2 focus-within:ring-blue-500 ${errors.phone ? 'border-red-300' : 'border-gray-300'}`}>
                 <Phone size={18} className="text-gray-400" aria-hidden="true" />
@@ -141,7 +143,7 @@ export default function Register() {
             {/* Password */}
             <div>
               <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
-                Password
+                {t('auth.passwordLabel')}
               </label>
               <div className={`flex items-center space-x-2 border rounded-lg px-3 py-2 focus-within:ring-2 focus-within:ring-blue-500 ${errors.password ? 'border-red-300' : 'border-gray-300'}`}>
                 <Lock size={18} className="text-gray-400" aria-hidden="true" />
@@ -169,7 +171,7 @@ export default function Register() {
             {/* Confirm Password */}
             <div>
               <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700 mb-1">
-                Confirm Password
+                {t('auth.confirmPassword')}
               </label>
               <div className={`flex items-center space-x-2 border rounded-lg px-3 py-2 focus-within:ring-2 focus-within:ring-blue-500 ${errors.confirmPassword ? 'border-red-300' : 'border-gray-300'}`}>
                 <Lock size={18} className="text-gray-400" aria-hidden="true" />
@@ -201,15 +203,15 @@ export default function Register() {
               className="w-full btn-primary disabled:opacity-50 disabled:cursor-not-allowed mt-4"
               aria-label={isSubmitting ? 'Creating your account, please wait' : 'Create a new account'}
             >
-              {isSubmitting ? 'Creating account...' : 'Create Account'}
+              {isSubmitting ? t('auth.creatingAccount') : t('auth.createAccount')}
             </button>
           </form>
 
           {/* Login Link */}
           <p className="text-center text-gray-600 mt-6">
-            Already have an account?{' '}
+            {t('auth.haveAccount')}{' '}
             <Link to="/login" className="text-blue-600 hover:text-blue-700 font-semibold">
-              Login
+              {t('auth.loginLink')}
             </Link>
           </p>
         </div>
