@@ -27,6 +27,7 @@ const serviceRoutes = require('./routes/services');
 const bookingRoutes = require('./routes/bookings');
 const paymentRoutes = require('./routes/payments');
 const professionalRoutes = require('./routes/professionals');
+const adminRoutes = require('./routes/admin');
 
 const app = express();
 
@@ -58,6 +59,7 @@ app.use('/api/services', serviceRoutes);
 app.use('/api/bookings', bookingRoutes);
 app.use('/api/payments', paymentRoutes);
 app.use('/api/professionals', professionalRoutes);
+app.use('/api/admin', adminRoutes);
 
 // Error handling middleware
 app.use((err, req, res, next) => {

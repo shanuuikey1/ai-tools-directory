@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
+import { professionalsAPI } from '../services/api';
 import { CheckCircle, ArrowRight, Briefcase, TrendingUp, Users, Shield, Loader } from 'lucide-react';
 
 export default function Professional() {
@@ -32,8 +32,7 @@ export default function Professional() {
       // Submit to backend
       setLoading(true);
       try {
-        const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
-        const response = await axios.post(`${apiUrl}/professionals/apply`, {
+        await professionalsAPI.apply({
           name: formData.name,
           email: formData.email,
           phone: formData.phone,

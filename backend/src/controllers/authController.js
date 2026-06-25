@@ -145,6 +145,10 @@ exports.loginCustomer = async (req, res) => {
       return res.status(401).json({ message: 'Invalid email or password' });
     }
 
+    if (user.is_active === false) {
+      return res.status(403).json({ message: 'Your account has been suspended. Please contact platform support.' });
+    }
+
     const isValidPassword = await bcrypt.compare(password, user.password_hash);
 
     if (!isValidPassword) {
@@ -263,6 +267,10 @@ exports.loginProvider = async (req, res) => {
 
     if (!provider) {
       return res.status(401).json({ message: 'Invalid email or password' });
+    }
+
+    if (provider.is_active === false) {
+      return res.status(403).json({ message: 'Your account has been suspended. Please contact platform support.' });
     }
 
     const isValidPassword = await bcrypt.compare(password, provider.password_hash);

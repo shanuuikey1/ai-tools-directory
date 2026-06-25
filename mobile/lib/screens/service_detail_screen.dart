@@ -220,11 +220,22 @@ class _BookingSheetState extends State<_BookingSheet> {
   DateTime _date = DateTime.now().add(const Duration(days: 1));
   TimeOfDay _time = const TimeOfDay(hour: 10, minute: 0);
   final _addressController = TextEditingController();
+  bool _loading = false;
 
   @override
   void dispose() {
     _addressController.dispose();
     super.dispose();
+  }
+
+  List<DateTime> _getNext7Days() {
+    final today = DateTime.now();
+    return List.generate(7, (i) => today.add(Duration(days: i)));
+  }
+
+  TimeOfDay _parseSlot(String slot) {
+    final parts = slot.split(':');
+    return TimeOfDay(hour: int.parse(parts[0]), minute: int.parse(parts[1]));
   }
 
   Future<void> _pickDate() async {
@@ -242,26 +253,220 @@ class _BookingSheetState extends State<_BookingSheet> {
     if (picked != null) setState(() => _time = picked);
   }
 
-  void _confirm() {
+  Future<void> _confirm() async {
     if (_addressController.text.trim().isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Please enter your address')),
       );
       return;
     }
-    final dt = DateTime(
-        _date.year, _date.month, _date.day, _time.hour, _time.minute);
-    final booking = Booking(
-      id: DateTime.now().millisecondsSinceEpoch.toString(),
-      service: widget.service,
-      dateTime: dt,
-      address: _addressController.text.trim(),
+
+    setState(() => _loading = true);
+
+    try {
+      final dt = DateTime(
+        _date.year,
+        _date.month,
+        _date.day,
+        _time.hour,
+        _time.minute,
+      );
+
+      // Perform checkout including payments creation and verification
+      await context.read<AppState>().checkoutBooking(
+            service: widget.service,
+            dateTime: dt,
+            address: _addressController.text.trim(),
+          );
+
+      if (!mounted) return;
+      Navigator.pop(context); // close sheet
+
+      showDialog(
+        context: context,
+        builder: (_) => _SuccessDialog(service: widget.service),
+      );
+    } catch (e) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Checkout failed: ${e.toString()}'),
+          backgroundColor: AppColors.danger,
+        ),
+      );
+    } finally {
+      if (mounted) {
+        setState(() => _loading = false);
+      }
+    }
+  }
+
+  Widget _buildDateSlider() {
+    final days = _getNext7Days();
+    return SizedBox(
+      height: 85,
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        itemCount: days.length + 1,
+        itemBuilder: (context, index) {
+          if (index == days.length) {
+            // Custom Date Picker Button at the end
+            return Padding(
+              padding: const EdgeInsets.only(right: 4),
+              child: InkWell(
+                onTap: _pickDate,
+                borderRadius: BorderRadius.circular(16),
+                child: Container(
+                  width: 70,
+                  margin: const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(16),
+                    border: Border.all(color: const Color(0xFFE4E7F0)),
+                  ),
+                  child: const Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.calendar_month_rounded, color: AppColors.primary, size: 24),
+                      SizedBox(height: 4),
+                      Text('Other', style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: AppColors.primary)),
+                    ],
+                  ),
+                ),
+              ),
+            );
+          }
+
+          final day = days[index];
+          final isSelected = DateUtils.isSameDay(_date, day);
+          final dayName = DateFormat('EEE').format(day);
+          final dayNum = DateFormat('d').format(day);
+          final monthName = DateFormat('MMM').format(day);
+
+          return InkWell(
+            onTap: () => setState(() => _date = day),
+            borderRadius: BorderRadius.circular(16),
+            child: Container(
+              width: 70,
+              margin: const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
+              decoration: BoxDecoration(
+                gradient: isSelected
+                    ? const LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        colors: [AppColors.primary, AppColors.accent],
+                      )
+                    : null,
+                color: isSelected ? null : Colors.white,
+                borderRadius: BorderRadius.circular(16),
+                border: isSelected ? null : Border.all(color: const Color(0xFFE4E7F0)),
+                boxShadow: isSelected
+                    ? [
+                        BoxShadow(
+                          color: AppColors.primary.withValues(alpha: 0.25),
+                          blurRadius: 8,
+                          offset: const Offset(0, 3),
+                        )
+                      ]
+                    : null,
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(dayName,
+                      style: TextStyle(
+                          fontSize: 11,
+                          fontWeight: FontWeight.w600,
+                          color: isSelected ? Colors.white.withValues(alpha: 0.8) : AppColors.textMuted)),
+                  const SizedBox(height: 2),
+                  Text(dayNum,
+                      style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w800,
+                          color: isSelected ? Colors.white : AppColors.textDark)),
+                  const SizedBox(height: 2),
+                  Text(monthName,
+                      style: TextStyle(
+                          fontSize: 10,
+                          fontWeight: FontWeight.w600,
+                          color: isSelected ? Colors.white.withValues(alpha: 0.8) : AppColors.textMuted)),
+                ],
+              ),
+            ),
+          );
+        },
+      ),
     );
-    context.read<AppState>().addBooking(booking);
-    Navigator.pop(context); // sheet
-    showDialog(
-      context: context,
-      builder: (_) => _SuccessDialog(service: widget.service),
+  }
+
+  Widget _buildTimeGrid() {
+    final slots = ['08:00', '10:00', '12:00', '14:00', '16:00', '18:00'];
+    
+    return Wrap(
+      spacing: 8,
+      runSpacing: 8,
+      children: [
+        ...slots.map((slot) {
+          final slotTime = _parseSlot(slot);
+          final isSelected = _time.hour == slotTime.hour && _time.minute == slotTime.minute;
+          
+          // Format for display (e.g. 10:00 AM)
+          final tempDt = DateTime(2026, 1, 1, slotTime.hour, slotTime.minute);
+          final displayLabel = DateFormat('hh:mm a').format(tempDt);
+
+          return InkWell(
+            onTap: () => setState(() => _time = slotTime),
+            borderRadius: BorderRadius.circular(12),
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+              decoration: BoxDecoration(
+                color: isSelected ? AppColors.primary.withValues(alpha: 0.1) : Colors.white,
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(
+                  color: isSelected ? AppColors.primary : const Color(0xFFE4E7F0),
+                  width: isSelected ? 1.5 : 1,
+                ),
+              ),
+              child: Text(
+                displayLabel,
+                style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w700,
+                  color: isSelected ? AppColors.primary : AppColors.textDark,
+                ),
+              ),
+            ),
+          );
+        }),
+        // Custom selector chip
+        InkWell(
+          onTap: _pickTime,
+          borderRadius: BorderRadius.circular(12),
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(color: const Color(0xFFE4E7F0)),
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Icon(Icons.more_time_rounded, size: 14, color: AppColors.primary),
+                const SizedBox(width: 4),
+                Text(
+                  'Other',
+                  style: TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w700,
+                    color: AppColors.primary,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
     );
   }
 
@@ -294,29 +499,23 @@ class _BookingSheetState extends State<_BookingSheet> {
             const Text('Schedule your service',
                 style: TextStyle(fontSize: 19, fontWeight: FontWeight.w800)),
             const SizedBox(height: 18),
-            Row(
-              children: [
-                Expanded(
-                  child: _FieldButton(
-                    icon: Icons.calendar_today_rounded,
-                    label: DateFormat('EEE, d MMM').format(_date),
-                    onTap: _pickDate,
-                  ),
-                ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: _FieldButton(
-                    icon: Icons.access_time_rounded,
-                    label: _time.format(context),
-                    onTap: _pickTime,
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 12),
+            const Text('Select Date',
+                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700, color: AppColors.textDark)),
+            const SizedBox(height: 8),
+            _buildDateSlider(),
+            const SizedBox(height: 18),
+            const Text('Select Time Slot',
+                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700, color: AppColors.textDark)),
+            const SizedBox(height: 8),
+            _buildTimeGrid(),
+            const SizedBox(height: 18),
+            const Text('Service Address',
+                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700, color: AppColors.textDark)),
+            const SizedBox(height: 8),
             TextField(
               controller: _addressController,
               maxLines: 2,
+              enabled: !_loading,
               decoration: const InputDecoration(
                 hintText: 'Enter your full address',
                 prefixIcon: Icon(Icons.location_on_outlined),
@@ -341,10 +540,17 @@ class _BookingSheetState extends State<_BookingSheet> {
               ),
             ),
             const SizedBox(height: 18),
-            ElevatedButton(
-              onPressed: _confirm,
-              child: const Text('Confirm Booking'),
-            ),
+            _loading
+                ? const Center(
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(vertical: 8),
+                      child: CircularProgressIndicator(),
+                    ),
+                  )
+                : ElevatedButton(
+                    onPressed: _confirm,
+                    child: const Text('Confirm & Pay Now'),
+                  ),
           ],
         ),
       ),
@@ -368,40 +574,6 @@ class _BookingSheetState extends State<_BookingSheet> {
   }
 }
 
-class _FieldButton extends StatelessWidget {
-  final IconData icon;
-  final String label;
-  final VoidCallback onTap;
-  const _FieldButton(
-      {required this.icon, required this.label, required this.onTap});
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      borderRadius: BorderRadius.circular(14),
-      onTap: onTap,
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 16),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(14),
-          border: Border.all(color: const Color(0xFFE4E7F0)),
-        ),
-        child: Row(
-          children: [
-            Icon(icon, size: 18, color: AppColors.primary),
-            const SizedBox(width: 8),
-            Flexible(
-              child: Text(label,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(fontWeight: FontWeight.w600)),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
 
 class _SuccessDialog extends StatelessWidget {
   final ServiceItem service;

@@ -85,15 +85,15 @@ class ApiService {
     return _decode(res) as Map<String, dynamic>;
   }
 
-  /// Create a booking on the backend (best-effort sync).
-  static Future<void> createBooking({
+  /// Create a booking on the backend. Returns the created booking details.
+  static Future<Map<String, dynamic>> createBooking({
     required String token,
     required int providerId,
     required int serviceId,
     required String date,
     required String time,
     required String address,
-    required int price,
+    required double price,
   }) async {
     final res = await http
         .post(_u('/bookings'),
@@ -107,7 +107,45 @@ class ApiService {
               'servicePrice': price,
             }))
         .timeout(_timeout);
-    _decode(res);
+    return _decode(res) as Map<String, dynamic>;
+  }
+
+  /// Create a Razorpay order on the backend.
+  static Future<Map<String, dynamic>> createOrder({
+    required String token,
+    required int bookingId,
+    required double amount,
+  }) async {
+    final res = await http
+        .post(_u('/payments/create-order'),
+            headers: _headers(token),
+            body: jsonEncode({
+              'bookingId': bookingId,
+              'amount': amount,
+            }))
+        .timeout(_timeout);
+    return _decode(res) as Map<String, dynamic>;
+  }
+
+  /// Verify a Razorpay payment on the backend.
+  static Future<Map<String, dynamic>> verifyPayment({
+    required String token,
+    required int bookingId,
+    required String paymentId,
+    required String orderId,
+    required String signature,
+  }) async {
+    final res = await http
+        .post(_u('/payments/verify'),
+            headers: _headers(token),
+            body: jsonEncode({
+              'bookingId': bookingId,
+              'razorpayPaymentId': paymentId,
+              'razorpayOrderId': orderId,
+              'razorpaySignature': signature,
+            }))
+        .timeout(_timeout);
+    return _decode(res) as Map<String, dynamic>;
   }
 
   /// Permanently delete the signed-in customer's account. Requires the

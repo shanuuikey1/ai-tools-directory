@@ -28,6 +28,18 @@ services:
         sync: false
       - key: RAZORPAY_KEY_SECRET
         sync: false
+      # WhatsApp Notifications (Optional)
+      - key: WHATSAPP_NOTIFICATION_MODE
+        value: console
+      - key: WHATSAPP_API_URL
+        value: https://api.green-api.com
+      - key: WHATSAPP_INSTANCE_ID
+        sync: false
+      - key: WHATSAPP_API_TOKEN
+        sync: false
+      - key: WHATSAPP_GROUP_ID
+        sync: false
+
 
 databases:
   - name: ghar-pahuch-seva-db
