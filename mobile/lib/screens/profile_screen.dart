@@ -31,10 +31,10 @@ class ProfileScreen extends StatelessWidget {
               bottom: false,
               child: Column(
                 children: [
-                  const Align(
+                  Align(
                     alignment: Alignment.centerLeft,
-                    child: Text('Profile',
-                        style: TextStyle(
+                    child: Text(state.tr('profile.title'),
+                        style: const TextStyle(
                             color: Colors.white,
                             fontSize: 22,
                             fontWeight: FontWeight.w800)),
@@ -56,7 +56,7 @@ class ProfileScreen extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 14),
-                  Text(user?.name ?? 'Guest user',
+                  Text(user?.name ?? state.tr('profile.guest'),
                       style: const TextStyle(
                           color: Colors.white,
                           fontSize: 19,
@@ -78,23 +78,33 @@ class ProfileScreen extends StatelessWidget {
               child: ElevatedButton(
                 onPressed: () => Navigator.push(context,
                     MaterialPageRoute(builder: (_) => const AuthScreen())),
-                child: const Text('Login / Sign up'),
+                child: Text(state.tr('profile.login')),
               ),
             ),
           const SizedBox(height: 10),
-          _tile(Icons.location_on_outlined, 'Saved Addresses'),
-          _tile(Icons.payment_rounded, 'Payment Methods'),
-          _tile(Icons.local_offer_outlined, 'Offers & Coupons'),
+          _tile(Icons.location_on_outlined, state.tr('profile.savedAddresses')),
+          _tile(Icons.payment_rounded, state.tr('profile.paymentMethods')),
+          _tile(Icons.local_offer_outlined, state.tr('profile.offers')),
+          _tile(
+            Icons.language_rounded,
+            state.tr('profile.language'),
+            trailingText: state.lang == 'hi'
+                ? state.tr('language.hindi')
+                : state.tr('language.english'),
+            onTap: () => _showLanguagePicker(context, state),
+          ),
           _tile(
             Icons.dns_rounded,
-            state.isOnline ? 'Server (connected)' : 'Server Settings',
+            state.isOnline
+                ? '${state.tr('profile.serverSettings')} (${state.tr('profile.onlineMode')})'
+                : state.tr('profile.serverSettings'),
             onTap: () => Navigator.push(
               context,
               MaterialPageRoute(builder: (_) => const ServerSettingsScreen()),
             ),
           ),
-          _tile(Icons.headset_mic_rounded, 'Help & Support'),
-          _tile(Icons.info_outline_rounded, 'About Us'),
+          _tile(Icons.headset_mic_rounded, state.tr('profile.help')),
+          _tile(Icons.info_outline_rounded, state.tr('profile.about')),
           if (user != null) ...[
             const SizedBox(height: 8),
             Padding(
@@ -102,8 +112,8 @@ class ProfileScreen extends StatelessWidget {
               child: OutlinedButton.icon(
                 onPressed: () => state.logout(),
                 icon: const Icon(Icons.logout_rounded, color: AppColors.textDark),
-                label: const Text('Logout',
-                    style: TextStyle(color: AppColors.textDark)),
+                label: Text(state.tr('profile.logout'),
+                    style: const TextStyle(color: AppColors.textDark)),
                 style: OutlinedButton.styleFrom(
                   minimumSize: const Size.fromHeight(52),
                   side: const BorderSide(color: Color(0xFFE4E7F0)),
@@ -119,8 +129,8 @@ class ProfileScreen extends StatelessWidget {
                 onPressed: () => _confirmDelete(context, state),
                 icon: const Icon(Icons.delete_outline_rounded,
                     color: AppColors.danger, size: 20),
-                label: const Text('Delete my account',
-                    style: TextStyle(color: AppColors.danger)),
+                label: Text(state.tr('profile.deleteAccount'),
+                    style: const TextStyle(color: AppColors.danger)),
               ),
             ),
           ],
@@ -224,7 +234,8 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 
-  Widget _tile(IconData icon, String label, {VoidCallback? onTap}) {
+  Widget _tile(IconData icon, String label,
+      {VoidCallback? onTap, String? trailingText}) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(20, 0, 20, 10),
       child: Container(
@@ -246,10 +257,74 @@ class ProfileScreen extends StatelessWidget {
           ),
           title: Text(label,
               style: const TextStyle(fontWeight: FontWeight.w600)),
-          trailing: const Icon(Icons.chevron_right_rounded,
-              color: AppColors.textMuted),
+          trailing: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              if (trailingText != null)
+                Text(trailingText,
+                    style: const TextStyle(
+                        color: AppColors.primary,
+                        fontWeight: FontWeight.w700,
+                        fontSize: 13)),
+              const Icon(Icons.chevron_right_rounded,
+                  color: AppColors.textMuted),
+            ],
+          ),
         ),
       ),
+    );
+  }
+
+  /// Bottom sheet to switch the app language. Persisted via [AppState].
+  Future<void> _showLanguagePicker(BuildContext context, AppState state) async {
+    await showModalBottomSheet<void>(
+      context: context,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+      ),
+      builder: (sheetContext) {
+        Widget option(String code, String label) {
+          final selected = state.lang == code;
+          return ListTile(
+            onTap: () async {
+              await state.setLanguage(code);
+              if (sheetContext.mounted) Navigator.pop(sheetContext);
+            },
+            leading: Icon(
+              selected
+                  ? Icons.radio_button_checked_rounded
+                  : Icons.radio_button_unchecked_rounded,
+              color: selected ? AppColors.primary : AppColors.textMuted,
+            ),
+            title: Text(label,
+                style: TextStyle(
+                    fontWeight:
+                        selected ? FontWeight.w800 : FontWeight.w600)),
+          );
+        }
+
+        return SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 12),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(20, 8, 20, 8),
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(state.tr('language.label'),
+                        style: const TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.w800)),
+                  ),
+                ),
+                option('en', state.tr('language.english')),
+                option('hi', state.tr('language.hindi')),
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 }

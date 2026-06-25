@@ -11,17 +11,19 @@ class BookingsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bookings = context.watch<AppState>().bookings;
+    final state = context.watch<AppState>();
+    final bookings = state.bookings;
     return Scaffold(
       backgroundColor: AppColors.bg,
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Padding(
-              padding: EdgeInsets.fromLTRB(20, 16, 20, 8),
-              child: Text('My Bookings',
-                  style: TextStyle(fontSize: 26, fontWeight: FontWeight.w800)),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(20, 16, 20, 8),
+              child: Text(state.tr('bookings.title'),
+                  style: const TextStyle(
+                      fontSize: 26, fontWeight: FontWeight.w800)),
             ),
             Expanded(
               child: bookings.isEmpty
@@ -45,6 +47,7 @@ class _EmptyBookings extends StatelessWidget {
   const _EmptyBookings();
   @override
   Widget build(BuildContext context) {
+    final state = context.watch<AppState>();
     return Center(
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -60,11 +63,12 @@ class _EmptyBookings extends StatelessWidget {
                 size: 52, color: AppColors.primary),
           ),
           const SizedBox(height: 20),
-          const Text('No bookings yet',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700)),
+          Text(state.tr('bookings.empty'),
+              style: const TextStyle(
+                  fontSize: 18, fontWeight: FontWeight.w700)),
           const SizedBox(height: 6),
-          const Text('Your booked services will appear here.',
-              style: TextStyle(color: AppColors.textMuted)),
+          Text(state.tr('bookings.emptyHint'),
+              style: const TextStyle(color: AppColors.textMuted)),
         ],
       ),
     );
@@ -88,8 +92,22 @@ class _BookingCard extends StatelessWidget {
     }
   }
 
+  String _statusKey() {
+    switch (booking.status) {
+      case BookingStatus.confirmed:
+        return 'bookings.statusConfirmed';
+      case BookingStatus.completed:
+        return 'bookings.statusCompleted';
+      case BookingStatus.cancelled:
+        return 'bookings.statusCancelled';
+      case BookingStatus.pending:
+        return 'bookings.statusPending';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    final state = context.watch<AppState>();
     final s = booking.service;
     return Container(
       padding: const EdgeInsets.all(14),
@@ -136,7 +154,7 @@ class _BookingCard extends StatelessWidget {
                   color: _statusColor.withValues(alpha: 0.12),
                   borderRadius: BorderRadius.circular(8),
                 ),
-                child: Text(booking.status.label,
+                child: Text(state.tr(_statusKey()),
                     style: TextStyle(
                         color: _statusColor,
                         fontSize: 11.5,
@@ -179,7 +197,7 @@ class _BookingCard extends StatelessWidget {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12)),
                     ),
-                    child: const Text('Cancel'),
+                    child: Text(state.tr('common.cancel')),
                   ),
                 ),
                 const SizedBox(width: 12),
@@ -189,7 +207,7 @@ class _BookingCard extends StatelessWidget {
                     style: ElevatedButton.styleFrom(
                       minimumSize: const Size.fromHeight(44),
                     ),
-                    child: const Text('Mark done'),
+                    child: Text(state.tr('bookings.markDone')),
                   ),
                 ),
               ],
@@ -200,8 +218,8 @@ class _BookingCard extends StatelessWidget {
             const SizedBox(height: 10),
             Row(
               children: [
-                const Text('You rated  ',
-                    style: TextStyle(
+                Text(state.tr('bookings.youRated'),
+                    style: const TextStyle(
                         fontSize: 12.5, color: AppColors.textMuted)),
                 ...List.generate(
                   5,
@@ -221,13 +239,14 @@ class _BookingCard extends StatelessWidget {
 
   void _rate(BuildContext context) {
     int rating = 5;
+    final state = context.read<AppState>();
     showDialog(
       context: context,
       builder: (ctx) => StatefulBuilder(
         builder: (ctx, setSt) => AlertDialog(
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-          title: const Text('Rate your service'),
+          title: Text(state.tr('bookings.rateTitle')),
           content: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: List.generate(
@@ -248,7 +267,7 @@ class _BookingCard extends StatelessWidget {
                 context.read<AppState>().rateBooking(booking.id, rating);
                 Navigator.pop(ctx);
               },
-              child: const Text('Submit'),
+              child: Text(state.tr('bookings.submit')),
             ),
           ],
         ),

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../api_service.dart';
+import '../app_state.dart';
 import '../theme.dart';
 
 class ServerSettingsScreen extends StatefulWidget {
@@ -35,8 +37,8 @@ class _ServerSettingsScreenState extends State<ServerSettingsScreen> {
     }
     if (!mounted) return;
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-          content: Text('Server URL saved'),
+      SnackBar(
+          content: Text(context.read<AppState>().tr('server.saved')),
           backgroundColor: AppColors.success),
     );
     Navigator.pop(context);
@@ -57,39 +59,41 @@ class _ServerSettingsScreenState extends State<ServerSettingsScreen> {
       _result = null;
     });
     final ok = ApiConfig.isConfigured ? await ApiService.health() : false;
+    if (!mounted) return;
+    final tr = context.read<AppState>().tr;
     setState(() {
       _testing = false;
       _ok = ok;
       _result = ApiConfig.isConfigured
-          ? (ok ? 'Connected successfully ✓' : 'Could not reach server')
-          : 'Enter a URL first';
+          ? (ok ? tr('server.connected') : tr('server.unreachable'))
+          : tr('server.enterUrl');
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    final state = context.watch<AppState>();
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Server Settings',
-            style: TextStyle(fontWeight: FontWeight.w800)),
+        title: Text(state.tr('server.title'),
+            style: const TextStyle(fontWeight: FontWeight.w800)),
       ),
       body: ListView(
         padding: const EdgeInsets.all(20),
         children: [
-          const Text(
-            'Connect the app to your backend',
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.w800),
+          Text(
+            state.tr('server.heading'),
+            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w800),
           ),
           const SizedBox(height: 8),
-          const Text(
-            'Leave empty to use offline mode. When set, sign-up and login use '
-            'your live API and accounts are stored in your database.',
-            style: TextStyle(color: AppColors.textMuted, height: 1.5),
+          Text(
+            state.tr('server.desc'),
+            style: const TextStyle(color: AppColors.textMuted, height: 1.5),
           ),
           const SizedBox(height: 20),
-          const Text('API base URL',
-              style:
-                  TextStyle(fontWeight: FontWeight.w600, fontSize: 13.5)),
+          Text(state.tr('server.urlLabel'),
+              style: const TextStyle(
+                  fontWeight: FontWeight.w600, fontSize: 13.5)),
           const SizedBox(height: 8),
           TextField(
             controller: _url,
@@ -109,7 +113,7 @@ class _ServerSettingsScreenState extends State<ServerSettingsScreen> {
                     height: 18,
                     child: CircularProgressIndicator(strokeWidth: 2.2))
                 : const Icon(Icons.wifi_tethering_rounded),
-            label: const Text('Test connection'),
+            label: Text(state.tr('server.test')),
             style: OutlinedButton.styleFrom(
               minimumSize: const Size.fromHeight(50),
               shape: RoundedRectangleBorder(
@@ -132,7 +136,8 @@ class _ServerSettingsScreenState extends State<ServerSettingsScreen> {
             ),
           ],
           const SizedBox(height: 24),
-          ElevatedButton(onPressed: _save, child: const Text('Save')),
+          ElevatedButton(
+              onPressed: _save, child: Text(state.tr('server.save'))),
         ],
       ),
     );

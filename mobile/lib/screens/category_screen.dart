@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../app_state.dart';
 import '../models.dart';
 import '../sample_data.dart';
 import '../theme.dart';
@@ -33,16 +35,18 @@ class _Empty extends StatelessWidget {
   const _Empty();
   @override
   Widget build(BuildContext context) {
-    return const Center(
+    final state = context.watch<AppState>();
+    return Center(
       child: Padding(
-        padding: EdgeInsets.all(40),
+        padding: const EdgeInsets.all(40),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(Icons.handyman_rounded, size: 56, color: AppColors.textMuted),
-            SizedBox(height: 16),
-            Text('Coming soon to your area',
-                style: TextStyle(color: AppColors.textMuted)),
+            const Icon(Icons.handyman_rounded,
+                size: 56, color: AppColors.textMuted),
+            const SizedBox(height: 16),
+            Text(state.tr('category.comingSoon'),
+                style: const TextStyle(color: AppColors.textMuted)),
           ],
         ),
       ),

@@ -7,18 +7,15 @@ import 'main_shell.dart';
 
 class _Slide {
   final IconData icon;
-  final String title;
-  final String subtitle;
-  const _Slide(this.icon, this.title, this.subtitle);
+  final String titleKey;
+  final String subtitleKey;
+  const _Slide(this.icon, this.titleKey, this.subtitleKey);
 }
 
 const _slides = [
-  _Slide(Icons.touch_app_rounded, 'Book in seconds',
-      'Pick a service, choose a time, and we handle the rest — no calls, no haggling.'),
-  _Slide(Icons.verified_user_rounded, 'Trusted professionals',
-      'Every expert is background-checked, trained and rated by real customers.'),
-  _Slide(Icons.payments_rounded, 'Upfront pricing',
-      'See the exact price before you book. Pay securely from your phone.'),
+  _Slide(Icons.touch_app_rounded, 'onboarding.title1', 'onboarding.desc1'),
+  _Slide(Icons.verified_user_rounded, 'onboarding.title2', 'onboarding.desc2'),
+  _Slide(Icons.payments_rounded, 'onboarding.title3', 'onboarding.desc3'),
 ];
 
 class OnboardingScreen extends StatefulWidget {
@@ -48,6 +45,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final state = context.watch<AppState>();
     final isLast = _page == _slides.length - 1;
     return Scaffold(
       body: SafeArea(
@@ -57,8 +55,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               alignment: Alignment.centerRight,
               child: TextButton(
                 onPressed: _finish,
-                child: const Text('Skip',
-                    style: TextStyle(color: AppColors.textMuted)),
+                child: Text(state.tr('onboarding.skip'),
+                    style: const TextStyle(color: AppColors.textMuted)),
               ),
             ),
             Expanded(
@@ -85,14 +83,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         ),
                         const SizedBox(height: 48),
                         Text(
-                          s.title,
+                          state.tr(s.titleKey),
                           textAlign: TextAlign.center,
                           style: const TextStyle(
                               fontSize: 26, fontWeight: FontWeight.w800),
                         ),
                         const SizedBox(height: 14),
                         Text(
-                          s.subtitle,
+                          state.tr(s.subtitleKey),
                           textAlign: TextAlign.center,
                           style: const TextStyle(
                               fontSize: 15,
@@ -134,7 +132,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     );
                   }
                 },
-                child: Text(isLast ? 'Get Started' : 'Next'),
+                child: Text(isLast
+                    ? state.tr('onboarding.getStarted')
+                    : state.tr('common.next')),
               ),
             ),
           ],

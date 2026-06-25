@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../app_state.dart';
 import '../models.dart';
 import '../theme.dart';
 import '../screens/service_detail_screen.dart';
@@ -11,6 +13,7 @@ class ServiceListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final state = context.watch<AppState>();
     return InkWell(
       borderRadius: BorderRadius.circular(20),
       onTap: () => Navigator.push(
@@ -61,9 +64,9 @@ class ServiceListTile extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                const Text('from',
-                    style:
-                        TextStyle(fontSize: 11, color: AppColors.textMuted)),
+                Text(state.tr('home.from'),
+                    style: const TextStyle(
+                        fontSize: 11, color: AppColors.textMuted)),
                 Text('₹${service.basePrice}',
                     style: const TextStyle(
                         fontSize: 17,

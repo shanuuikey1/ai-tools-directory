@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../app_state.dart';
 import '../theme.dart';
 import 'home_screen.dart';
 import 'bookings_screen.dart';
@@ -20,6 +22,7 @@ class _MainShellState extends State<MainShell> {
 
   @override
   Widget build(BuildContext context) {
+    final state = context.watch<AppState>();
     return Scaffold(
       body: IndexedStack(index: _index, children: _tabs),
       bottomNavigationBar: Container(
@@ -42,19 +45,19 @@ class _MainShellState extends State<MainShell> {
               children: [
                 _NavItem(
                   icon: Icons.grid_view_rounded,
-                  label: 'Home',
+                  label: state.tr('nav.home'),
                   selected: _index == 0,
                   onTap: () => setState(() => _index = 0),
                 ),
                 _NavItem(
                   icon: Icons.receipt_long_rounded,
-                  label: 'Bookings',
+                  label: state.tr('nav.bookings'),
                   selected: _index == 1,
                   onTap: () => setState(() => _index = 1),
                 ),
                 _NavItem(
                   icon: Icons.person_rounded,
-                  label: 'Profile',
+                  label: state.tr('nav.profile'),
                   selected: _index == 2,
                   onTap: () => setState(() => _index = 2),
                 ),

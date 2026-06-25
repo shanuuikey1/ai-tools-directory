@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'api_service.dart';
+import 'i18n.dart';
 import 'models.dart';
 
 /// App-wide state: auth + bookings.
@@ -13,6 +14,7 @@ class AppState extends ChangeNotifier {
   String? _token;
   final List<Booking> _bookings = [];
   bool _seenOnboarding = false;
+  String _lang = 'en';
 
   AppUser? get user => _user;
   String? get token => _token;
@@ -21,9 +23,29 @@ class AppState extends ChangeNotifier {
   bool get isOnline => ApiConfig.isConfigured;
   List<Booking> get bookings => List.unmodifiable(_bookings.reversed);
 
+  /// Current UI language code ('en' or 'hi').
+  String get lang => _lang;
+
+  /// Translate a dot-notation key for the current language, falling back to
+  /// English and finally to the key itself so the UI never shows a blank.
+  String tr(String key) {
+    return kTranslations[_lang]?[key] ?? kTranslations['en']?[key] ?? key;
+  }
+
+  /// Switch the UI language and persist the choice.
+  Future<void> setLanguage(String code) async {
+    if (code != 'en' && code != 'hi') return;
+    if (_lang == code) return;
+    _lang = code;
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('app_language', code);
+    notifyListeners();
+  }
+
   Future<void> load() async {
     await ApiConfig.load();
     final prefs = await SharedPreferences.getInstance();
+    _lang = prefs.getString('app_language') ?? 'en';
     _seenOnboarding = prefs.getBool('seenOnboarding') ?? false;
     _token = prefs.getString('user_token');
     final name = prefs.getString('user_name');

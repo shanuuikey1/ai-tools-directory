@@ -29,17 +29,17 @@ class _AuthScreenState extends State<AuthScreen> {
   }
 
   Future<void> _submit() async {
+    final state = context.read<AppState>();
     if (_email.text.trim().isEmpty || _password.text.trim().isEmpty) {
-      _snack('Please fill email and password');
+      _snack(state.tr('auth.fillEmailPassword'));
       return;
     }
     if (!_isLogin && _name.text.trim().isEmpty) {
-      _snack('Please enter your name');
+      _snack(state.tr('auth.enterName'));
       return;
     }
 
     setState(() => _busy = true);
-    final state = context.read<AppState>();
     try {
       if (_isLogin) {
         await state.login(
@@ -56,7 +56,10 @@ class _AuthScreenState extends State<AuthScreen> {
       }
       if (!mounted) return;
       Navigator.pop(context);
-      _snack(_isLogin ? 'Welcome back!' : 'Account created!',
+      _snack(
+          _isLogin
+              ? state.tr('auth.welcomeSnack')
+              : state.tr('auth.createdSnack'),
           color: AppColors.success);
     } catch (e) {
       if (!mounted) return;
@@ -74,7 +77,8 @@ class _AuthScreenState extends State<AuthScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final online = context.watch<AppState>().isOnline;
+    final state = context.watch<AppState>();
+    final online = state.isOnline;
     return Scaffold(
       appBar: AppBar(),
       body: SingleChildScrollView(
@@ -93,14 +97,17 @@ class _AuthScreenState extends State<AuthScreen> {
                   color: Colors.white, size: 38),
             ),
             const SizedBox(height: 22),
-            Text(_isLogin ? 'Welcome back' : 'Create account',
+            Text(
+                _isLogin
+                    ? state.tr('auth.loginTitle')
+                    : state.tr('auth.registerTitle'),
                 style: const TextStyle(
                     fontSize: 26, fontWeight: FontWeight.w800)),
             const SizedBox(height: 6),
             Text(
               _isLogin
-                  ? 'Login to book trusted home services'
-                  : 'Sign up to get started in minutes',
+                  ? state.tr('auth.loginSubtitle')
+                  : state.tr('auth.registerSubtitle'),
               style: const TextStyle(color: AppColors.textMuted),
             ),
             const SizedBox(height: 10),
@@ -109,24 +116,24 @@ class _AuthScreenState extends State<AuthScreen> {
                 Icon(online ? Icons.cloud_done_rounded : Icons.cloud_off_rounded,
                     size: 15, color: AppColors.textMuted),
                 const SizedBox(width: 6),
-                Text(online ? 'Connected to server' : 'Offline mode',
+                Text(online ? state.tr('auth.connected') : state.tr('auth.offline'),
                     style: const TextStyle(
                         fontSize: 12, color: AppColors.textMuted)),
               ],
             ),
             const SizedBox(height: 22),
             if (!_isLogin) ...[
-              _label('Full name'),
+              _label(state.tr('auth.name')),
               TextField(
                 controller: _name,
-                decoration: const InputDecoration(
-                  hintText: 'John Doe',
-                  prefixIcon: Icon(Icons.person_outline_rounded),
+                decoration: InputDecoration(
+                  hintText: state.tr('auth.namePlaceholder'),
+                  prefixIcon: const Icon(Icons.person_outline_rounded),
                 ),
               ),
               const SizedBox(height: 16),
             ],
-            _label('Email'),
+            _label(state.tr('auth.email')),
             TextField(
               controller: _email,
               keyboardType: TextInputType.emailAddress,
@@ -137,7 +144,7 @@ class _AuthScreenState extends State<AuthScreen> {
             ),
             const SizedBox(height: 16),
             if (!_isLogin) ...[
-              _label('Phone'),
+              _label(state.tr('auth.phone')),
               TextField(
                 controller: _phone,
                 keyboardType: TextInputType.phone,
@@ -148,7 +155,7 @@ class _AuthScreenState extends State<AuthScreen> {
               ),
               const SizedBox(height: 16),
             ],
-            _label('Password'),
+            _label(state.tr('auth.password')),
             TextField(
               controller: _password,
               obscureText: true,
@@ -167,7 +174,9 @@ class _AuthScreenState extends State<AuthScreen> {
                       child: CircularProgressIndicator(
                           strokeWidth: 2.4, color: Colors.white),
                     )
-                  : Text(_isLogin ? 'Login' : 'Create Account'),
+                  : Text(_isLogin
+                      ? state.tr('auth.login')
+                      : state.tr('auth.register')),
             ),
             const SizedBox(height: 18),
             Center(
@@ -181,10 +190,12 @@ class _AuthScreenState extends State<AuthScreen> {
                     children: [
                       TextSpan(
                           text: _isLogin
-                              ? "Don't have an account? "
-                              : 'Already have an account? '),
+                              ? '${state.tr('auth.noAccount')} '
+                              : '${state.tr('auth.haveAccount')} '),
                       TextSpan(
-                        text: _isLogin ? 'Sign up' : 'Login',
+                        text: _isLogin
+                            ? state.tr('auth.signUp')
+                            : state.tr('auth.logIn'),
                         style: const TextStyle(
                             color: AppColors.primary,
                             fontWeight: FontWeight.w700),

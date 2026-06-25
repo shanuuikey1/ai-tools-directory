@@ -13,6 +13,7 @@ class ServiceDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final state = context.watch<AppState>();
     return Scaffold(
       body: CustomScrollView(
         slivers: [
@@ -57,13 +58,13 @@ class ServiceDetailScreen extends StatelessWidget {
                       const SizedBox(width: 10),
                       _Pill(
                         icon: Icons.reviews_rounded,
-                        text: '${service.reviews} reviews',
+                        text: '${service.reviews} ${state.tr('serviceDetail.reviews')}',
                         color: AppColors.primary,
                       ),
                       const SizedBox(width: 10),
                       _Pill(
                         icon: Icons.schedule_rounded,
-                        text: '${service.durationMins} min',
+                        text: '${service.durationMins} ${state.tr('serviceDetail.min')}',
                         color: AppColors.accent,
                       ),
                     ],
@@ -78,26 +79,26 @@ class ServiceDetailScreen extends StatelessWidget {
                           color: AppColors.primary,
                           fontWeight: FontWeight.w600)),
                   const SizedBox(height: 18),
-                  const Text('About this service',
-                      style: TextStyle(
+                  Text(state.tr('serviceDetail.about'),
+                      style: const TextStyle(
                           fontSize: 16, fontWeight: FontWeight.w700)),
                   const SizedBox(height: 8),
                   Text(service.description,
                       style: const TextStyle(
                           height: 1.6, color: AppColors.textMuted)),
                   const SizedBox(height: 22),
-                  const Text("What's included",
-                      style: TextStyle(
+                  Text(state.tr('serviceDetail.whatsIncluded'),
+                      style: const TextStyle(
                           fontSize: 16, fontWeight: FontWeight.w700)),
                   const SizedBox(height: 12),
-                  ..._includes.map((t) => Padding(
+                  ..._includeKeys.map((k) => Padding(
                         padding: const EdgeInsets.only(bottom: 10),
                         child: Row(
                           children: [
                             const Icon(Icons.check_circle_rounded,
                                 color: AppColors.success, size: 20),
                             const SizedBox(width: 10),
-                            Text(t),
+                            Text(state.tr(k)),
                           ],
                         ),
                       )),
@@ -112,11 +113,11 @@ class ServiceDetailScreen extends StatelessWidget {
     );
   }
 
-  static const _includes = [
-    'Verified, trained professional',
-    'All tools & materials included',
-    '30-day service warranty',
-    'Free reschedule up to 2 hours before',
+  static const _includeKeys = [
+    'serviceDetail.include1',
+    'serviceDetail.include2',
+    'serviceDetail.include3',
+    'serviceDetail.include4',
   ];
 }
 
@@ -153,6 +154,7 @@ class _BookBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final state = context.watch<AppState>();
     return Container(
       padding: const EdgeInsets.fromLTRB(20, 14, 20, 24),
       decoration: BoxDecoration(
@@ -171,8 +173,9 @@ class _BookBar extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Text('Total price',
-                  style: TextStyle(color: AppColors.textMuted, fontSize: 12)),
+              Text(state.tr('serviceDetail.totalPrice'),
+                  style: const TextStyle(
+                      color: AppColors.textMuted, fontSize: 12)),
               Text('₹${service.basePrice}',
                   style: const TextStyle(
                       fontSize: 22, fontWeight: FontWeight.w800)),
@@ -182,7 +185,7 @@ class _BookBar extends StatelessWidget {
           Expanded(
             child: ElevatedButton(
               onPressed: () => _startBooking(context),
-              child: const Text('Book Now'),
+              child: Text(state.tr('serviceDetail.bookNow')),
             ),
           ),
         ],
@@ -254,9 +257,10 @@ class _BookingSheetState extends State<_BookingSheet> {
   }
 
   Future<void> _confirm() async {
+    final state = context.read<AppState>();
     if (_addressController.text.trim().isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please enter your address')),
+        SnackBar(content: Text(state.tr('serviceDetail.enterAddress'))),
       );
       return;
     }
@@ -290,7 +294,7 @@ class _BookingSheetState extends State<_BookingSheet> {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Checkout failed: ${e.toString()}'),
+          content: Text('${state.tr('serviceDetail.checkoutFailed')}: ${e.toString()}'),
           backgroundColor: AppColors.danger,
         ),
       );
@@ -324,12 +328,12 @@ class _BookingSheetState extends State<_BookingSheet> {
                     borderRadius: BorderRadius.circular(16),
                     border: Border.all(color: const Color(0xFFE4E7F0)),
                   ),
-                  child: const Column(
+                  child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(Icons.calendar_month_rounded, color: AppColors.primary, size: 24),
-                      SizedBox(height: 4),
-                      Text('Other', style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: AppColors.primary)),
+                      const Icon(Icons.calendar_month_rounded, color: AppColors.primary, size: 24),
+                      const SizedBox(height: 4),
+                      Text(context.read<AppState>().tr('serviceDetail.other'), style: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: AppColors.primary)),
                     ],
                   ),
                 ),
@@ -455,8 +459,8 @@ class _BookingSheetState extends State<_BookingSheet> {
                 const Icon(Icons.more_time_rounded, size: 14, color: AppColors.primary),
                 const SizedBox(width: 4),
                 Text(
-                  'Other',
-                  style: TextStyle(
+                  context.read<AppState>().tr('serviceDetail.other'),
+                  style: const TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.w700,
                     color: AppColors.primary,
@@ -472,6 +476,7 @@ class _BookingSheetState extends State<_BookingSheet> {
 
   @override
   Widget build(BuildContext context) {
+    final state = context.watch<AppState>();
     return Padding(
       padding: EdgeInsets.only(
           bottom: MediaQuery.of(context).viewInsets.bottom),
@@ -496,29 +501,30 @@ class _BookingSheetState extends State<_BookingSheet> {
               ),
             ),
             const SizedBox(height: 18),
-            const Text('Schedule your service',
-                style: TextStyle(fontSize: 19, fontWeight: FontWeight.w800)),
+            Text(state.tr('serviceDetail.schedule'),
+                style: const TextStyle(
+                    fontSize: 19, fontWeight: FontWeight.w800)),
             const SizedBox(height: 18),
-            const Text('Select Date',
-                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700, color: AppColors.textDark)),
+            Text(state.tr('serviceDetail.selectDate'),
+                style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w700, color: AppColors.textDark)),
             const SizedBox(height: 8),
             _buildDateSlider(),
             const SizedBox(height: 18),
-            const Text('Select Time Slot',
-                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700, color: AppColors.textDark)),
+            Text(state.tr('serviceDetail.selectTimeSlot'),
+                style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w700, color: AppColors.textDark)),
             const SizedBox(height: 8),
             _buildTimeGrid(),
             const SizedBox(height: 18),
-            const Text('Service Address',
-                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700, color: AppColors.textDark)),
+            Text(state.tr('serviceDetail.address'),
+                style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w700, color: AppColors.textDark)),
             const SizedBox(height: 8),
             TextField(
               controller: _addressController,
               maxLines: 2,
               enabled: !_loading,
-              decoration: const InputDecoration(
-                hintText: 'Enter your full address',
-                prefixIcon: Icon(Icons.location_on_outlined),
+              decoration: InputDecoration(
+                hintText: state.tr('serviceDetail.addressHint'),
+                prefixIcon: const Icon(Icons.location_on_outlined),
               ),
             ),
             const SizedBox(height: 18),
@@ -530,11 +536,14 @@ class _BookingSheetState extends State<_BookingSheet> {
               ),
               child: Column(
                 children: [
-                  _row('Service', widget.service.name),
+                  _row(state.tr('serviceDetail.summaryService'),
+                      widget.service.name),
                   const SizedBox(height: 8),
-                  _row('Price', '₹${widget.service.basePrice}'),
+                  _row(state.tr('serviceDetail.summaryPrice'),
+                      '₹${widget.service.basePrice}'),
                   const Divider(height: 22),
-                  _row('Total payable', '₹${widget.service.basePrice}',
+                  _row(state.tr('serviceDetail.totalPayable'),
+                      '₹${widget.service.basePrice}',
                       bold: true),
                 ],
               ),
@@ -549,7 +558,7 @@ class _BookingSheetState extends State<_BookingSheet> {
                   )
                 : ElevatedButton(
                     onPressed: _confirm,
-                    child: const Text('Confirm & Pay Now'),
+                    child: Text(state.tr('serviceDetail.confirmPay')),
                   ),
           ],
         ),
@@ -581,6 +590,7 @@ class _SuccessDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final state = context.watch<AppState>();
     return Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
       child: Padding(
@@ -599,11 +609,12 @@ class _SuccessDialog extends StatelessWidget {
                   color: AppColors.success, size: 44),
             ),
             const SizedBox(height: 18),
-            const Text('Booking Confirmed!',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w800)),
+            Text(state.tr('serviceDetail.bookingConfirmedTitle'),
+                style: const TextStyle(
+                    fontSize: 20, fontWeight: FontWeight.w800)),
             const SizedBox(height: 8),
             Text(
-              'Your ${service.name} is booked. A professional will reach out to confirm shortly.',
+              '${state.tr('serviceDetail.successPrefix')} ${service.name} ${state.tr('serviceDetail.successSuffix')}',
               textAlign: TextAlign.center,
               style: const TextStyle(color: AppColors.textMuted, height: 1.5),
             ),
@@ -613,7 +624,7 @@ class _SuccessDialog extends StatelessWidget {
                 Navigator.pop(context); // dialog
                 Navigator.pop(context); // detail -> back home
               },
-              child: const Text('Done'),
+              child: Text(state.tr('common.done')),
             ),
           ],
         ),

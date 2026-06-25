@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../app_state.dart';
 import '../models.dart';
 import '../sample_data.dart';
 import '../theme.dart';
@@ -17,6 +19,7 @@ class _SearchScreenState extends State<SearchScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final state = context.watch<AppState>();
     final List<ServiceItem> results = _query.isEmpty
         ? kServices
         : kServices
@@ -33,17 +36,17 @@ class _SearchScreenState extends State<SearchScreen> {
           child: TextField(
             autofocus: true,
             onChanged: (v) => setState(() => _query = v),
-            decoration: const InputDecoration(
-              hintText: 'Search services...',
-              prefixIcon: Icon(Icons.search_rounded),
+            decoration: InputDecoration(
+              hintText: state.tr('search.hint'),
+              prefixIcon: const Icon(Icons.search_rounded),
             ),
           ),
         ),
       ),
       body: results.isEmpty
-          ? const Center(
-              child: Text('No services found',
-                  style: TextStyle(color: AppColors.textMuted)),
+          ? Center(
+              child: Text(state.tr('search.noResults'),
+                  style: const TextStyle(color: AppColors.textMuted)),
             )
           : ListView.separated(
               padding: const EdgeInsets.fromLTRB(20, 12, 20, 24),

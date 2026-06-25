@@ -14,19 +14,21 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final user = context.watch<AppState>().user;
-    final greeting = user == null ? 'there' : user.name.split(' ').first;
+    final state = context.watch<AppState>();
+    final user = state.user;
+    final greeting =
+        user == null ? state.tr('home.guest') : user.name.split(' ').first;
 
     return CustomScrollView(
       slivers: [
         SliverToBoxAdapter(child: _Header(greeting: greeting)),
         const SliverToBoxAdapter(child: _PromoBanner()),
         SliverToBoxAdapter(
-          child: _SectionTitle(title: 'Categories', onTap: null),
+          child: _SectionTitle(title: state.tr('home.categories'), onTap: null),
         ),
         const SliverToBoxAdapter(child: _CategoryGrid()),
         SliverToBoxAdapter(
-          child: _SectionTitle(title: 'Most popular', onTap: null),
+          child: _SectionTitle(title: state.tr('home.mostPopular'), onTap: null),
         ),
         SliverPadding(
           padding: const EdgeInsets.fromLTRB(20, 4, 20, 24),
@@ -48,6 +50,7 @@ class _Header extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final state = context.watch<AppState>();
     return Container(
       decoration: const BoxDecoration(
         gradient: AppColors.heroGradient,
@@ -64,7 +67,7 @@ class _Header extends StatelessWidget {
                 const Icon(Icons.location_on_rounded,
                     color: Colors.white, size: 18),
                 const SizedBox(width: 4),
-                Text('Chhindwara, MP',
+                Text(state.tr('home.location'),
                     style: TextStyle(
                         color: Colors.white.withValues(alpha: 0.9),
                         fontWeight: FontWeight.w600)),
@@ -81,12 +84,12 @@ class _Header extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 18),
-            Text('Hi $greeting 👋',
+            Text('${state.tr('home.hi')} $greeting 👋',
                 style: TextStyle(
                     color: Colors.white.withValues(alpha: 0.9), fontSize: 15)),
             const SizedBox(height: 4),
-            const Text('What do you need\ndone today?',
-                style: TextStyle(
+            Text(state.tr('home.question'),
+                style: const TextStyle(
                     color: Colors.white,
                     fontSize: 24,
                     height: 1.2,
@@ -104,11 +107,11 @@ class _Header extends StatelessWidget {
                   boxShadow: softShadow,
                 ),
                 child: Row(
-                  children: const [
-                    Icon(Icons.search_rounded, color: AppColors.textMuted),
-                    SizedBox(width: 10),
-                    Text('Search for a service',
-                        style: TextStyle(color: AppColors.textMuted)),
+                  children: [
+                    const Icon(Icons.search_rounded, color: AppColors.textMuted),
+                    const SizedBox(width: 10),
+                    Text(state.tr('home.searchService'),
+                        style: const TextStyle(color: AppColors.textMuted)),
                   ],
                 ),
               ),
@@ -125,6 +128,7 @@ class _PromoBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final state = context.watch<AppState>();
     return Container(
       margin: const EdgeInsets.fromLTRB(20, 20, 20, 4),
       padding: const EdgeInsets.all(18),
@@ -137,15 +141,16 @@ class _PromoBanner extends StatelessWidget {
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
-                Text('First booking?',
-                    style: TextStyle(
+              children: [
+                Text(state.tr('home.firstBooking'),
+                    style: const TextStyle(
                         color: Colors.white,
                         fontSize: 17,
                         fontWeight: FontWeight.w800)),
-                SizedBox(height: 6),
-                Text('Get 20% OFF on your first home service.',
-                    style: TextStyle(color: Color(0xFFC7CBD6), fontSize: 13)),
+                const SizedBox(height: 6),
+                Text(state.tr('home.firstBookingDesc'),
+                    style: const TextStyle(
+                        color: Color(0xFFC7CBD6), fontSize: 13)),
               ],
             ),
           ),
@@ -237,6 +242,7 @@ class _ServiceRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final state = context.watch<AppState>();
     return InkWell(
       borderRadius: BorderRadius.circular(20),
       onTap: () => Navigator.push(
@@ -290,9 +296,9 @@ class _ServiceRow extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                const Text('from',
-                    style:
-                        TextStyle(fontSize: 11, color: AppColors.textMuted)),
+                Text(state.tr('home.from'),
+                    style: const TextStyle(
+                        fontSize: 11, color: AppColors.textMuted)),
                 Text('₹${service.basePrice}',
                     style: const TextStyle(
                         fontSize: 17,
