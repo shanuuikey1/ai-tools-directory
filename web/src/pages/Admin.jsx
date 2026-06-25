@@ -24,6 +24,8 @@ import {
   UserCheck,
   UserX,
   RefreshCw,
+  Eye,
+  EyeOff,
 } from 'lucide-react';
 import { professionalsAPI, adminAPI, servicesAPI } from '../services/api';
 import SEO from '../components/SEO';
@@ -33,6 +35,7 @@ export default function Admin() {
   const [keyInput, setKeyInput] = useState('');
   const [loading, setLoading] = useState(!!adminKey);
   const [error, setError] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
 
   // Dashboard Tabs: 'overview', 'applications', 'providers', 'customers', 'bookings', 'services'
@@ -483,15 +486,25 @@ export default function Admin() {
                 <label htmlFor="adminKey" className="block text-xs font-bold text-gray-700 uppercase tracking-widest mb-2.5">
                   Secret Admin API Key
                 </label>
-                <input
-                  id="adminKey"
-                  type="password"
-                  value={keyInput}
-                  onChange={(e) => setKeyInput(e.target.value)}
-                  placeholder="••••••••••••••••••••"
-                  required
-                  className="w-full px-4 py-3 bg-slate-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none text-gray-900 text-center font-mono tracking-widest placeholder:tracking-normal transition-all"
-                />
+                <div className="relative">
+                  <input
+                    id="adminKey"
+                    type={showPassword ? "text" : "password"}
+                    value={keyInput}
+                    onChange={(e) => setKeyInput(e.target.value)}
+                    placeholder="••••••••••••••••••••"
+                    required
+                    className="w-full pl-4 pr-12 py-3 bg-slate-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none text-gray-900 text-center font-mono tracking-widest placeholder:tracking-normal transition-all"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 focus:outline-none"
+                    aria-label={showPassword ? 'Hide admin key' : 'Show admin key'}
+                  >
+                    {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                  </button>
+                </div>
               </div>
 
               <button
