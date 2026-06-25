@@ -2,28 +2,30 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import SEO from '../components/SEO';
 import { Search, Calendar, Star, ShieldCheck } from 'lucide-react';
+import { useLanguage } from '../context/LanguageContext';
 
 export default function HowItWorks() {
+  const { t } = useLanguage();
   const steps = [
     {
       icon: <Search size={28} className="text-blue-600" aria-hidden="true" />,
-      title: '1. Find a Service',
-      description: 'Browse our categories — cleaning, plumbing, electrical, beauty, AC repair, and more. Filter by your needs and budget.',
+      title: t('howItWorks.step1Title'),
+      description: t('howItWorks.step1Desc'),
     },
     {
       icon: <Calendar size={28} className="text-blue-600" aria-hidden="true" />,
-      title: '2. Book Online',
-      description: 'Choose your preferred date and time. Enter your address and confirm your booking in under 2 minutes.',
+      title: t('howItWorks.step2Title'),
+      description: t('howItWorks.step2Desc'),
     },
     {
       icon: <ShieldCheck size={28} className="text-blue-600" aria-hidden="true" />,
-      title: '3. Verified Professional Arrives',
-      description: 'A background-verified expert arrives at your doorstep with all the necessary tools and equipment.',
+      title: t('howItWorks.step3Title'),
+      description: t('howItWorks.step3Desc'),
     },
     {
       icon: <Star size={28} className="text-blue-600" aria-hidden="true" />,
-      title: '4. Pay & Rate',
-      description: 'Pay securely online after the service is complete. Rate your experience to help other customers choose wisely.',
+      title: t('howItWorks.step4Title'),
+      description: t('howItWorks.step4Desc'),
     },
   ];
 
@@ -36,8 +38,8 @@ export default function HowItWorks() {
       <div className="min-h-screen bg-gray-50 py-12">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h1 className="text-4xl font-bold text-gray-900 mb-3">How It Works</h1>
-            <p className="text-lg text-gray-500">Book a service in 4 simple steps</p>
+            <h1 className="text-4xl font-bold text-gray-900 mb-3">{t('howItWorks.title')}</h1>
+            <p className="text-lg text-gray-500">{t('howItWorks.subtitle')}</p>
           </div>
 
           <div className="space-y-6">
@@ -59,7 +61,7 @@ export default function HowItWorks() {
               to="/services"
               className="inline-flex items-center space-x-2 bg-blue-600 text-white font-semibold px-8 py-4 rounded-xl hover:bg-blue-700 transition shadow-lg"
             >
-              <span>Get Started Now</span>
+              <span>{t('howItWorks.getStarted')}</span>
             </Link>
           </div>
         </div>

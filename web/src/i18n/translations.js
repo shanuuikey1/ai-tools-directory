@@ -221,6 +221,55 @@ export const translations = {
       recently: 'Recently',
       logOut: 'Log Out',
     },
+    about: {
+      title: 'About Ghar Pahuch Seva',
+      intro:
+        "Ghar Pahuch Seva is Chhindwara's most trusted platform for booking professional home services. We connect homeowners with verified, background-checked service providers for everything from cleaning and plumbing to electrical work and beauty services.",
+      localTitle: 'Local Focus',
+      localDesc: 'Built specifically for Chhindwara residents',
+      verifiedTitle: 'Verified Pros',
+      verifiedDesc: 'Every provider is background checked',
+      qualityTitle: 'Quality Work',
+      qualityDesc: 'Rated and reviewed by real customers',
+      missionTitle: 'Our Mission',
+      missionDesc:
+        'We believe everyone deserves access to reliable, affordable home services. Our mission is to make booking a plumber, electrician, or cleaner as easy as ordering food online — with the trust and transparency that Chhindwara families deserve.',
+      bookAService: 'Book a Service',
+    },
+    howItWorks: {
+      title: 'How It Works',
+      subtitle: 'Book a service in 4 simple steps',
+      step1Title: '1. Find a Service',
+      step1Desc:
+        'Browse our categories — cleaning, plumbing, electrical, beauty, AC repair, and more. Filter by your needs and budget.',
+      step2Title: '2. Book Online',
+      step2Desc:
+        'Choose your preferred date and time. Enter your address and confirm your booking in under 2 minutes.',
+      step3Title: '3. Verified Professional Arrives',
+      step3Desc:
+        'A background-verified expert arrives at your doorstep with all the necessary tools and equipment.',
+      step4Title: '4. Pay & Rate',
+      step4Desc:
+        'Pay securely online after the service is complete. Rate your experience to help other customers choose wisely.',
+      getStarted: 'Get Started Now',
+    },
+    help: {
+      title: 'Help & Support',
+      subtitle: 'We are here to help you with any questions',
+      emailUs: 'Email Us',
+      callUs: 'Call Us',
+      whatsapp: 'WhatsApp',
+      chatWithUs: 'Chat with us',
+      sendMessage: 'Send Us a Message',
+      thankYou: 'Thank you! We will get back to you within 24 hours.',
+      nameLabel: 'Name',
+      namePlaceholder: 'Your name',
+      emailLabel: 'Email',
+      messageLabel: 'Message',
+      messagePlaceholder: 'How can we help you?',
+      sending: 'Sending...',
+      sendButton: 'Send Message',
+    },
   },
 
   hi: {
@@ -439,6 +488,55 @@ export const translations = {
       memberSince: 'सदस्य बने',
       recently: 'हाल ही में',
       logOut: 'लॉग आउट',
+    },
+    about: {
+      title: 'घर पहुंच सेवा के बारे में',
+      intro:
+        'घर पहुंच सेवा छिंदवाड़ा का सबसे भरोसेमंद मंच है जहां पेशेवर घरेलू सेवाएं बुक की जाती हैं। हम गृहस्वामियों को सफाई, प्लंबिंग, इलेक्ट्रिकल कार्य और ब्यूटी सेवाओं तक हर चीज़ के लिए सत्यापित, पृष्ठभूमि-जांचे गए सेवा प्रदाताओं से जोड़ते हैं।',
+      localTitle: 'स्थानीय फोकस',
+      localDesc: 'विशेष रूप से छिंदवाड़ा निवासियों के लिए बनाया गया',
+      verifiedTitle: 'सत्यापित पेशेवर',
+      verifiedDesc: 'हर प्रदाता की पृष्ठभूमि जांच होती है',
+      qualityTitle: 'गुणवत्तापूर्ण कार्य',
+      qualityDesc: 'वास्तविक ग्राहकों द्वारा रेटेड और समीक्षित',
+      missionTitle: 'हमारा लक्ष्य',
+      missionDesc:
+        'हम मानते हैं कि हर किसी को भरोसेमंद, किफायती घरेलू सेवाओं तक पहुंच का हक है। हमारा लक्ष्य है प्लंबर, इलेक्ट्रीशियन या क्लीनर बुक करना उतना ही आसान बनाना जितना ऑनलाइन खाना मंगाना — उस भरोसे और पारदर्शिता के साथ जिसके छिंदवाड़ा परिवार हकदार हैं।',
+      bookAService: 'सेवा बुक करें',
+    },
+    howItWorks: {
+      title: 'यह कैसे काम करता है',
+      subtitle: '4 आसान चरणों में सेवा बुक करें',
+      step1Title: '1. सेवा खोजें',
+      step1Desc:
+        'हमारी श्रेणियां देखें — सफाई, प्लंबिंग, इलेक्ट्रिकल, ब्यूटी, एसी मरम्मत और बहुत कुछ। अपनी ज़रूरत और बजट के अनुसार फ़िल्टर करें।',
+      step2Title: '2. ऑनलाइन बुक करें',
+      step2Desc:
+        'अपनी पसंदीदा तारीख और समय चुनें। अपना पता दर्ज करें और 2 मिनट से कम में बुकिंग की पुष्टि करें।',
+      step3Title: '3. सत्यापित पेशेवर पहुंचता है',
+      step3Desc:
+        'एक पृष्ठभूमि-सत्यापित विशेषज्ञ सभी आवश्यक उपकरणों के साथ आपके दरवाज़े पर पहुंचता है।',
+      step4Title: '4. भुगतान करें और रेट करें',
+      step4Desc:
+        'सेवा पूरी होने के बाद ऑनलाइन सुरक्षित भुगतान करें। दूसरे ग्राहकों की मदद के लिए अपने अनुभव को रेट करें।',
+      getStarted: 'अभी शुरू करें',
+    },
+    help: {
+      title: 'सहायता और समर्थन',
+      subtitle: 'हम आपके किसी भी प्रश्न में मदद के लिए यहां हैं',
+      emailUs: 'हमें ईमेल करें',
+      callUs: 'हमें कॉल करें',
+      whatsapp: 'व्हाट्सएप',
+      chatWithUs: 'हमसे चैट करें',
+      sendMessage: 'हमें संदेश भेजें',
+      thankYou: 'धन्यवाद! हम 24 घंटे के भीतर आपसे संपर्क करेंगे।',
+      nameLabel: 'नाम',
+      namePlaceholder: 'आपका नाम',
+      emailLabel: 'ईमेल',
+      messageLabel: 'संदेश',
+      messagePlaceholder: 'हम आपकी कैसे मदद कर सकते हैं?',
+      sending: 'भेजा जा रहा है...',
+      sendButton: 'संदेश भेजें',
     },
   },
 };
