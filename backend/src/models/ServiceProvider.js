@@ -1,5 +1,6 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
+const { encrypt, decrypt } = require('../utils/crypto');
 
 const ServiceProvider = sequelize.define(
   'ServiceProvider',
@@ -62,17 +63,39 @@ const ServiceProvider = sequelize.define(
       type: DataTypes.INTEGER,
       defaultValue: 0,
     },
+    // Sensitive financial / identity data — encrypted at rest with
+    // AES-256-GCM via transparent setters/getters (see utils/crypto). Stored
+    // as ciphertext strings; reads return the decrypted value automatically.
+    // These must never be returned in list endpoints (see adminController).
     bank_account: {
       type: DataTypes.STRING,
       allowNull: true,
+      set(value) {
+        this.setDataValue('bank_account', encrypt(value));
+      },
+      get() {
+        return decrypt(this.getDataValue('bank_account'));
+      },
     },
     ifsc_code: {
       type: DataTypes.STRING,
       allowNull: true,
+      set(value) {
+        this.setDataValue('ifsc_code', encrypt(value));
+      },
+      get() {
+        return decrypt(this.getDataValue('ifsc_code'));
+      },
     },
     aadhar_number: {
       type: DataTypes.STRING,
       allowNull: true,
+      set(value) {
+        this.setDataValue('aadhar_number', encrypt(value));
+      },
+      get() {
+        return decrypt(this.getDataValue('aadhar_number'));
+      },
     },
     verification_status: {
       type: DataTypes.ENUM('pending', 'verified', 'rejected'),

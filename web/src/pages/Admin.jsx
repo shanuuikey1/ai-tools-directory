@@ -31,7 +31,7 @@ import { professionalsAPI, adminAPI, servicesAPI } from '../services/api';
 import SEO from '../components/SEO';
 
 export default function Admin() {
-  const [adminKey, setAdminKey] = useState(localStorage.getItem('adminKey') || '');
+  const [adminKey, setAdminKey] = useState(sessionStorage.getItem('adminKey') || '');
   const [keyInput, setKeyInput] = useState('');
   const [loading, setLoading] = useState(!!adminKey);
   const [error, setError] = useState('');
@@ -117,10 +117,10 @@ export default function Admin() {
       setCustomers(customersRes.data.customers);
 
       setAdminKey(key);
-      localStorage.setItem('adminKey', key);
+      sessionStorage.setItem('adminKey', key);
     } catch (err) {
       setAdminKey('');
-      localStorage.removeItem('adminKey');
+      sessionStorage.removeItem('adminKey');
       setError(err.response?.data?.message || 'Authentication failed. Please check your admin key.');
       console.error(err);
     } finally {
@@ -141,7 +141,7 @@ export default function Admin() {
 
   const handleLogout = () => {
     setAdminKey('');
-    localStorage.removeItem('adminKey');
+    sessionStorage.removeItem('adminKey');
     setStats(null);
     setApplications([]);
     setProviders([]);

@@ -87,6 +87,13 @@ exports.updateApplicationStatus = async (req, res) => {
     const { id } = req.params;
     const { status, notes } = req.body;
 
+    // Restrict status to the model's enum so an admin typo (or a malformed
+    // request) can't persist an out-of-range value.
+    const ALLOWED_STATUSES = ['pending', 'verified', 'rejected'];
+    if (status !== undefined && !ALLOWED_STATUSES.includes(status)) {
+      return res.status(400).json({ message: 'Invalid status value' });
+    }
+
     const application = await ProfessionalApplication.findByPk(id);
 
     if (!application) {

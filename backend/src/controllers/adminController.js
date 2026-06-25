@@ -86,6 +86,9 @@ exports.getAllBookings = async (req, res) => {
 exports.getAllProviders = async (req, res) => {
   try {
     const providers = await ServiceProvider.findAll({
+      // Never expose the password hash or sensitive financial/identity fields
+      // (Aadhaar / bank / IFSC) in a list endpoint, even to an admin client.
+      attributes: { exclude: ['password_hash', 'bank_account', 'ifsc_code', 'aadhar_number'] },
       order: [['createdAt', 'DESC']],
     });
 

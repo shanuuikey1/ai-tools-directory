@@ -24,7 +24,15 @@ class _ServerSettingsScreenState extends State<ServerSettingsScreen> {
   }
 
   Future<void> _save() async {
-    await ApiConfig.setBaseUrl(_url.text);
+    try {
+      await ApiConfig.setBaseUrl(_url.text);
+    } on ApiException catch (e) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(e.message), backgroundColor: AppColors.danger),
+      );
+      return;
+    }
     if (!mounted) return;
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
@@ -35,7 +43,15 @@ class _ServerSettingsScreenState extends State<ServerSettingsScreen> {
   }
 
   Future<void> _test() async {
-    await ApiConfig.setBaseUrl(_url.text);
+    try {
+      await ApiConfig.setBaseUrl(_url.text);
+    } on ApiException catch (e) {
+      setState(() {
+        _ok = false;
+        _result = e.message;
+      });
+      return;
+    }
     setState(() {
       _testing = true;
       _result = null;

@@ -7,6 +7,10 @@ const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
 const { Op } = require('sequelize');
 
+// bcrypt work factor. 12 is a sensible 2024+ baseline; raising it does not
+// affect existing hashes (the cost is embedded in each stored hash).
+const BCRYPT_ROUNDS = 12;
+
 // Customer Registration
 exports.registerCustomer = async (req, res) => {
   try {
@@ -33,7 +37,7 @@ exports.registerCustomer = async (req, res) => {
     }
 
     // Hash password
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const hashedPassword = await bcrypt.hash(password, BCRYPT_ROUNDS);
 
     // Create user
     const user = await User.create({
@@ -94,7 +98,7 @@ exports.registerProvider = async (req, res) => {
     }
 
     // Hash password
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const hashedPassword = await bcrypt.hash(password, BCRYPT_ROUNDS);
 
     // Create provider
     const provider = await ServiceProvider.create({
@@ -226,7 +230,7 @@ exports.deleteCustomerAccount = async (req, res) => {
       if (retained > 0) {
         // Anonymise: scrub PII and disable login while preserving the row
         // (and its foreign-key links to retained transaction records).
-        const randomHash = await bcrypt.hash(crypto.randomBytes(32).toString('hex'), 10);
+        const randomHash = await bcrypt.hash(crypto.randomBytes(32).toString('hex'), BCRYPT_ROUNDS);
         await user.update(
           {
             email: `deleted+${userId}@deleted.gharpahuchseva.com`,

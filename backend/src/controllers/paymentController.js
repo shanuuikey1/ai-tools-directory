@@ -35,6 +35,14 @@ exports.createOrder = async (req, res) => {
     // Check if Razorpay credentials are not configured or are placeholders
     const isPlaceholderKey = !RAZORPAY_KEY_ID || RAZORPAY_KEY_ID === 'your_razorpay_key_id' || RAZORPAY_KEY_ID.startsWith('your_');
 
+    // The sandbox mock marks bookings paid WITHOUT a real payment or signature
+    // check. That is only ever acceptable outside production — in production we
+    // must fail closed so missing/placeholder keys can't become free bookings.
+    if (isPlaceholderKey && process.env.NODE_ENV === 'production') {
+      console.error('✗ Razorpay credentials are not configured in production. Refusing to mock-complete payment.');
+      return res.status(503).json({ message: 'Payments are temporarily unavailable' });
+    }
+
     if (isPlaceholderKey) {
       console.warn('⚠️ Razorpay credentials are not configured. Falling back to Sandbox Mock Payment.');
       const mockOrderId = `order_mock_${Date.now()}`;
@@ -120,18 +128,33 @@ exports.verifyPayment = async (req, res) => {
     }
 
     const isPlaceholderKey = !RAZORPAY_KEY_ID || RAZORPAY_KEY_ID === 'your_razorpay_key_id' || RAZORPAY_KEY_ID.startsWith('your_');
-    const isMock = isPlaceholderKey && (razorpayOrderId.startsWith('order_mock_') || razorpayOrderId.startsWith('order_fallback_'));
+    // The mock path bypasses signature verification, so it must never be
+    // reachable in production even if keys are somehow placeholders there.
+    const isMock =
+      isPlaceholderKey &&
+      process.env.NODE_ENV !== 'production' &&
+      (razorpayOrderId.startsWith('order_mock_') || razorpayOrderId.startsWith('order_fallback_'));
 
     if (!isMock) {
       const crypto = require('crypto');
-      // Verify signature
+      // A real (non-mock) verification requires the signature to be present.
+      if (!razorpaySignature) {
+        return res.status(400).json({ message: 'Invalid payment signature' });
+      }
+      // Verify signature with a constant-time comparison so the validity of a
+      // forged signature can't be inferred from response timing.
       const body = razorpayOrderId + '|' + razorpayPaymentId;
       const expectedSignature = crypto
         .createHmac('sha256', RAZORPAY_KEY_SECRET)
         .update(body)
         .digest('hex');
 
-      if (expectedSignature !== razorpaySignature) {
+      const expectedBuf = Buffer.from(expectedSignature, 'utf8');
+      const providedBuf = Buffer.from(String(razorpaySignature), 'utf8');
+      if (
+        expectedBuf.length !== providedBuf.length ||
+        !crypto.timingSafeEqual(expectedBuf, providedBuf)
+      ) {
         return res.status(400).json({ message: 'Invalid payment signature' });
       }
     } else {

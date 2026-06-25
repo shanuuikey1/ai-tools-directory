@@ -31,20 +31,13 @@ export default defineConfig({
         ],
       },
       workbox: {
+        // Precache only the static app shell (build output). We deliberately
+        // do NOT runtime-cache API responses: those include authenticated PII
+        // (bookings, payment history, profile) and caching them in the service
+        // worker would leave that data readable in Cache Storage after logout,
+        // especially on shared devices. Keep dynamic data network-only.
         globPatterns: ['**/*.{js,css,html,ico,png,svg}'],
-        runtimeCaching: [
-          {
-            urlPattern: /^https:\/\/api\.gharpahuchseva\.com\/.*/i,
-            handler: 'NetworkFirst',
-            options: {
-              cacheName: 'api-cache',
-              expiration: {
-                maxEntries: 100,
-                maxAgeSeconds: 60 * 60 * 24, // 24 hours
-              },
-            },
-          },
-        ],
+        runtimeCaching: [],
       },
     }),
   ],

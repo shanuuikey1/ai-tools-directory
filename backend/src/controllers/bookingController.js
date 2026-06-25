@@ -254,6 +254,14 @@ exports.rateBooking = async (req, res) => {
       return res.status(404).json({ message: 'Booking not found' });
     }
 
+    // Ratings only make sense for delivered work — block them on bookings that
+    // are still pending/accepted/cancelled to prevent review manipulation.
+    if (booking.status !== 'completed') {
+      return res
+        .status(400)
+        .json({ message: 'Only completed bookings can be rated' });
+    }
+
     if (userType === 'customer') {
       if (booking.customer_id !== userId) {
         return res.status(403).json({ message: 'Unauthorized' });

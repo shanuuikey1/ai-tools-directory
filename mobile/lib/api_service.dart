@@ -16,7 +16,28 @@ class ApiConfig {
     baseUrl = prefs.getString('api_base_url') ?? '';
   }
 
+  /// Returns null if [url] is an acceptable backend URL, otherwise a reason
+  /// string. We require HTTPS so credentials and the bearer token are never
+  /// sent in cleartext, with a localhost/emulator exception for local dev.
+  static String? validationError(String url) {
+    final trimmed = url.trim();
+    if (trimmed.isEmpty) return null; // empty == offline/demo mode
+    final uri = Uri.tryParse(trimmed);
+    if (uri == null || !uri.hasScheme || uri.host.isEmpty) {
+      return 'Enter a valid URL (e.g. https://api.example.com/api)';
+    }
+    final isLocal = uri.host == 'localhost' ||
+        uri.host == '127.0.0.1' ||
+        uri.host == '10.0.2.2'; // Android emulator -> host loopback
+    if (uri.scheme != 'https' && !isLocal) {
+      return 'Server URL must use https:// to keep your data secure';
+    }
+    return null;
+  }
+
   static Future<void> setBaseUrl(String url) async {
+    final problem = validationError(url);
+    if (problem != null) throw ApiException(problem);
     baseUrl = url.trim();
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString('api_base_url', baseUrl);

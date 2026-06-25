@@ -1,4 +1,14 @@
 const jwt = require('jsonwebtoken');
+const crypto = require('crypto');
+
+// Timing-safe string equality. Compares SHA-256 digests so inputs of
+// differing length don't leak length via early return, and the byte
+// comparison itself runs in constant time.
+const safeEqual = (a, b) => {
+  const ha = crypto.createHash('sha256').update(String(a)).digest();
+  const hb = crypto.createHash('sha256').update(String(b)).digest();
+  return crypto.timingSafeEqual(ha, hb);
+};
 
 const authenticateCustomer = (req, res, next) => {
   try {
@@ -61,7 +71,7 @@ const authenticateAdmin = (req, res, next) => {
     return res.status(503).json({ message: 'Admin operations are disabled' });
   }
   const provided = req.headers['x-admin-key'];
-  if (provided !== configured) {
+  if (!provided || !safeEqual(provided, configured)) {
     return res.status(401).json({ message: 'Invalid admin key' });
   }
   next();
