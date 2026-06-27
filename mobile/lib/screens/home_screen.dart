@@ -72,6 +72,35 @@ class _Header extends StatelessWidget {
                         color: Colors.white.withValues(alpha: 0.9),
                         fontWeight: FontWeight.w600)),
                 const Spacer(),
+                GestureDetector(
+                  onTap: () {
+                    final target = state.lang == 'en' ? 'hi' : 'en';
+                    state.setLanguage(target);
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
+                    decoration: BoxDecoration(
+                      color: Colors.white.withValues(alpha: 0.18),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Icon(Icons.translate_rounded,
+                            color: Colors.white, size: 14),
+                        const SizedBox(width: 4),
+                        Text(
+                          state.lang == 'en' ? 'हिंदी' : 'EN',
+                          style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w800),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 8),
                 Container(
                   padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
@@ -198,6 +227,7 @@ class _CategoryGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final state = context.watch<AppState>();
     return GridView.count(
       crossAxisCount: 4,
       shrinkWrap: true,
@@ -224,7 +254,7 @@ class _CategoryGrid extends StatelessWidget {
                 child: Icon(c.icon, color: c.color, size: 26),
               ),
               const SizedBox(height: 6),
-              Text(c.name,
+              Text(state.tr(c.name),
                   textAlign: TextAlign.center,
                   style: const TextStyle(
                       fontSize: 11.5, fontWeight: FontWeight.w600)),
@@ -273,7 +303,7 @@ class _ServiceRow extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(service.name,
+                  Text(state.tr(service.name),
                       style: const TextStyle(
                           fontSize: 15, fontWeight: FontWeight.w700)),
                   const SizedBox(height: 4),

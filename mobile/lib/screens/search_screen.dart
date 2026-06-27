@@ -20,12 +20,20 @@ class _SearchScreenState extends State<SearchScreen> {
   @override
   Widget build(BuildContext context) {
     final state = context.watch<AppState>();
+    final queryLower = _query.toLowerCase();
     final List<ServiceItem> results = _query.isEmpty
         ? kServices
         : kServices
-            .where((s) =>
-                s.name.toLowerCase().contains(_query.toLowerCase()) ||
-                s.category.toLowerCase().contains(_query.toLowerCase()))
+            .where((s) {
+              final engName = s.name.toLowerCase();
+              final engCat = s.category.toLowerCase();
+              final hiName = state.tr(s.name).toLowerCase();
+              final hiCat = state.tr(s.category).toLowerCase();
+              return engName.contains(queryLower) ||
+                  engCat.contains(queryLower) ||
+                  hiName.contains(queryLower) ||
+                  hiCat.contains(queryLower);
+            })
             .toList();
 
     return Scaffold(

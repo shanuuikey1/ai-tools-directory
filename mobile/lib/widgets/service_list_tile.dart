@@ -44,7 +44,7 @@ class ServiceListTile extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(service.name,
+                  Text(state.tr(service.name),
                       style: const TextStyle(
                           fontSize: 15, fontWeight: FontWeight.w700)),
                   const SizedBox(height: 4),

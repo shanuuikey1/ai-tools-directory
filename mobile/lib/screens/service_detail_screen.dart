@@ -70,11 +70,11 @@ class ServiceDetailScreen extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: 18),
-                  Text(service.name,
+                  Text(state.tr(service.name),
                       style: const TextStyle(
                           fontSize: 24, fontWeight: FontWeight.w800)),
                   const SizedBox(height: 6),
-                  Text(service.category,
+                  Text(state.tr(service.category),
                       style: const TextStyle(
                           color: AppColors.primary,
                           fontWeight: FontWeight.w600)),
@@ -83,7 +83,7 @@ class ServiceDetailScreen extends StatelessWidget {
                       style: const TextStyle(
                           fontSize: 16, fontWeight: FontWeight.w700)),
                   const SizedBox(height: 8),
-                  Text(service.description,
+                  Text(state.tr(service.description),
                       style: const TextStyle(
                           height: 1.6, color: AppColors.textMuted)),
                   const SizedBox(height: 22),
@@ -305,7 +305,7 @@ class _BookingSheetState extends State<_BookingSheet> {
     }
   }
 
-  Widget _buildDateSlider() {
+  Widget _buildDateSlider(AppState state) {
     final days = _getNext7Days();
     return SizedBox(
       height: 85,
@@ -343,9 +343,9 @@ class _BookingSheetState extends State<_BookingSheet> {
 
           final day = days[index];
           final isSelected = DateUtils.isSameDay(_date, day);
-          final dayName = DateFormat('EEE').format(day);
-          final dayNum = DateFormat('d').format(day);
-          final monthName = DateFormat('MMM').format(day);
+          final dayName = DateFormat('EEE', state.lang).format(day);
+          final dayNum = DateFormat('d', state.lang).format(day);
+          final monthName = DateFormat('MMM', state.lang).format(day);
 
           return InkWell(
             onTap: () => setState(() => _date = day),
@@ -403,7 +403,7 @@ class _BookingSheetState extends State<_BookingSheet> {
     );
   }
 
-  Widget _buildTimeGrid() {
+  Widget _buildTimeGrid(AppState state) {
     final slots = ['08:00', '10:00', '12:00', '14:00', '16:00', '18:00'];
     
     return Wrap(
@@ -416,7 +416,7 @@ class _BookingSheetState extends State<_BookingSheet> {
           
           // Format for display (e.g. 10:00 AM)
           final tempDt = DateTime(2026, 1, 1, slotTime.hour, slotTime.minute);
-          final displayLabel = DateFormat('hh:mm a').format(tempDt);
+          final displayLabel = DateFormat('hh:mm a', state.lang).format(tempDt);
 
           return InkWell(
             onTap: () => setState(() => _time = slotTime),
@@ -508,12 +508,12 @@ class _BookingSheetState extends State<_BookingSheet> {
             Text(state.tr('serviceDetail.selectDate'),
                 style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w700, color: AppColors.textDark)),
             const SizedBox(height: 8),
-            _buildDateSlider(),
+            _buildDateSlider(state),
             const SizedBox(height: 18),
             Text(state.tr('serviceDetail.selectTimeSlot'),
                 style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w700, color: AppColors.textDark)),
             const SizedBox(height: 8),
-            _buildTimeGrid(),
+            _buildTimeGrid(state),
             const SizedBox(height: 18),
             Text(state.tr('serviceDetail.address'),
                 style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w700, color: AppColors.textDark)),
@@ -537,7 +537,7 @@ class _BookingSheetState extends State<_BookingSheet> {
               child: Column(
                 children: [
                   _row(state.tr('serviceDetail.summaryService'),
-                      widget.service.name),
+                      state.tr(widget.service.name)),
                   const SizedBox(height: 8),
                   _row(state.tr('serviceDetail.summaryPrice'),
                       '₹${widget.service.basePrice}'),
@@ -614,7 +614,7 @@ class _SuccessDialog extends StatelessWidget {
                     fontSize: 20, fontWeight: FontWeight.w800)),
             const SizedBox(height: 8),
             Text(
-              '${state.tr('serviceDetail.successPrefix')} ${service.name} ${state.tr('serviceDetail.successSuffix')}',
+              '${state.tr('serviceDetail.successPrefix')} ${state.tr(service.name)} ${state.tr('serviceDetail.successSuffix')}',
               textAlign: TextAlign.center,
               style: const TextStyle(color: AppColors.textMuted, height: 1.5),
             ),

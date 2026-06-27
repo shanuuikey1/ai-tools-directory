@@ -16,7 +16,7 @@ class CategoryScreen extends StatelessWidget {
     final services = servicesByCategory(category.name);
     return Scaffold(
       appBar: AppBar(
-        title: Text(category.name,
+        title: Text(context.watch<AppState>().tr(category.name),
             style: const TextStyle(fontWeight: FontWeight.w800)),
       ),
       body: services.isEmpty

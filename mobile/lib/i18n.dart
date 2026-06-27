@@ -330,5 +330,42 @@ const Map<String, Map<String, String>> kTranslations = {
     'server.connected': 'सफलतापूर्वक कनेक्ट हुआ ✓',
     'server.unreachable': 'सर्वर तक नहीं पहुंच सका',
     'server.enterUrl': 'पहले एक URL दर्ज करें',
+
+    // Categories
+    'Cleaning': 'सफाई',
+    'Plumbing': 'प्लंबिंग',
+    'Electrical': 'इलेक्ट्रिकल',
+    'Beauty': 'ब्यूटी',
+    'AC Repair': 'एसी मरम्मत',
+    'Carpentry': 'बढ़ईगिरी',
+    'Painting': 'पेंटिंग',
+    'Pest Control': 'कीट नियंत्रण',
+
+    // Service Names
+    'Home Deep Cleaning': 'घर की गहरी सफाई',
+    'Bathroom Cleaning': 'बाथरूम की सफाई',
+    'Tap & Pipe Repair': 'नल और पाइप मरम्मत',
+    'Wiring & Switch Fix': 'वायरिंग और स्विच फिक्स',
+    'Salon for Women': 'महिलाओं के लिए सैलून',
+    "Men's Grooming": 'पुरुषों की ग्रूमिंग',
+    'AC Service & Repair': 'एसी सर्विस और मरम्मत',
+    'Furniture Repair': 'फर्नीचर मरम्मत',
+    'Wall Painting': 'दीवार की पेंटिंग',
+    'General Pest Control': 'सामान्य कीट नियंत्रण',
+
+    // Descriptions (App Sample Data & Backend Seed Data)
+    'Top-to-bottom deep cleaning of your home including kitchen, bathrooms, floors and dusting by trained professionals with eco-friendly products.': 'प्रशिक्षित पेशेवरों द्वारा पर्यावरण-अनुकूल उत्पादों के साथ रसोई, बाथरूम, फर्श और डस्टिंग सहित आपके घर की ऊपर से नीचे तक गहरी सफाई।',
+    'Top-to-bottom deep cleaning of your home — kitchen, bathrooms, floors and dusting by trained professionals.': 'प्रशिक्षित पेशेवरों द्वारा आपके घर की ऊपर से नीचे तक गहरी सफाई — रसोई, बाथरूम, फर्श और डस्टिंग।',
+    'Intensive scrubbing and sanitisation of tiles, fittings and floor to remove stains and germs.': 'दाग-धब्बे और कीटाणुओं को हटाने के लिए टाइल्स, फिटिंग्स और फर्श की सघन घिसाई और सैनिटाइजेशन।',
+    'Fix leaking taps, broken pipes and low water pressure. Includes inspection and minor parts.': 'लीक होते नल, टूटे पाइप और कम पानी के दबाव को ठीक करें। इसमें निरीक्षण और छोटे पुर्जे शामिल हैं।',
+    'Certified electrician for switches, sockets, wiring faults and fan/light installation.': 'स्विच, सॉकेट, वायरिंग दोष और पंखे/लाइट इंस्टॉलेशन के लिए प्रमाणित इलेक्ट्रीशियन।',
+    'Premium at-home salon — facial, waxing, threading and more with hygienic single-use kits.': 'प्रीमियम घरेलू सैलून — स्वच्छ सिंगल-यूज़ किट के साथ फेशियल, वैक्सिंग, थ्रेडिंग और बहुत कुछ।',
+    'Haircut, beard styling and head massage by expert stylists in the comfort of your home.': 'आपके घर के आराम में विशेषज्ञ स्टाइलिस्टों द्वारा बाल काटना, दाढ़ी संवारना और सिर की मालिश।',
+    'Complete AC servicing — deep jet cleaning, gas check and cooling diagnostics.': 'पूर्ण एसी सर्विसिंग — डीप जेट क्लीनिंग, गैस चेक और कूलिंग डायग्नोस्टिक्स।',
+    'Cooling check, gas top-up assessment, filter cleaning and general AC servicing.': 'कूलिंग चेक, गैस टॉप-अप मूल्यांकन, फिल्टर सफाई और सामान्य एसी सर्विसिंग।',
+    'Repair doors, drawers, hinges and furniture. Skilled carpenter with tools included.': 'दरवाजे, दराज, कब्जे और फर्नीचर की मरम्मत करें। उपकरणों के साथ कुशल बढ़ई शामिल है।',
+    'Fresh interior wall painting with premium emulsion. Free colour consultation included.': 'प्रीमियम इमल्शन के साथ ताज़ा आंतरिक दीवार पेंटिंग। मुफ्त रंग परामर्श शामिल है।',
+    'Safe and odourless treatment for cockroaches, ants and other household pests.': 'कॉकरोच, चींटियों और अन्य घरेलू कीड़ों के लिए सुरक्षित और गंधहीन उपचार।',
+    'Safe treatment for cockroaches, ants and common household pests.': 'कॉकरोच, चींटियों और आम घरेलू कीड़ों के लिए सुरक्षित उपचार।',
   },
 };

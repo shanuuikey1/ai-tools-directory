@@ -134,12 +134,12 @@ class _BookingCard extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(s.name,
+                    Text(state.tr(s.name),
                         style: const TextStyle(
                             fontSize: 15, fontWeight: FontWeight.w700)),
                     const SizedBox(height: 4),
                     Text(
-                      DateFormat('EEE, d MMM • h:mm a')
+                      DateFormat('EEE, d MMM • h:mm a', state.lang)
                           .format(booking.dateTime),
                       style: const TextStyle(
                           fontSize: 12.5, color: AppColors.textMuted),
