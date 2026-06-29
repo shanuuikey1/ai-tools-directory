@@ -205,8 +205,8 @@ class AppState extends ChangeNotifier {
         service: service,
         dateTime: dateTime,
         address: address,
+        status: BookingStatus.confirmed,
       );
-      booking.status = BookingStatus.pending;
       _bookings.add(booking);
       notifyListeners();
     } else {

@@ -266,8 +266,9 @@ class ProfileScreen extends StatelessWidget {
                         color: AppColors.primary,
                         fontWeight: FontWeight.w700,
                         fontSize: 13)),
-              const Icon(Icons.chevron_right_rounded,
-                  color: AppColors.textMuted),
+              if (onTap != null)
+                const Icon(Icons.chevron_right_rounded,
+                    color: AppColors.textMuted),
             ],
           ),
         ),
